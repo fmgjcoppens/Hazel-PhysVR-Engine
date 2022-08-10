@@ -1,4 +1,6 @@
-#include "HazelPVRE.h"
+#include "HazelPVR.h"
+
+using namespace HazelPVR;
 
 int main () {
     hello();
