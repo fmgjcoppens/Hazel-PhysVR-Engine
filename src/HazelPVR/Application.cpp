@@ -1,5 +1,5 @@
 #include "Application.h"
-#include <stdio.h>
+#include <iostream>
 
 namespace HazelPVR {
 
@@ -13,6 +13,7 @@ namespace HazelPVR {
 
     void Application::Run() {
         std::cout << "Welcome to Hazel Physics VR Engine!   " << std::endl;
+//        while (true);
     }
 
 }
