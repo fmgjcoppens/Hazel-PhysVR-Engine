@@ -1,4 +1,4 @@
-#include "Core.h"
+#include "../../include/HazelPVR/Core.h"
 
 namespace HazelPVR {
 

@@ -1,5 +1,4 @@
-#include "Application.h"
-
+#include "../../include/HazelPVR/Application.h"
 namespace HazelPVR {
 
     Application::Application() {

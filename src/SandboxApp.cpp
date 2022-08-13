@@ -1,4 +1,4 @@
-#include "HazelPVR.h"
+#include <HazelPVR.h>
 
 class Sandbox : public HazelPVR::Application {
 public:
