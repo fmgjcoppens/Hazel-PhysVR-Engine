@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Core.h"
+#include <stdio.h>
 
 namespace HazelPVR {
 
@@ -11,6 +11,9 @@ namespace HazelPVR {
         virtual ~Application();
         void Run();
     };
+
+    // To be defined in the CLIENT
+    Application* CreateApplication();
 
 
 }

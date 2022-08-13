@@ -3,17 +3,17 @@
 class Sandbox : public HazelPVR::Application {
 public:
     Sandbox() {
-        // code
+        // Constructor implementation code
+        printf("Sandbox::Sandbox() (constructor)\n");
     }
 
     ~Sandbox() {
-        // code
+        // Destructor implementation code
+        printf("Sandbox::~Sandbox() (destructor)\n");
     }
 };
 
-int main () {
-    Sandbox *sandbox = new Sandbox();
-    sandbox->Run();
-    delete sandbox;
-    return 0;
+HazelPVR::Application* HazelPVR::CreateApplication() {
+    printf("HazelPVR::CreateApplication()\n");
+    return new Sandbox();
 }

@@ -2,7 +2,8 @@
 
 namespace HazelPVR {
 
-    void hello();
+
+    // Add function prototypes here
+
 
 }
-

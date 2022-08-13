@@ -1,19 +1,21 @@
 #include "Application.h"
-#include <iostream>
 
 namespace HazelPVR {
 
     Application::Application() {
-        // Code
+        // Constructor implementation code
+        printf("HazelPVR::Application::Application() (constructor)\n");
     }
 
     Application::~Application() {
-        // code
+        // Destructor implementation code
+        printf("HazelPVR::Application::~Application() (destructor)\n");
     }
 
     void Application::Run() {
-        std::cout << "Welcome to Hazel Physics VR Engine!   " << std::endl;
-//        while (true);
+        printf("HazelPVR::Application::Run()\n");
+        while (true);
+
     }
 
 }
