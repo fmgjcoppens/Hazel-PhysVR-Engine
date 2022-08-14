@@ -1,20 +1,26 @@
+### PROJECT SETUP
+## General project settings
 cmake_minimum_required(VERSION 3.22)
 project(HazelPhysVREngine)
 set(CMAKE_CXX_STANDARD 14)
 
-## Set some general names and dirs
+## Toplevel name and project dirs
 set(ENGINE_NAME HazelPVR)
 set(SRC_DIR src/)
 set(INCL_DIR include/)
 set(LIB_DIR lib/)
 
+## Hazel source & include dirs
 set(ENGINE_SRC_DIR ${SRC_DIR}/${ENGINE_NAME})
 set(ENGINE_INCL_DIR ${INCL_DIR}/${ENGINE_NAME})
 
-## Logger include path
+## Logger include dir
 set(LOGGER_INCL_DIR ${LIB_DIR}/spdlog/include/)
 
-## Hazel dirs, headers and sources
+
+
+### SOURCES AND HEADERS TO TRACK
+## Hazel headers and sources
 set(ENGINE_HEADERS
         ${ENGINE_INCL_DIR}/Application.h
         ${ENGINE_INCL_DIR}/Core.h
@@ -24,9 +30,9 @@ set(ENGINE_HEADERS
 set(ENGINE_SRCS
         ${ENGINE_SRC_DIR}/Core.cpp
         ${ENGINE_SRC_DIR}/Log.cpp)
-## Hazel dirs, headers and sources
+## Hazel headers and sources
 
-## SandboxApp dirs, headers and sources
+## SandboxApp headers and sources
 set(SANDBOX_HEADERS
         ${INCL_DIR}/HazelPVR.h
         ${ENGINE_INCL_DIR}/Application.h)
@@ -34,9 +40,11 @@ set(SANDBOX_HEADERS
 set(SANDBOX_SRCS
         ${SRC_DIR}/SandboxApp.cpp
         ${ENGINE_SRC_DIR}/Application.cpp)
-## SandboxApp dirs, headers and sources
+## SandboxApp headers and sources
 
 
+
+### BUILD TARGETS
 ## Hazel build target
 add_library(
         ${ENGINE_NAME} SHARED
@@ -66,6 +74,9 @@ target_include_directories(
 )
 ## SandboxApp build target
 
+
+
+### LINKING
 ## Link SandboxApp and Hazel
 target_link_libraries(SandboxApp ${ENGINE_NAME})
 ## Link SandboxApp and Hazel
