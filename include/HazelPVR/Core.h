@@ -2,8 +2,6 @@
 
 namespace HazelPVR {
 
-
     // Add function prototypes here
-
 
 }

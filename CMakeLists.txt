@@ -11,13 +11,19 @@ set(LIB_DIR lib/)
 set(ENGINE_SRC_DIR ${SRC_DIR}/${ENGINE_NAME})
 set(ENGINE_INCL_DIR ${INCL_DIR}/${ENGINE_NAME})
 
+## Logger include path
+set(LOGGER_INCL_DIR ${LIB_DIR}/spdlog/include/)
+
 ## Hazel dirs, headers and sources
 set(ENGINE_HEADERS
         ${ENGINE_INCL_DIR}/Application.h
         ${ENGINE_INCL_DIR}/Core.h
-        ${ENGINE_INCL_DIR}/EntryPoint.h)
+        ${ENGINE_INCL_DIR}/EntryPoint.h
+        ${ENGINE_INCL_DIR}/Log.h)
 
-set(ENGINE_SRCS ${ENGINE_SRC_DIR}/Core.cpp)
+set(ENGINE_SRCS
+        ${ENGINE_SRC_DIR}/Core.cpp
+        ${ENGINE_SRC_DIR}/Log.cpp)
 ## Hazel dirs, headers and sources
 
 ## SandboxApp dirs, headers and sources
@@ -41,6 +47,7 @@ add_library(
 target_include_directories(
         ${ENGINE_NAME} PRIVATE
         ${ENGINE_INCL_DIR}
+        ${LOGGER_INCL_DIR}
 )
 ## Hazel build target
 
@@ -55,6 +62,7 @@ target_include_directories(
         SandboxApp PRIVATE
         ${INCL_DIR}
         ${ENGINE_INCL_DIR}
+        ${LOGGER_INCL_DIR}
 )
 ## SandboxApp build target
 

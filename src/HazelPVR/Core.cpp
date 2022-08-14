@@ -2,9 +2,7 @@
 
 namespace HazelPVR {
 
-
     // Add function implementations here
-
 
 }
 
