@@ -4,17 +4,17 @@ namespace HazelPVR {
 
     Application::Application() {
         // Constructor implementation code
-        printf("HazelPVR::Application::Application() (constructor)\n");
+        HZPVR_CORE_INFO("HazelPVR::Application::Application() (constructor)");
     }
 
     Application::~Application() {
         // Destructor implementation code
-        printf("HazelPVR::Application::~Application() (destructor)\n");
+        HZPVR_CORE_INFO("HazelPVR::Application::~Application() (destructor)");
     }
 
     void Application::Run() {
-        printf("HazelPVR::Application::Run()\n");
-        while (true);
+        HZPVR_CORE_INFO("HazelPVR::Application::Run()");
+//        while (true);
     }
 
 }
