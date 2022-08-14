@@ -2,31 +2,62 @@ cmake_minimum_required(VERSION 3.22)
 project(HazelPhysVREngine)
 set(CMAKE_CXX_STANDARD 14)
 
-set(NAME HazelPVR)
-set(SRC src)
-set(INCL include)
+## Set some general names and dirs
+set(ENGINE_NAME HazelPVR)
+set(SRC_DIR src/)
+set(INCL_DIR include/)
+set(LIB_DIR lib/)
 
-set(HAZELPVR_SRC ${SRC}/${NAME})
-set(HAZELPVR_INCL ${INCL}/${NAME})
+set(ENGINE_SRC_DIR ${SRC_DIR}/${ENGINE_NAME})
+set(ENGINE_INCL_DIR ${INCL_DIR}/${ENGINE_NAME})
 
-set(HAZELPVR_HEADERS
-        ${HAZELPVR_INCL}/Application.h
-        ${HAZELPVR_INCL}/Core.h
-        ${HAZELPVR_INCL}/EntryPoint.h)
-set(HAZELPVR_SRCS
-        ${HAZELPVR_SRC}/Core.cpp)
+## Hazel dirs, headers and sources
+set(ENGINE_HEADERS
+        ${ENGINE_INCL_DIR}/Application.h
+        ${ENGINE_INCL_DIR}/Core.h
+        ${ENGINE_INCL_DIR}/EntryPoint.h)
 
+set(ENGINE_SRCS ${ENGINE_SRC_DIR}/Core.cpp)
+## Hazel dirs, headers and sources
+
+## SandboxApp dirs, headers and sources
 set(SANDBOX_HEADERS
-        ${INCL}/HazelPVR.h
-        ${HAZELPVR_INCL}/Application.h)
+        ${INCL_DIR}/HazelPVR.h
+        ${ENGINE_INCL_DIR}/Application.h)
+
 set(SANDBOX_SRCS
-        src/SandboxApp.cpp
-        src/HazelPVR/Application.cpp)
+        ${SRC_DIR}/SandboxApp.cpp
+        ${ENGINE_SRC_DIR}/Application.cpp)
+## SandboxApp dirs, headers and sources
 
-add_library(${NAME} SHARED ${HAZELPVR_SRCS} ${HAZELPVR_HEADERS})
-target_include_directories(${NAME} PRIVATE ${HAZELPVR_INCL})
 
-add_executable(SandboxApp ${SANDBOX_SRCS} ${SANDBOX_HEADERS})
-target_include_directories(SandboxApp PRIVATE ${INCL} ${HAZELPVR_INCL})
+## Hazel build target
+add_library(
+        ${ENGINE_NAME} SHARED
+        ${ENGINE_SRCS}
+        ${ENGINE_HEADERS}
+)
 
-target_link_libraries(SandboxApp ${NAME})
+target_include_directories(
+        ${ENGINE_NAME} PRIVATE
+        ${ENGINE_INCL_DIR}
+)
+## Hazel build target
+
+## SandboxApp build target
+add_executable(
+        SandboxApp
+        ${SANDBOX_SRCS}
+        ${SANDBOX_HEADERS}
+)
+
+target_include_directories(
+        SandboxApp PRIVATE
+        ${INCL_DIR}
+        ${ENGINE_INCL_DIR}
+)
+## SandboxApp build target
+
+## Link SandboxApp and Hazel
+target_link_libraries(SandboxApp ${ENGINE_NAME})
+## Link SandboxApp and Hazel

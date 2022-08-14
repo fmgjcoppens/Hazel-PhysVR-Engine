@@ -1,4 +1,5 @@
 #include "../../include/HazelPVR/Application.h"
+
 namespace HazelPVR {
 
     Application::Application() {
@@ -14,7 +15,6 @@ namespace HazelPVR {
     void Application::Run() {
         printf("HazelPVR::Application::Run()\n");
         while (true);
-
     }
 
 }
