@@ -5,7 +5,6 @@
 
 namespace HazelPVR {
 
-
     class Application {
     public:
         Application();
@@ -15,6 +14,5 @@ namespace HazelPVR {
 
     // To be defined in the CLIENT
     Application* CreateApplication();
-
 
 }

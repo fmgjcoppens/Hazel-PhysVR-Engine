@@ -8,5 +8,6 @@ int main (int argc, char** argv) {
     auto app = HazelPVR::CreateApplication();
     app->Run();
     delete app;
+
     return 0;
 }
