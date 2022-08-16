@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Log.h"
+#include "Events/Event.h"
 
 namespace HazelPVR {
 
