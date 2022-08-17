@@ -16,7 +16,6 @@ namespace HazelPVR {
     }
 
     void Application::Run() {
-        HZPVR_CORE_INFO("HazelPVR::Application::Run()");
         WindowResizeEvent e(1280, 720);
         if (e.IsInCategory(EventCategoryApplication)) {
             HZPVR_TRACE(e);
@@ -25,6 +24,7 @@ namespace HazelPVR {
             HZPVR_TRACE(e);
         }
 
+        HZPVR_CORE_INFO("HazelPVR::Application::Run()");
         while (true);
     }
 
