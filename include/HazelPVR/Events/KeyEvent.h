@@ -2,8 +2,6 @@
 
 #include "Event.h"
 
-#include <sstream>
-
 namespace HazelPVR {
 
 	class KeyEvent : public Event {

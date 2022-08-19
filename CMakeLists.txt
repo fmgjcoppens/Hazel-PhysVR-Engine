@@ -1,63 +1,52 @@
-### PROJECT SETUP
+#==================== PROJECT SETUP ====================
 ## General project settings
-cmake_minimum_required(VERSION 3.22)
-project(HazelPhysVREngine)
+cmake_minimum_required(VERSION 3.23)
+project(HazelPhysicsVREngine)
 set(CMAKE_CXX_STANDARD 14)
 
 ## Toplevel name and project dirs
 set(ENGINE_NAME HazelPVR)
 set(SRC_DIR src/)
 set(INCL_DIR include/)
-set(LIB_DIR lib/)
 
 ## Hazel source & include dirs
 set(ENGINE_SRC_DIR ${SRC_DIR}/${ENGINE_NAME})
 set(ENGINE_INCL_DIR ${INCL_DIR}/${ENGINE_NAME})
+set(VENDOR_INCL_DIR ${INCL_DIR}/vendor)
 
-## Logger include dir
-set(LOGGER_INCL_DIR ${LIB_DIR}/spdlog/include/)
+## Vendor (external) include dirs
+# Logger include dir
+set(LOGGER_INCL_DIR ${VENDOR_INCL_DIR}/spdlog/include/)
 
+#==================== SRCS AND HEADERS TO TRACK ====================
+# Hazel sources and headers
+file(GLOB ENGINE_SRCS
+        ${ENGINE_SRC_DIR}/*.cpp)
+file(GLOB ENGINE_HEADERS
+        ${ENGINE_INCL_DIR}/*.h
+        ${ENGINE_INCL_DIR}/Events/*.h)
 
-
-### SOURCES AND HEADERS TO TRACK
-## Hazel headers and sources
-set(ENGINE_HEADERS
-        ${ENGINE_INCL_DIR}/Application.h
-        ${ENGINE_INCL_DIR}/Core.h
-        ${ENGINE_INCL_DIR}/EntryPoint.h
-        ${ENGINE_INCL_DIR}/Log.h)
-
-set(ENGINE_SRCS
-        ${ENGINE_SRC_DIR}/Core.cpp
-        ${ENGINE_SRC_DIR}/Log.cpp)
-## Hazel headers and sources
-
-## SandboxApp headers and sources
-set(SANDBOX_HEADERS
-        ${INCL_DIR}/HazelPVR.h
-        ${ENGINE_INCL_DIR}/Application.h)
-
+## SandboxApp sources and headers
 set(SANDBOX_SRCS
-        ${SRC_DIR}/SandboxApp.cpp
-        ${ENGINE_SRC_DIR}/Application.cpp)
-## SandboxApp headers and sources
+        ${SRC_DIR}/SandboxApp.cpp)
+set(SANDBOX_HEADERS
+        ${INCL_DIR}/HazelPVR.h)
 
-
-
-### BUILD TARGETS
+#==================== BUILD TARGETS ====================
 ## Hazel build target
 add_library(
         ${ENGINE_NAME} SHARED
         ${ENGINE_SRCS}
         ${ENGINE_HEADERS}
 )
-
 target_include_directories(
         ${ENGINE_NAME} PRIVATE
         ${ENGINE_INCL_DIR}
         ${LOGGER_INCL_DIR}
 )
-## Hazel build target
+target_precompile_headers(
+        ${ENGINE_NAME} PRIVATE
+        ${ENGINE_INCL_DIR}/hzpvrpch.h)
 
 ## SandboxApp build target
 add_executable(
@@ -65,18 +54,13 @@ add_executable(
         ${SANDBOX_SRCS}
         ${SANDBOX_HEADERS}
 )
-
 target_include_directories(
         SandboxApp PRIVATE
         ${INCL_DIR}
         ${ENGINE_INCL_DIR}
         ${LOGGER_INCL_DIR}
 )
-## SandboxApp build target
 
-
-
-### LINKING
+#==================== LINKING ====================
 ## Link SandboxApp and Hazel
 target_link_libraries(SandboxApp ${ENGINE_NAME})
-## Link SandboxApp and Hazel
