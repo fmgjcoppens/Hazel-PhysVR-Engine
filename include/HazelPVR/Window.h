@@ -1,7 +1,5 @@
 #pragma once
 
-#include "hzpvrpch.h"
-
 #include "Core.h"
 #include "Events/Event.h"
 
@@ -12,7 +10,7 @@ namespace HazelPVR {
 		unsigned int Width;
 		unsigned int Height;
 
-		WindowProps(const std::string& title = "Hazel Engine",
+		WindowProps(const std::string& title = "Hazel PhysicsVR Engine",
 			        unsigned int width = 1280,
 			        unsigned int height = 720)
 			: Title(title), Width(width), Height(height) {

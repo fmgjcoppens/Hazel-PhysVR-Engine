@@ -1,7 +1,8 @@
-//#include "../hzpvrpch.h" // Precompiled header. Include not necessary with CMake
+#include "hzpvrpch.h" // Precompiled header. Include not necessary with CMake
 #include "Application.h"
 
 #include "Events/ApplicationEvent.h"
+#include "Log.h"
 
 #include <GLFW/glfw3.h>
 
@@ -9,28 +10,20 @@ namespace HazelPVR {
 
     Application::Application() {
         // Constructor implementation code
-        HZPVR_CORE_TRACE("HazelPVR::Application::Application()");
+        m_Window = std::unique_ptr<Window>(Window::Create());
     }
 
     Application::~Application() {
         // Destructor implementation code
-        HZPVR_CORE_TRACE("HazelPVR::Application::~Application()");
     }
 
     void Application::Run() {
-
-        WindowResizeEvent e(1280, 720);
-        if (e.IsInCategory(EventCategoryApplication)) {
-            HZPVR_TRACE(e);
+        while (m_Running)
+        {
+            glClearColor(1, 0, 1, 1);
+            glClear(GL_COLOR_BUFFER_BIT);
+            m_Window->OnUpdate();
         }
-        if (e.IsInCategory(EventCategoryInput)) {
-            HZPVR_TRACE(e);
-        }
-
-        int rc = glfwInit();
-        HZPVR_CORE_TRACE(rc);
-
-        while (true);
     }
 
 }

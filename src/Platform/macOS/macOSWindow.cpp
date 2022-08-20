@@ -1,38 +1,33 @@
-#include "hzpch.h"
-#include "WindowsWindow.h"
+#include "hzpvrpch.h"
+#include "macOS/macOSWindow.h"
 
-namespace Hazel {
+namespace HazelPVR {
 	
 	static bool s_GLFWInitialized = false;
 
-	Window* Window::Create(const WindowProps& props)
-	{
-		return new WindowsWindow(props);
+	Window* Window::Create(const WindowProps& props) {
+		return new macOSWindow(props);
 	}
 
-	WindowsWindow::WindowsWindow(const WindowProps& props)
-	{
+	macOSWindow::macOSWindow(const WindowProps& props) {
 		Init(props);
 	}
 
-	WindowsWindow::~WindowsWindow()
-	{
+	macOSWindow::~macOSWindow()	{
 		Shutdown();
 	}
 
-	void WindowsWindow::Init(const WindowProps& props)
-	{
+	void macOSWindow::Init(const WindowProps& props) {
 		m_Data.Title = props.Title;
 		m_Data.Width = props.Width;
 		m_Data.Height = props.Height;
 
-		HZ_CORE_INFO("Creating window {0} ({1}, {2})", props.Title, props.Width, props.Height);
+        HZPVR_CORE_INFO("Creating window {0} ({1}, {2})", props.Title, props.Width, props.Height);
 
-		if (!s_GLFWInitialized)
-		{
+		if (!s_GLFWInitialized)	{
 			// TODO: glfwTerminate on system shutdown
 			int success = glfwInit();
-			HZ_CORE_ASSERT(success, "Could not intialize GLFW!");
+			HZ_CORE_ASSERT(success, "Could not initialize GLFW!");
 
 			s_GLFWInitialized = true;
 		}
@@ -43,19 +38,16 @@ namespace Hazel {
 		SetVSync(true);
 	}
 
-	void WindowsWindow::Shutdown()
-	{
+	void macOSWindow::Shutdown() {
 		glfwDestroyWindow(m_Window);
 	}
 
-	void WindowsWindow::OnUpdate()
-	{
+	void macOSWindow::OnUpdate() {
 		glfwPollEvents();
 		glfwSwapBuffers(m_Window);
 	}
 
-	void WindowsWindow::SetVSync(bool enabled)
-	{
+	void macOSWindow::SetVSync(bool enabled) {
 		if (enabled)
 			glfwSwapInterval(1);
 		else
@@ -64,8 +56,7 @@ namespace Hazel {
 		m_Data.VSync = enabled;
 	}
 
-	bool WindowsWindow::IsVSync() const
-	{
+	bool macOSWindow::IsVSync() const {
 		return m_Data.VSync;
 	}
 
