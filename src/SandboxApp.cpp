@@ -4,16 +4,16 @@ class Sandbox : public HazelPVR::Application {
 public:
     Sandbox() {
         // Constructor implementation code
-        HZPVR_INFO("Sandbox::Sandbox() (CONSTRUCTOR)");
+        HZPVR_TRACE("Sandbox::Sandbox()");
     }
 
     ~Sandbox() {
         // Destructor implementation code
-        HZPVR_INFO("Sandbox::~Sandbox() (DESTRUCTOR)");
+        HZPVR_TRACE("Sandbox::~Sandbox()");
     }
 };
 
 HazelPVR::Application* HazelPVR::CreateApplication() {
-    HZPVR_INFO("HazelPVR::CreateApplication()");
+    HZPVR_TRACE("HazelPVR::CreateApplication()");
     return new Sandbox();
 }

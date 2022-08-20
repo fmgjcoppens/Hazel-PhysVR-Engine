@@ -1,4 +1,4 @@
-#include "Log.h"
+//#include "../hzpvrpch.h" // Precompiled header. Include not necessary with CMake
 
 namespace HazelPVR {
 
