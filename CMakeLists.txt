@@ -5,13 +5,15 @@ project(HazelPhysicsVREngine)
 set(CMAKE_CXX_STANDARD 14)
 
 ## Global compiler definitions
-add_compile_definitions(HZPVR_PLATFORM_MACOS)
+add_compile_definitions(HZPVR_PLATFORM_MACOS)   # Currently the only supported platform
+#add_compile_definitions(HZPVR_PLATFORM_LINUX)
+#add_compile_definitions(HZPVR_PLATFORM_WINDOWS)
 
 ## Toplevel name and project dirs
-set(ENGINE_NAME     HazelPVR)
-set(PLATFORM_NAME   Platform)
-set(SRC_DIR         src)
-set(INCL_DIR        include)
+set(ENGINE_NAME     HazelPVR)   # Name used in all folder paths and targets
+set(PLATFORM_NAME   Platform)   # Name of the folder for platform dependent source files
+set(SRC_DIR         src)        # Source implementation files
+set(INCL_DIR        include)    # Source definition files
 
 ## HazelPVR source & include dirs
 set(ENGINE_SRC_DIR ${SRC_DIR}/${ENGINE_NAME})
