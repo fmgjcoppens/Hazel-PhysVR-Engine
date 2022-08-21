@@ -5,11 +5,10 @@
 
 namespace HazelPVR {
 
-	class macOSWindow : public Window
-	{
+	class macOSWindow : public Window {
 	public:
-		macOSWindow(const WindowProperties& props);
-		virtual ~macOSWindow();
+		explicit macOSWindow(const WindowProperties& properties);
+		~macOSWindow() override;
 
 		void OnUpdate() override;
 
@@ -20,11 +19,12 @@ namespace HazelPVR {
 		inline void SetEventCallback(const EventCallbackFn& callback) override { m_Data.EventCallback = callback; }
 		void SetVSync(bool enabled) override;
 		bool IsVSync() const override;
-	private:
-		virtual void Init(const WindowProperties& props);
+
+    private:
+		virtual void Init(const WindowProperties& properties);
 		virtual void Shutdown();
-	private:
-		GLFWwindow* m_Window;
+
+		GLFWwindow* m_Window{};
 
 		struct WindowData
 		{

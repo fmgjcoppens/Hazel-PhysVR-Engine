@@ -7,40 +7,40 @@
 
 namespace HazelPVR {
 
-	static bool s_GLFWInitialized = false;
+    static bool s_GLFWInitialized = false;
 
-     static void GLFWErrorCallback(int error, const char* description) {
-         HZPVR_CORE_ERROR("GLFW Error ({0}): {1}", error, description);
+    static void GLFWErrorCallback(int error, const char* description) {
+        HZPVR_CORE_ERROR("GLFW Error ({0}): {1}", error, description);
      }
 
-	Window* Window::Create(const WindowProperties& props) {
-		return new macOSWindow(props);
+	Window* Window::Create(const WindowProperties& properties) {
+		return new macOSWindow(properties);
 	}
 
-	macOSWindow::macOSWindow(const WindowProperties& props) {
-		Init(props);
+	macOSWindow::macOSWindow(const WindowProperties& properties) {
+		Init(properties);
 	}
 
 	macOSWindow::~macOSWindow()	{
 		Shutdown();
 	}
 
-	void macOSWindow::Init(const WindowProperties& props) {
-		m_Data.Title = props.Title;
-		m_Data.Width = props.Width;
-		m_Data.Height = props.Height;
+	void macOSWindow::Init(const WindowProperties& properties) {
+        m_Data.Title = properties.Title;
+		m_Data.Width = properties.Width;
+		m_Data.Height = properties.Height;
 
-        HZPVR_CORE_INFO("Creating window '{0} ({1}, {2})'", props.Title, props.Width, props.Height);
+        HZPVR_CORE_INFO("Creating window '{0} ({1}, {2})'", properties.Title, properties.Width, properties.Height);
 
-		if (!s_GLFWInitialized)	{
-			// TODO: glfwTerminate on system shutdown
+        if (!s_GLFWInitialized)	{
+            // TODO: glfwTerminate on system shutdown
 			int success = glfwInit();
 			HZPVR_CORE_ASSERT(success, "Could not initialize GLFW!");
             glfwSetErrorCallback(GLFWErrorCallback);
 			s_GLFWInitialized = true;
 		}
 
-		m_Window = glfwCreateWindow((int)props.Width, (int)props.Height, m_Data.Title.c_str(), nullptr, nullptr);
+		m_Window = glfwCreateWindow((int)properties.Width, (int)properties.Height, m_Data.Title.c_str(), nullptr, nullptr);
 		glfwMakeContextCurrent(m_Window);
 		glfwSetWindowUserPointer(m_Window, &m_Data);
 		SetVSync(true);
