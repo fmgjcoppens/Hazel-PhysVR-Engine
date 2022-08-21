@@ -8,7 +8,7 @@ namespace HazelPVR {
 	class macOSWindow : public Window
 	{
 	public:
-		macOSWindow(const WindowProps& props);
+		macOSWindow(const WindowProperties& props);
 		virtual ~macOSWindow();
 
 		void OnUpdate() override;
@@ -21,7 +21,7 @@ namespace HazelPVR {
 		void SetVSync(bool enabled) override;
 		bool IsVSync() const override;
 	private:
-		virtual void Init(const WindowProps& props);
+		virtual void Init(const WindowProperties& props);
 		virtual void Shutdown();
 	private:
 		GLFWwindow* m_Window;

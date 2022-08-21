@@ -4,6 +4,9 @@ cmake_minimum_required(VERSION 3.23)
 project(HazelPhysicsVREngine)
 set(CMAKE_CXX_STANDARD 14)
 
+## Global compiler definitions
+add_compile_definitions(HZPVR_PLATFORM_MACOS)
+
 ## Toplevel name and project dirs
 set(ENGINE_NAME HazelPVR)
 set(PLATFORM_NAME Platform)
@@ -43,14 +46,14 @@ file(GLOB_RECURSE PLATFORM_SRCS
 file(GLOB_RECURSE PLATFORM_HEADERS
         ${PLATFORM_INCL_DIR}/*.h)
 
-## SandboxApp sources and headers
+## Sandbox Application sources and headers
 set(SANDBOX_SRCS
         ${SRC_DIR}/SandboxApp.cpp)
 set(SANDBOX_HEADERS
         ${INCL_DIR}/HazelPVR.h)
 
 #==================== BUILD TARGETS ====================
-## Hazel build target
+## The HazelPVR build target
 add_library(
         ${ENGINE_NAME} SHARED
         ${ENGINE_SRCS}
@@ -67,9 +70,14 @@ target_include_directories(
 )
 target_precompile_headers(
         ${ENGINE_NAME} PRIVATE
-        ${PCH})
+        ${PCH}
+)
+target_compile_definitions(
+        ${ENGINE_NAME} PRIVATE
+        GL_SILENCE_DEPRECATION
+)
 
-## SandboxApp build target
+## The SandboxApp build target
 add_executable(
         SandboxApp
         ${SANDBOX_SRCS}

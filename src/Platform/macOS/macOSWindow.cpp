@@ -5,11 +5,11 @@ namespace HazelPVR {
 	
 	static bool s_GLFWInitialized = false;
 
-	Window* Window::Create(const WindowProps& props) {
+	Window* Window::Create(const WindowProperties& props) {
 		return new macOSWindow(props);
 	}
 
-	macOSWindow::macOSWindow(const WindowProps& props) {
+	macOSWindow::macOSWindow(const WindowProperties& props) {
 		Init(props);
 	}
 
@@ -17,7 +17,7 @@ namespace HazelPVR {
 		Shutdown();
 	}
 
-	void macOSWindow::Init(const WindowProps& props) {
+	void macOSWindow::Init(const WindowProperties& props) {
 		m_Data.Title = props.Title;
 		m_Data.Width = props.Width;
 		m_Data.Height = props.Height;
@@ -27,7 +27,7 @@ namespace HazelPVR {
 		if (!s_GLFWInitialized)	{
 			// TODO: glfwTerminate on system shutdown
 			int success = glfwInit();
-			HZ_CORE_ASSERT(success, "Could not initialize GLFW!");
+			HZPVR_CORE_ASSERT(success, "Could not initialize GLFW!");
 
 			s_GLFWInitialized = true;
 		}
