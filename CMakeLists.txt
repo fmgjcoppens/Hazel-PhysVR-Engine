@@ -8,10 +8,10 @@ set(CMAKE_CXX_STANDARD 14)
 add_compile_definitions(HZPVR_PLATFORM_MACOS)
 
 ## Toplevel name and project dirs
-set(ENGINE_NAME HazelPVR)
-set(PLATFORM_NAME Platform)
-set(SRC_DIR src)
-set(INCL_DIR include)
+set(ENGINE_NAME     HazelPVR)
+set(PLATFORM_NAME   Platform)
+set(SRC_DIR         src)
+set(INCL_DIR        include)
 
 ## HazelPVR source & include dirs
 set(ENGINE_SRC_DIR ${SRC_DIR}/${ENGINE_NAME})
@@ -21,9 +21,10 @@ set(PLATFORM_INCL_DIR ${INCL_DIR}/${PLATFORM_NAME})
 set(VENDOR_INCL_DIR ${INCL_DIR}/vendor)
 
 ## Vendor (external dependencies) include dirs
-# Logger include dir
+# spdlog logger (submodule) include dir
 set(LOGGER_INCL_DIR ${VENDOR_INCL_DIR}/spdlog/include)
-# GLFW
+
+# GLFW (submodule) build target and suppress building docs, tests and examples
 set(GLFW_BUILD_DOCS OFF CACHE BOOL "" FORCE)
 set(GLFW_BUILD_TESTS OFF CACHE BOOL "" FORCE)
 set(GLFW_BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
@@ -75,6 +76,7 @@ target_precompile_headers(
 target_compile_definitions(
         ${ENGINE_NAME} PRIVATE
         GL_SILENCE_DEPRECATION
+        HZPVR_ENABLE_ASSERTS
 )
 
 ## The SandboxApp build target
