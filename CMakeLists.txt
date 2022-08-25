@@ -1,42 +1,32 @@
 #==================== PROJECT SETUP ====================
 ## General project settings
-cmake_minimum_required(VERSION 3.23)
-project(HazelPhysicsVREngine)
+cmake_minimum_required(VERSION 3.16)
+project(HazelPhysicsVREngine LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 14)
-
-## OS detection and related variables
-include(OS_detection.cmake)
 
 ## User enabled definitions
 set(USER_DEFINITIONS
 #        HZPVR_ENABLE_ASSERTS
+#        HZPVR_ENABLE_RANDOM_DEFS
         )
 
 ## Toplevel name and project dirs
 set(ENGINE_NAME     HazelPVR)   # Name used in all folder paths and targets
-set(PLATFORM_NAME   Platform)   # Name of the folder for platform dependent source files
 set(SRC_DIR         src)        # Source implementation files
 set(INCL_DIR        include)    # Source definition files
 
 ## HazelPVR source & include dirs
 set(ENGINE_SRC_DIR ${SRC_DIR}/${ENGINE_NAME})
 set(ENGINE_INCL_DIR ${INCL_DIR}/${ENGINE_NAME})
-set(PLATFORM_SRC_DIR ${SRC_DIR}/${PLATFORM_NAME})
-set(PLATFORM_INCL_DIR ${INCL_DIR}/${PLATFORM_NAME})
-set(VENDOR_INCL_DIR ${INCL_DIR}/vendor)
 
-## Vendor (external dependencies) include dirs
-# spdlog logger (submodule) include dir
-set(LOGGER_INCL_DIR ${VENDOR_INCL_DIR}/spdlog/include)
+## Detection and definition of platform specific paths and variables
+include(Platform_detection.cmake)
 
-# GLFW (submodule) build target and suppress building docs, tests and examples
-set(GLFW_BUILD_DOCS OFF CACHE BOOL "" FORCE)
-set(GLFW_BUILD_TESTS OFF CACHE BOOL "" FORCE)
-set(GLFW_BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
-add_subdirectory(include/vendor/glfw)
+## Vendor specific (external dependencies)
+include(Vendor.cmake)
 
 #==================== SRCS AND HEADERS TO TRACK ====================
-# Precompiled header
+# Precompiled headers
 set(PCH ${INCL_DIR}/hzpvrpch.h)
 
 # HazelPVR sources and headers
@@ -45,12 +35,6 @@ file(GLOB ENGINE_SRCS
 file(GLOB ENGINE_HEADERS
         ${ENGINE_INCL_DIR}/*.h
         ${ENGINE_INCL_DIR}/Events/*.h)
-
-# Platform sources and headers
-file(GLOB PLATFORM_SRCS
-        ${PLATFORM_SRC_DIR}/${OS_NAME}/${OS_NAME}*.cpp)
-file(GLOB PLATFORM_HEADERS
-        ${PLATFORM_INCL_DIR}/${OS_NAME}/${OS_NAME}*.h)
 
 ## Sandbox Application sources and headers
 set(SANDBOX_SRCS
