@@ -4,19 +4,19 @@
 
 namespace HazelPVR {
 
-	class KeyEvent : public Event {
+	class HAZELPVR_API KeyEvent : public Event {
 	public:
 		inline int GetKeyCode() const { return m_KeyCode; }
 
 		EVENT_CLASS_CATEGORY(EventCategoryKeyboard | EventCategoryInput)
 	protected:
-		KeyEvent(int keycode)
+		explicit KeyEvent(int keycode)
 			: m_KeyCode(keycode) {}
 
 		int m_KeyCode;
 	};
 
-	class KeyPressedEvent : public KeyEvent	{
+	class HAZELPVR_API KeyPressedEvent : public KeyEvent	{
 	public:
 		KeyPressedEvent(int keycode, int repeatCount)
 			: KeyEvent(keycode), m_RepeatCount(repeatCount) {}
@@ -34,9 +34,9 @@ namespace HazelPVR {
 		int m_RepeatCount;
 	};
 
-	class KeyReleasedEvent : public KeyEvent {
+	class HAZELPVR_API KeyReleasedEvent : public KeyEvent {
 	public:
-		KeyReleasedEvent(int keycode)
+		explicit KeyReleasedEvent(int keycode)
 			: KeyEvent(keycode) {}
 
 		std::string ToString() const override {

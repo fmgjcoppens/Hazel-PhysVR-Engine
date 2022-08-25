@@ -33,7 +33,7 @@ namespace HazelPVR {
 
 #define EVENT_CLASS_CATEGORY(category) virtual int GetCategoryFlags() const override { return category; }
 
-	class Event	{
+	class HAZELPVR_API Event	{
 		friend class EventDispatcher;
 	public:
 		virtual EventType GetEventType() const = 0;
@@ -41,7 +41,7 @@ namespace HazelPVR {
 		virtual int GetCategoryFlags() const = 0;
 		virtual std::string ToString() const { return GetName(); }
 
-		inline bool IsInCategory(EventCategory category) {
+		inline bool IsInCategory(EventCategory category) const {
 			return GetCategoryFlags() & category;
 		}
 	protected:
@@ -52,7 +52,7 @@ namespace HazelPVR {
 		template<typename T>
 		using EventFn = std::function<bool(T&)>;
 	public:
-		EventDispatcher(Event& event)
+		explicit EventDispatcher(Event& event)
 			: m_Event(event)
 		{
 		}

@@ -6,7 +6,7 @@ public:
         HZPVR_INFO("Creating new instance of Sandbox");
     }
 
-    ~Sandbox() {
+    ~Sandbox() override {
         HZPVR_INFO("Destroying instance of Sandbox");
     }
 };

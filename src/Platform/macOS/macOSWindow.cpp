@@ -5,6 +5,8 @@
 #include "Events/MouseEvent.h"
 #include "Events/KeyEvent.h"
 
+#include "Core.h"
+
 namespace HazelPVR {
 
     static bool s_GLFWInitialized = false;

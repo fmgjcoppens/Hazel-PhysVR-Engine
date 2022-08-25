@@ -6,7 +6,7 @@
 
 namespace HazelPVR {
 
-    class Application {
+    class HAZELPVR_API Application {
     public:
         Application();
         virtual ~Application();

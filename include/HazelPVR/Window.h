@@ -1,5 +1,7 @@
 #pragma once
 
+#include <utility>
+
 #include "Core.h"
 #include "Events/Event.h"
 
@@ -10,19 +12,19 @@ namespace HazelPVR {
 		unsigned int Width;
 		unsigned int Height;
 
-		WindowProperties(const std::string& title = "Hazel PhysicsVR Engine",
+		explicit WindowProperties(std::string  title = "Hazel PhysicsVR Engine",
                          unsigned int width = 1280,
                          unsigned int height = 720)
-			: Title(title), Width(width), Height(height) {
+			: Title(std::move(title)), Width(width), Height(height) {
 		}
 	};
 
 	// Interface representing a desktop system based Window
-	class Window {
+	class HAZELPVR_API Window {
 	public:
 		using EventCallbackFn = std::function<void(Event&)>;
 
-		virtual ~Window() {}
+		virtual ~Window() = default;
 
 		virtual void OnUpdate() = 0;
 

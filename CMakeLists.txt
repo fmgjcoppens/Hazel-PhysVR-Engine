@@ -4,10 +4,13 @@ cmake_minimum_required(VERSION 3.23)
 project(HazelPhysicsVREngine)
 set(CMAKE_CXX_STANDARD 14)
 
-## Global compiler definitions
-add_compile_definitions(HZPVR_PLATFORM_MACOS)   # Currently the only supported platform
-#add_compile_definitions(HZPVR_PLATFORM_LINUX)
-#add_compile_definitions(HZPVR_PLATFORM_WINDOWS)
+## OS detection and related variables
+include(OS_detection.cmake)
+
+## User enabled definitions
+set(USER_DEFINITIONS
+#        HZPVR_ENABLE_ASSERTS
+        )
 
 ## Toplevel name and project dirs
 set(ENGINE_NAME     HazelPVR)   # Name used in all folder paths and targets
@@ -78,7 +81,7 @@ target_precompile_headers(
 target_compile_definitions(
         ${ENGINE_NAME} PRIVATE
         GL_SILENCE_DEPRECATION
-        HZPVR_ENABLE_ASSERTS
+        ${USER_DEFINITIONS}
 )
 
 ## The SandboxApp build target
