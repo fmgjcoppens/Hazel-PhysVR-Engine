@@ -47,10 +47,10 @@ file(GLOB ENGINE_HEADERS
         ${ENGINE_INCL_DIR}/Events/*.h)
 
 # Platform sources and headers
-file(GLOB_RECURSE PLATFORM_SRCS
-        ${PLATFORM_SRC_DIR}/*.cpp)
-file(GLOB_RECURSE PLATFORM_HEADERS
-        ${PLATFORM_INCL_DIR}/*.h)
+file(GLOB PLATFORM_SRCS
+        ${PLATFORM_SRC_DIR}/${OS_NAME}/${OS_NAME}*.cpp)
+file(GLOB PLATFORM_HEADERS
+        ${PLATFORM_INCL_DIR}/${OS_NAME}/${OS_NAME}*.h)
 
 ## Sandbox Application sources and headers
 set(SANDBOX_SRCS
