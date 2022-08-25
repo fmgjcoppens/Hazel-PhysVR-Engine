@@ -99,14 +99,17 @@ target_include_directories(
 
 #==================== LINKING ====================
 ## Link HazelPVR with dependencies
-find_library(COCOA_LIB Cocoa)
+if(OS_NAME STREQUAL "macOS")
+    find_library(COCOA_LIB Cocoa)
+    find_library(IOKIT_LIB IOKit)
+    target_link_libraries(${ENGINE_NAME}
+            ${COCOA_LIB}
+            ${IOKIT_LIB})
+endif()
 find_library(OPENGL_LIB OpenGL)
-find_library(IOKIT_LIB IOKit)
 target_link_libraries(${ENGINE_NAME}
         glfw
-        ${COCOA_LIB}
-        ${OPENGL_LIB}
-        ${IOKIT_LIB})
+        ${OPENGL_LIB})
 
 ## Link SandboxApp with HazelPVR
 target_link_libraries(SandboxApp
