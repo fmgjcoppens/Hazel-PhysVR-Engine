@@ -1,28 +1,20 @@
 ## Platform detection
 if(CMAKE_SYSTEM_NAME STREQUAL "Linux")
     set(OS_NAME Linux)
+    add_compile_definitions(HZPVR_PLATFORM_LINUX)
 elseif(CMAKE_SYSTEM_NAME STREQUAL "Darwin")
     set(OS_NAME macOS)
-elseif(CMAKE_SYSTEM_NAME STREQUAL "Windows")
-    set(OS_NAME Windows)
-else()
-    set(OS_NAME Unknown)
-endif()
-
-## Global compiler definitions
-if(OS_NAME STREQUAL "Linux")
-    add_compile_definitions(HZPVR_PLATFORM_LINUX)
-elseif(OS_NAME STREQUAL "macOS")
     add_compile_definitions(HZPVR_PLATFORM_MACOS)
     find_library(COCOA_LIB Cocoa)
     find_library(IOKIT_LIB IOKit)
-elseif(OS_NAME STREQUAL "Windows")
+elseif(CMAKE_SYSTEM_NAME STREQUAL "Windows")
+    set(OS_NAME Windows)
     add_compile_definitions(HZPVR_PLATFORM_WINDOWS)
     set(USER_DEFINITIONS
             ${USER_DEFINITIONS}
             HZPVR_BUILD_DLL)
 else()
-    # Unsupported OS -> do nothing.
+    set(OS_NAME Unknown)
 endif()
 
 # Platform dir, sources and headers

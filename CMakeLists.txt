@@ -95,10 +95,9 @@ target_link_libraries(${ENGINE_NAME}
         ${OPENGL_LIBRARIES})
 if(OS_NAME STREQUAL "macOS") # Cannot go to Platform.cmake because target has to exist
     target_link_libraries(${ENGINE_NAME}
-            ${COCOA_LIB}
-            ${IOKIT_LIB})
+        ${COCOA_LIB}
+        ${IOKIT_LIB})
 endif()
-
 
 ## Link SandboxApp with HazelPVR
 target_link_libraries(SandboxApp
