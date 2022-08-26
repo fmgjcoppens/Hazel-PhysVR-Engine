@@ -13,17 +13,17 @@ set(INCL_DIR        include)    # Source definition files
 set(ENGINE_SRC_DIR ${SRC_DIR}/${ENGINE_NAME})
 set(ENGINE_INCL_DIR ${INCL_DIR}/${ENGINE_NAME})
 
-## Detection and definition of platform specific paths and variables
-include(Platform.cmake)
-
-## Vendor specific (external dependencies)
-include(Vendor.cmake)
-
 ## User enabled definitions
 set(USER_DEFINITIONS
         ${USER_DEFINITIONS}
 #        HZPVR_ENABLE_ASSERTS
         )
+
+## Vendor specific (external dependencies)
+include(Vendor.cmake)
+
+## Detection and definition of platform specific paths and variables
+include(Platform.cmake)
 
 #==================== SRCS AND HEADERS TO TRACK ====================
 # Precompiled headers
@@ -67,6 +67,12 @@ target_compile_definitions(
         ${ENGINE_NAME} PRIVATE
         ${USER_DEFINITIONS}
 )
+if(OS_NAME STREQUAL "macOS") # Cannot go to Platform.cmake because target has to exist
+    target_compile_definitions(
+            ${ENGINE_NAME} PRIVATE
+            GL_SILENCE_DEPRECATION
+    )
+endif()
 
 ## The SandboxApp build target
 add_executable(
@@ -87,6 +93,12 @@ find_package(OpenGL REQUIRED)
 target_link_libraries(${ENGINE_NAME}
         glfw
         ${OPENGL_LIBRARIES})
+if(OS_NAME STREQUAL "macOS") # Cannot go to Platform.cmake because target has to exist
+    target_link_libraries(${ENGINE_NAME}
+            ${COCOA_LIB}
+            ${IOKIT_LIB})
+endif()
+
 
 ## Link SandboxApp with HazelPVR
 target_link_libraries(SandboxApp

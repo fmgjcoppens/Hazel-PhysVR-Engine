@@ -14,15 +14,8 @@ if(OS_NAME STREQUAL "Linux")
     add_compile_definitions(HZPVR_PLATFORM_LINUX)
 elseif(OS_NAME STREQUAL "macOS")
     add_compile_definitions(HZPVR_PLATFORM_MACOS)
-    target_compile_definitions(
-            ${ENGINE_NAME} PRIVATE
-            GL_SILENCE_DEPRECATION
-    )
     find_library(COCOA_LIB Cocoa)
     find_library(IOKIT_LIB IOKit)
-    target_link_libraries(${ENGINE_NAME}
-            ${COCOA_LIB}
-            ${IOKIT_LIB})
 elseif(OS_NAME STREQUAL "Windows")
     add_compile_definitions(HZPVR_PLATFORM_WINDOWS)
     set(USER_DEFINITIONS
@@ -43,8 +36,8 @@ file(GLOB PLATFORM_HEADERS
         ${PLATFORM_INCL_DIR}/${OS_NAME}/${OS_NAME}*.h)
 
 
-
 # Some debug messages
-#message(STATUS "Value of OS_NAME: ${OS_NAME}")
-#message(STATUS "Value of PLATFORM_SRCS: ${PLATFORM_SRCS}")
-#message(STATUS "Value of PLATFORM_HEADERS: ${PLATFORM_HEADERS}")
+message(STATUS "Value of OS_NAME: ${OS_NAME}")
+message(STATUS "Value of PLATFORM_SRCS: ${PLATFORM_SRCS}")
+message(STATUS "Value of PLATFORM_HEADERS: ${PLATFORM_HEADERS}")
+message(STATUS "Value of USER_DEFINITIONS: ${USER_DEFINITIONS}")
