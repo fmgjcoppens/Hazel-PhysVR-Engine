@@ -2,13 +2,7 @@
 ## General project settings
 cmake_minimum_required(VERSION 3.16)
 project(HazelPhysicsVREngine LANGUAGES CXX)
-set(CMAKE_CXX_STANDARD 14)
-
-## User enabled definitions
-set(USER_DEFINITIONS
-#        HZPVR_ENABLE_ASSERTS
-#        HZPVR_ENABLE_RANDOM_DEFS
-        )
+set(CMAKE_CXX_STANDARD 17)
 
 ## Toplevel name and project dirs
 set(ENGINE_NAME     HazelPVR)   # Name used in all folder paths and targets
@@ -20,10 +14,16 @@ set(ENGINE_SRC_DIR ${SRC_DIR}/${ENGINE_NAME})
 set(ENGINE_INCL_DIR ${INCL_DIR}/${ENGINE_NAME})
 
 ## Detection and definition of platform specific paths and variables
-include(Platform_detection.cmake)
+include(Platform.cmake)
 
 ## Vendor specific (external dependencies)
 include(Vendor.cmake)
+
+## User enabled definitions
+set(USER_DEFINITIONS
+        ${USER_DEFINITIONS}
+#        HZPVR_ENABLE_ASSERTS
+        )
 
 #==================== SRCS AND HEADERS TO TRACK ====================
 # Precompiled headers
@@ -47,16 +47,17 @@ set(SANDBOX_HEADERS
 add_library(
         ${ENGINE_NAME} SHARED
         ${ENGINE_SRCS}
-        ${PLATFORM_SRCS}
         ${ENGINE_HEADERS}
+        ${PLATFORM_SRCS}
         ${PLATFORM_HEADERS}
 )
+
 target_include_directories(
         ${ENGINE_NAME} PRIVATE
         ${INCL_DIR}
         ${ENGINE_INCL_DIR}
-        ${PLATFORM_INCL_DIR}
         ${LOGGER_INCL_DIR}
+        ${PLATFORM_INCL_DIR}
 )
 target_precompile_headers(
         ${ENGINE_NAME} PRIVATE
@@ -64,7 +65,6 @@ target_precompile_headers(
 )
 target_compile_definitions(
         ${ENGINE_NAME} PRIVATE
-        GL_SILENCE_DEPRECATION
         ${USER_DEFINITIONS}
 )
 
@@ -83,17 +83,10 @@ target_include_directories(
 
 #==================== LINKING ====================
 ## Link HazelPVR with dependencies
-if(OS_NAME STREQUAL "macOS")
-    find_library(COCOA_LIB Cocoa)
-    find_library(IOKIT_LIB IOKit)
-    target_link_libraries(${ENGINE_NAME}
-            ${COCOA_LIB}
-            ${IOKIT_LIB})
-endif()
-find_library(OPENGL_LIB OpenGL)
+find_package(OpenGL REQUIRED)
 target_link_libraries(${ENGINE_NAME}
         glfw
-        ${OPENGL_LIB})
+        ${OPENGL_LIBRARIES})
 
 ## Link SandboxApp with HazelPVR
 target_link_libraries(SandboxApp

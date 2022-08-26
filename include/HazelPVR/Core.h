@@ -14,7 +14,6 @@
     #error "Unknown operating system!"
 #endif
 
-
 #ifdef HZPVR_ENABLE_ASSERTS
     #define HZPVR_ASSERT(x, ...) { if(!(x)) { HZPVR_ERROR("Assertion Failed: {0}", __VA_ARGS__); __debugbreak(); } }
     #define HZPVR_CORE_ASSERT(x, ...) { if(!(x)) { HZPVR_CORE_ERROR("Assertion Failed: {0}", __VA_ARGS__); __debugbreak(); } }
@@ -22,6 +21,5 @@
     #define HZPVR_ASSERT(x, ...)
     #define HZPVR_CORE_ASSERT(x, ...)
 #endif
-
 
 #define BIT(x) (1 << x)
