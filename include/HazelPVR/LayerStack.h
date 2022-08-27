@@ -5,8 +5,7 @@
 
 namespace HazelPVR {
 
-	class HAZELPVR_API LayerStack
-	{
+	class HAZELPVR_API LayerStack {
 	public:
 		LayerStack();
 		~LayerStack();

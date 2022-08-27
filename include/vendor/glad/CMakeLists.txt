@@ -1,0 +1,11 @@
+cmake_minimum_required(VERSION 3.4...3.20 FATAL_ERROR)
+project(GLAD LANGUAGES C)
+
+set(INCLUDE include)
+set(SOURCES src/glad.c)
+set(HEADERS
+        ${INCLUDE}/glad/glad.h
+        ${INCLUDE}/KHR/khrplatform.h)
+
+add_library(glad STATIC ${SOURCES} ${HEADERS})
+target_include_directories(glad PUBLIC ${INCLUDE})

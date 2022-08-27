@@ -5,7 +5,7 @@
 #include "Events/MouseEvent.h"
 #include "Events/KeyEvent.h"
 
-#include "Core.h"
+#include <glad/glad.h>
 
 namespace HazelPVR {
 
@@ -42,9 +42,10 @@ namespace HazelPVR {
             s_GLFWInitialized = true;
         }
 
-        m_Window = glfwCreateWindow((int) properties.Width, (int) properties.Height, m_Data.Title.c_str(), nullptr,
-                                    nullptr);
+        m_Window = glfwCreateWindow((int) properties.Width, (int) properties.Height, m_Data.Title.c_str(), nullptr, nullptr);
         glfwMakeContextCurrent(m_Window);
+        int status = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
+        HZPVR_CORE_ASSERT(status, "Failed to initialize Glad!");
         glfwSetWindowUserPointer(m_Window, &m_Data);
         SetVSync(true);
 
@@ -83,6 +84,10 @@ namespace HazelPVR {
                     data.EventCallback(event);
                     break;
                 }
+                default: {
+                    // default case: not implemented.
+                    break;
+                }
             }
         });
 
@@ -98,6 +103,10 @@ namespace HazelPVR {
                 case GLFW_RELEASE: {
                     MouseButtonReleasedEvent event(button);
                     data.EventCallback(event);
+                    break;
+                }
+                default: {
+                    // default case: not implemented.
                     break;
                 }
             }

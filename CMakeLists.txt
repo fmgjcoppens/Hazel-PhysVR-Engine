@@ -16,7 +16,8 @@ set(ENGINE_INCL_DIR ${INCL_DIR}/${ENGINE_NAME})
 ## User enabled definitions
 set(USER_DEFINITIONS
         ${USER_DEFINITIONS}
-#        HZPVR_ENABLE_ASSERTS
+        HZPVR_ENABLE_ASSERTS
+        GLFW_INCLUDE_NONE
         )
 
 ## Vendor specific (external dependencies)
@@ -90,9 +91,13 @@ target_include_directories(
 #==================== LINKING ====================
 ## Link HazelPVR with dependencies
 find_package(OpenGL REQUIRED)
+
 target_link_libraries(${ENGINE_NAME}
+        ${OPENGL_LIBRARIES}
         glfw
-        ${OPENGL_LIBRARIES})
+        glad
+        )
+
 if(OS_NAME STREQUAL "macOS") # Cannot go to Platform.cmake because target has to exist
     target_link_libraries(${ENGINE_NAME}
         ${COCOA_LIB}
