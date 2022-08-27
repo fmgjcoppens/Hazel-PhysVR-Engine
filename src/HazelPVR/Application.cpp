@@ -17,10 +17,25 @@ namespace HazelPVR {
         HZPVR_INFO("Destroying instance of Application");
     }
 
+    void Application::PushLayer(Layer* layer) {
+        m_LayerStack.PushLayer(layer);
+    }
+
+    void Application::PushOverLay(Layer* layer) {
+        m_LayerStack.PushOverlay(layer);
+    }
+
     void Application::onEvent(Event& event) {
         EventDispatcher dispatcher(event);
         dispatcher.Dispatch<WindowCloseEvent>(BIND_EVENT_FN(onWindowClose));
+
         HZPVR_CORE_TRACE("{0}", event);
+
+        for (auto it = m_LayerStack.end(); it != m_LayerStack.begin(); ) {
+            (*--it)->OnEvent(event);
+            if (event.Handled) break;
+        }
+
     }
 
     void Application::Run() {
@@ -29,6 +44,9 @@ namespace HazelPVR {
 //            glClearColor(0.0, 0.180392, 0.388235, 1); // Cool Black blue
             glClearColor(0.298039, 0.317647, 0.427451, 1); // Independence blue
             glClear(GL_COLOR_BUFFER_BIT);
+
+            for (Layer* layer : m_LayerStack) layer->OnUpdate();
+
             m_Window->OnUpdate();
         }
     }

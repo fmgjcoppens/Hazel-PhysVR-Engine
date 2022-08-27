@@ -1,4 +1,5 @@
 // HazelPVR precompiled header file
+#pragma once
 
 #include <iostream>
 #include <memory>
@@ -12,7 +13,7 @@
 #include <unordered_map>
 #include <unordered_set>
 
-#include "Log.h"
+#include "HazelPVR/Log.h"
 
 #ifdef HZPVR_PLATFORM_WINDOWS
 #include <Windows.h>

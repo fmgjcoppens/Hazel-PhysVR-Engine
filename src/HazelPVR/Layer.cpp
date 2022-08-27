@@ -7,6 +7,7 @@ namespace HazelPVR {
 	}
 
 	Layer::~Layer()	{
+        HZPVR_INFO("Destroying instance of Layer");
 	}
 
 }
