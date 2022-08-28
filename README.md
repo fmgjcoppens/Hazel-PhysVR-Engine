@@ -1,2 +1,2 @@
-# Hazel-PhysVR-Engine
-Physics VR game engine based on https://github.com/TheCherno/Hazel
+# HazelPVR
+The Hazel Physics VR engine, based on, but not forked from, the Hazel engine: https://github.com/TheCherno/Hazel

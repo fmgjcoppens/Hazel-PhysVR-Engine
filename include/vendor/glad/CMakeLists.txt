@@ -8,4 +8,5 @@ set(HEADERS
         ${INCLUDE}/KHR/khrplatform.h)
 
 add_library(glad STATIC ${SOURCES} ${HEADERS})
-target_include_directories(glad PUBLIC ${INCLUDE})
+target_include_directories(glad PUBLIC ${INCLUDE})  # Use PUBLIC scope here, otherwise glad headers will
+                                                    # not be available/found for other CLion/CMake projects.

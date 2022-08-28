@@ -1,11 +1,11 @@
 #==================== PROJECT SETUP ====================
 ## General project settings
 cmake_minimum_required(VERSION 3.16)
-project(HazelPhysicsVREngine LANGUAGES CXX)
+project(HazelPVR LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 17)
 
 ## Toplevel name and project dirs
-set(ENGINE_NAME     HazelPVR)   # Name used in all folder paths and targets
+set(ENGINE_NAME     HazelPVR)   # Name used in all folder paths and targets (same as proj name)
 set(SRC_DIR         src)        # Source implementation files
 set(INCL_DIR        include)    # Source definition files
 
@@ -96,6 +96,7 @@ target_link_libraries(${ENGINE_NAME}
         ${OPENGL_LIBRARIES}
         glfw
         glad
+        imgui
         )
 
 if(OS_NAME STREQUAL "macOS") # Cannot go to Platform.cmake because target has to exist
