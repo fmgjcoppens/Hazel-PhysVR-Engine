@@ -42,6 +42,11 @@ namespace HazelPVR {
             s_GLFWInitialized = true;
         }
 
+        glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+        glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 2);
+//        glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);  // 3.2+ only
+//        glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);            // Required on Mac
+
         m_Window = glfwCreateWindow((int) properties.Width, (int) properties.Height, m_Data.Title.c_str(), nullptr, nullptr);
         glfwMakeContextCurrent(m_Window);
         int status = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);

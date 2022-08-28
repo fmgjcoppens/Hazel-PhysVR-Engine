@@ -20,6 +20,7 @@ public:
     Sandbox() {
         HZPVR_INFO("Creating new instance of Sandbox");
         PushLayer(new ExampleLayer());
+        PushOverlay(new HazelPVR::ImGuiLayer());
     }
 
     ~Sandbox() override {

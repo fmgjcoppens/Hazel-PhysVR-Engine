@@ -17,8 +17,7 @@ set(ENGINE_INCL_DIR ${INCL_DIR}/${ENGINE_NAME})
 set(USER_DEFINITIONS
         ${USER_DEFINITIONS}
         HZPVR_ENABLE_ASSERTS
-        GLFW_INCLUDE_NONE
-        )
+        GLFW_INCLUDE_NONE)
 
 ## Vendor specific (external dependencies)
 include(Vendor.cmake)
@@ -32,14 +31,18 @@ set(PCH ${INCL_DIR}/hzpvrpch.h)
 
 # HazelPVR sources and headers
 file(GLOB ENGINE_SRCS
-        ${ENGINE_SRC_DIR}/*.cpp)
+        ${ENGINE_SRC_DIR}/*.cpp
+        ${ENGINE_SRC_DIR}/ImGui/*.cpp)
+
 file(GLOB ENGINE_HEADERS
         ${ENGINE_INCL_DIR}/*.h
-        ${ENGINE_INCL_DIR}/Events/*.h)
+        ${ENGINE_INCL_DIR}/Events/*.h
+        ${ENGINE_INCL_DIR}/ImGui/*.h)
 
 ## Sandbox Application sources and headers
 set(SANDBOX_SRCS
         ${SRC_DIR}/SandboxApp.cpp)
+
 set(SANDBOX_HEADERS
         ${INCL_DIR}/HazelPVR.h)
 
@@ -50,43 +53,40 @@ add_library(
         ${ENGINE_SRCS}
         ${ENGINE_HEADERS}
         ${PLATFORM_SRCS}
-        ${PLATFORM_HEADERS}
-)
+        ${PLATFORM_HEADERS})
 
 target_include_directories(
         ${ENGINE_NAME} PRIVATE
         ${INCL_DIR}
         ${ENGINE_INCL_DIR}
         ${LOGGER_INCL_DIR}
-        ${PLATFORM_INCL_DIR}
-)
+        ${PLATFORM_INCL_DIR})
+
 target_precompile_headers(
         ${ENGINE_NAME} PRIVATE
-        ${PCH}
-)
+        ${PCH})
+
 target_compile_definitions(
         ${ENGINE_NAME} PRIVATE
-        ${USER_DEFINITIONS}
-)
+        ${USER_DEFINITIONS})
+
 if(OS_NAME STREQUAL "macOS") # Cannot go to Platform.cmake because target has to exist
     target_compile_definitions(
             ${ENGINE_NAME} PRIVATE
-            GL_SILENCE_DEPRECATION
-    )
+            GL_SILENCE_DEPRECATION)
 endif()
 
 ## The SandboxApp build target
 add_executable(
         SandboxApp
         ${SANDBOX_SRCS}
-        ${SANDBOX_HEADERS}
-)
+        ${SANDBOX_HEADERS})
+
 target_include_directories(
         SandboxApp PRIVATE
         ${INCL_DIR}
         ${ENGINE_INCL_DIR}
-        ${LOGGER_INCL_DIR}
-)
+        ${LOGGER_INCL_DIR})
 
 #==================== LINKING ====================
 ## Link HazelPVR with dependencies
@@ -96,8 +96,7 @@ target_link_libraries(${ENGINE_NAME}
         ${OPENGL_LIBRARIES}
         glfw
         glad
-        imgui
-        )
+        imgui)
 
 if(OS_NAME STREQUAL "macOS") # Cannot go to Platform.cmake because target has to exist
     target_link_libraries(${ENGINE_NAME}
@@ -106,5 +105,4 @@ if(OS_NAME STREQUAL "macOS") # Cannot go to Platform.cmake because target has to
 endif()
 
 ## Link SandboxApp with HazelPVR
-target_link_libraries(SandboxApp
-        ${ENGINE_NAME})
+target_link_libraries(SandboxApp ${ENGINE_NAME})

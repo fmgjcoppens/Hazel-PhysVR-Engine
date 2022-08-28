@@ -23,9 +23,15 @@ set(PLATFORM_SRC_DIR ${SRC_DIR}/${PLATFORM_DIR})
 set(PLATFORM_INCL_DIR ${INCL_DIR}/${PLATFORM_DIR})
 
 file(GLOB PLATFORM_SRCS
-        ${PLATFORM_SRC_DIR}/${OS_NAME}/${OS_NAME}*.cpp)
+        ${PLATFORM_SRC_DIR}/${OS_NAME}/${OS_NAME}*.cpp
+        ${PLATFORM_SRC_DIR}/OpenGL/*.cpp)
+
 file(GLOB PLATFORM_HEADERS
-        ${PLATFORM_INCL_DIR}/${OS_NAME}/${OS_NAME}*.h)
+        ${PLATFORM_INCL_DIR}/${OS_NAME}/${OS_NAME}*.h
+        ${PLATFORM_INCL_DIR}/OpenGL/*.h)
+
+
+
 
 
 # Some debug messages
