@@ -20,6 +20,8 @@
     #elif defined(HZPVR_PLATFORM_LINUX)
         #include <signal.h>
         #define HZPVR_DEBUGBREAK() raise(SIGTRAP)
+    #elif defined(HZPVR_PLATFORM_MACOS)
+        #define HZPVR_DEBUGBREAK() __builtin_trap();
     #else
         #error "Platform doesn't support debugbreak yet!"
     #endif

@@ -5,8 +5,6 @@
 #include "Events/MouseEvent.h"
 #include "Events/KeyEvent.h"
 
-#include <glad/glad.h>
-
 namespace HazelPVR {
 
     static bool s_GLFWInitialized = false;
