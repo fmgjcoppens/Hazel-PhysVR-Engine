@@ -14,9 +14,24 @@
     #error "Unknown operating system!"
 #endif
 
+#ifdef HZPVR_DEBUG
+    #if defined(HZPVR_PLATFORM_WINDOWS)
+        #define HZPVR_DEBUGBREAK() __debugbreak()
+    #elif defined(HZPVR_PLATFORM_LINUX)
+        #include <signal.h>
+        #define HZPVR_DEBUGBREAK() raise(SIGTRAP)
+    #else
+        #error "Platform doesn't support debugbreak yet!"
+    #endif
+    #define HZPVR_ENABLE_ASSERTS
+#else
+    #define HZPVR_DEBUGBREAK()
+#endif
+
+
 #ifdef HZPVR_ENABLE_ASSERTS
-    #define HZPVR_ASSERT(x, ...) { if(!(x)) { HZPVR_ERROR("Assertion Failed: {0}", __VA_ARGS__); __builtin_debugtrap(); } }
-    #define HZPVR_CORE_ASSERT(x, ...) { if(!(x)) { HZPVR_CORE_ERROR("Assertion Failed: {0}", __VA_ARGS__); __builtin_debugtrap(); } }
+    #define HZPVR_ASSERT(x, ...) { if(!(x)) { HZPVR_ERROR("Assertion Failed: {0}", __VA_ARGS__); HZPVR_DEBUGBREAK(); } }
+    #define HZPVR_CORE_ASSERT(x, ...) { if(!(x)) { HZPVR_CORE_ERROR("Assertion Failed: {0}", __VA_ARGS__); HZPVR_DEBUGBREAK(); } }
 #else
     #define HZPVR_ASSERT(x, ...)
     #define HZPVR_CORE_ASSERT(x, ...)
