@@ -9,9 +9,8 @@ elseif(CMAKE_SYSTEM_NAME STREQUAL "Darwin")
     find_library(IOKIT_LIB IOKit)
 elseif(CMAKE_SYSTEM_NAME STREQUAL "Windows")
     set(OS_NAME Windows)
-    add_compile_definitions(HZPVR_PLATFORM_WINDOWS)
-    set(USER_DEFINITIONS
-            ${USER_DEFINITIONS}
+    add_compile_definitions(
+            HZPVR_PLATFORM_WINDOWS
             HZPVR_BUILD_DLL)
 else()
     set(OS_NAME Unknown)
