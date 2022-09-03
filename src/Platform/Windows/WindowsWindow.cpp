@@ -40,9 +40,10 @@ namespace HazelPVR {
             s_GLFWInitialized = true;
         }
 
-        m_Window = glfwCreateWindow((int) properties.Width, (int) properties.Height, m_Data.Title.c_str(), nullptr, nullptr);
+        m_Window = glfwCreateWindow((int) properties.Width, (int) properties.Height, m_Data.Title.c_str(), nullptr,
+                                    nullptr);
         glfwMakeContextCurrent(m_Window);
-        int status = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
+        int status = gladLoadGLLoader((GLADloadproc) glfwGetProcAddress);
         HZPVR_CORE_ASSERT(status, "Failed to initialize Glad!");
         glfwSetWindowUserPointer(m_Window, &m_Data);
         SetVSync(true);
@@ -60,6 +61,13 @@ namespace HazelPVR {
         glfwSetWindowCloseCallback(m_Window, [](GLFWwindow *window) {
             WindowData &data = *(WindowData *) glfwGetWindowUserPointer(window);
             WindowCloseEvent event;
+            data.EventCallback(event);
+        });
+
+        glfwSetCharCallback(m_Window, [](GLFWwindow *window, unsigned int keycode) {
+            WindowData &data = *(WindowData *) glfwGetWindowUserPointer(window);
+
+            KeyTypedEvent event(keycode);
             data.EventCallback(event);
         });
 

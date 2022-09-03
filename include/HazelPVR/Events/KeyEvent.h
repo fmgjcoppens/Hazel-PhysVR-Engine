@@ -16,7 +16,7 @@ namespace HazelPVR {
 		int m_KeyCode;
 	};
 
-	class HAZELPVR_API KeyPressedEvent : public KeyEvent	{
+	class HAZELPVR_API KeyPressedEvent : public KeyEvent {
 	public:
 		KeyPressedEvent(int keycode, int repeatCount)
 			: KeyEvent(keycode), m_RepeatCount(repeatCount) {}
@@ -47,4 +47,19 @@ namespace HazelPVR {
 
 		EVENT_CLASS_TYPE(KeyReleased)
 	};
+
+    class HAZELPVR_API KeyTypedEvent : public KeyEvent {
+    public:
+        KeyTypedEvent(int keycode)
+                : KeyEvent(keycode) {}
+
+        std::string ToString() const override {
+            std::stringstream ss;
+            ss << "KeyTypedEvent: " << m_KeyCode;
+            return ss.str();
+        }
+
+        EVENT_CLASS_TYPE(KeyTyped)
+    };
+
 }
