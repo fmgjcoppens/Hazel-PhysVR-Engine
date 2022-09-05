@@ -1,0 +1,15 @@
+#pragma once
+
+// From glfw3.h
+#define HZPVR_MOUSE_BUTTON_1         0
+#define HZPVR_MOUSE_BUTTON_2         1
+#define HZPVR_MOUSE_BUTTON_3         2
+#define HZPVR_MOUSE_BUTTON_4         3
+#define HZPVR_MOUSE_BUTTON_5         4
+#define HZPVR_MOUSE_BUTTON_6         5
+#define HZPVR_MOUSE_BUTTON_7         6
+#define HZPVR_MOUSE_BUTTON_8         7
+#define HZPVR_MOUSE_BUTTON_LAST      HZPVR_MOUSE_BUTTON_8
+#define HZPVR_MOUSE_BUTTON_LEFT      HZPVR_MOUSE_BUTTON_1
+#define HZPVR_MOUSE_BUTTON_RIGHT     HZPVR_MOUSE_BUTTON_2
+#define HZPVR_MOUSE_BUTTON_MIDDLE    HZPVR_MOUSE_BUTTON_3

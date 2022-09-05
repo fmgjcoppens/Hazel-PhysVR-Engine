@@ -16,6 +16,7 @@ endif()
 
 # Platform dir, sources and headers
 set(PLATFORM_DIR Platform)   # Name of the folder for platform dependent source files
+
 set(PLATFORM_SRC_DIR ${SRC_DIR}/${PLATFORM_DIR})
 set(PLATFORM_INCL_DIR ${INCL_DIR}/${PLATFORM_DIR})
 
@@ -29,8 +30,8 @@ file(GLOB PLATFORM_HEADERS
         ${PLATFORM_INCL_DIR}/OpenGL/*.h
 )
 
-
-
+message(STATUS "Value of PLATFORM_SRCS = ${PLATFORM_SRCS}")
+message(STATUS "Value of PLATFORM_HEADERS = ${PLATFORM_HEADERS}")
 
 
 ## Some debug messages

@@ -2,7 +2,10 @@
 #include "Application.h"
 
 #include "Events/ApplicationEvent.h"
+
 #include <glad/glad.h>
+
+#include "Input.h"
 
 namespace HazelPVR {
 

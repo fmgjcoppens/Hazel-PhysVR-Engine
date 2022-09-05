@@ -7,12 +7,21 @@ public:
     }
 
     void OnUpdate() override {
-        HZPVR_INFO("ExampleLayer::Update");
+
+        if (HazelPVR::Input::IsKeyPressed(HZPVR_KEY_TAB))
+            HZPVR_TRACE("Tab key is pressed (poll)!");
     }
 
     void OnEvent(HazelPVR::Event& event) override {
-        HZPVR_TRACE("{0}", event);
+
+        if (event.GetEventType() == HazelPVR::EventType::KeyPressed) {
+            auto& e = (HazelPVR::KeyPressedEvent&)event;
+            if (e.GetKeyCode() == HZPVR_KEY_TAB)
+                HZPVR_TRACE("Tab key is pressed (event)!");
+            HZPVR_TRACE("{0}", (char)e.GetKeyCode());
+        }
     }
+
 };
 
 class Sandbox : public HazelPVR::Application {

@@ -1,5 +1,5 @@
 #include "hzpvrpch.h"
-#include "macOSInput.h"
+#include "macOS/macOSInput.h"
 
 #include "Application.h"
 #include <GLFW/glfw3.h>

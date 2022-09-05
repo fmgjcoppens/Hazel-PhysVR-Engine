@@ -19,7 +19,7 @@ namespace HazelPVR {
 		// Window attributes
 		inline void SetEventCallback(const EventCallbackFn& callback) override { m_Data.EventCallback = callback; }
 		void SetVSync(bool enabled) override;
-		[[nodiscard]] bool IsVSync() const override;
+		bool IsVSync() const override;
 
         [[nodiscard]] inline void* GetNativeWindow() const override { return m_Window; }
     private:
