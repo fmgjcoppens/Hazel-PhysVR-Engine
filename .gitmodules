@@ -10,3 +10,6 @@
 [submodule "include/vendor/imgui"]
 	path = include/vendor/imgui
 	url = https://github.com/fmgjcoppens/imgui.git
+[submodule "include/vendor/glm"]
+	path = include/vendor/glm
+	url = https://github.com/g-truc/glm.git

@@ -13,18 +13,16 @@
 namespace HazelPVR {
 
 	ImGuiLayer::ImGuiLayer()
-		: Layer("ImGuiLayer")
-	{
+		: Layer("ImGuiLayer") {
 	}
 
-	ImGuiLayer::~ImGuiLayer()
-	{
-	}
+	ImGuiLayer::~ImGuiLayer() = default;
 
 	void ImGuiLayer::OnAttach()
 	{
 		ImGui::CreateContext();
 		ImGui::StyleColorsDark();
+//        ImGui::StyleColorsLight();
 
 		ImGuiIO& io = ImGui::GetIO();
 		io.BackendFlags |= ImGuiBackendFlags_HasMouseCursors;
@@ -56,14 +54,12 @@ namespace HazelPVR {
 		ImGui_ImplOpenGL3_Init("#version 410");
 	}
 
-	void ImGuiLayer::OnDetach()
-	{
+	void ImGuiLayer::OnDetach() {
 
 	}
 
-	void ImGuiLayer::OnUpdate()
-	{
-		ImGuiIO& io = ImGui::GetIO();
+	void ImGuiLayer::OnUpdate() {
+        ImGuiIO& io = ImGui::GetIO();
 		Application& app = Application::Get();
 		io.DisplaySize = ImVec2(app.GetWindow().GetWidth(), app.GetWindow().GetHeight());
 
@@ -79,10 +75,12 @@ namespace HazelPVR {
 
 		ImGui::Render();
 		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
-	}
+        ImGuiStyle style = ImGui::GetStyle();
+        style.ScaleAllSizes(2);
 
-	void ImGuiLayer::OnEvent(Event& event)
-	{
+    }
+
+	void ImGuiLayer::OnEvent(Event& event) {
         EventDispatcher dispatcher(event);
         dispatcher.Dispatch<MouseButtonPressedEvent>(HZPVR_BIND_EVENT_FN(ImGuiLayer::OnMouseButtonPressedEvent));
         dispatcher.Dispatch<MouseButtonReleasedEvent>(HZPVR_BIND_EVENT_FN(ImGuiLayer::OnMouseButtonReleasedEvent));
@@ -146,9 +144,9 @@ namespace HazelPVR {
         ImGuiIO& io = ImGui::GetIO();
         io.DisplaySize = ImVec2(event.GetWidth(), event.GetHeight());
         io.DisplayFramebufferScale = ImVec2(1.0f, 1.0f);
+
         glViewport(0, 0, event.GetWidth(), event.GetHeight());
         return false;
     }
-
 
 }

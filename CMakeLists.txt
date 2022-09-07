@@ -62,6 +62,7 @@ target_include_directories(${ENGINE_NAME} PRIVATE
         ${INCL_DIR}
         ${ENGINE_INCL_DIR}
         ${LOGGER_INCL_DIR}
+        ${GLM_INCL_DIR}
         ${PLATFORM_INCL_DIR}
 )
 
@@ -90,6 +91,7 @@ target_include_directories(SandboxApp PRIVATE
         ${INCL_DIR}
         ${ENGINE_INCL_DIR}
         ${LOGGER_INCL_DIR}
+        ${GLM_INCL_DIR}
 )
 
 #==================== LINKING ====================

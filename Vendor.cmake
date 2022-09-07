@@ -15,3 +15,6 @@ add_subdirectory(${VENDOR_INCL_DIR}/glad)
 
 # Imgui static lib build target
 add_subdirectory(${VENDOR_INCL_DIR}/imgui)
+
+# OpenGL Math (glm) header library include dir
+set(GLM_INCL_DIR ${VENDOR_INCL_DIR}/glm)
