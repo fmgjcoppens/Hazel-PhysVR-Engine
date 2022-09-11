@@ -5,7 +5,7 @@
 
 namespace HazelPVR {
 
-	class macOSInput : public Input {
+	class WindowsInput : public Input {
     protected:
         bool IsKeyPressedImpl(int keycode) override;
 

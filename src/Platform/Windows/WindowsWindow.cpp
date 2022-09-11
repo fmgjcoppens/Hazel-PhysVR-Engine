@@ -40,8 +40,7 @@ namespace HazelPVR {
             s_GLFWInitialized = true;
         }
 
-        m_Window = glfwCreateWindow((int) properties.Width, (int) properties.Height, m_Data.Title.c_str(), nullptr,
-                                    nullptr);
+        m_Window = glfwCreateWindow((int) properties.Width, (int) properties.Height, m_Data.Title.c_str(), nullptr,nullptr);
         glfwMakeContextCurrent(m_Window);
         int status = gladLoadGLLoader((GLADloadproc) glfwGetProcAddress);
         HZPVR_CORE_ASSERT(status, "Failed to initialize Glad!");

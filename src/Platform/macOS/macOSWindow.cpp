@@ -147,8 +147,10 @@ namespace HazelPVR {
     }
 
     void macOSWindow::SetVSync(bool enabled) {
-        if (enabled) glfwSwapInterval(1);
-        else glfwSwapInterval(0);
+        if (enabled)
+            glfwSwapInterval(1);
+        else
+            glfwSwapInterval(0);
 
         m_Data.VSync = enabled;
     }

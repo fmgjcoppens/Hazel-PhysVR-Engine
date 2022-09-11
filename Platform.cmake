@@ -35,7 +35,7 @@ message(STATUS "Value of PLATFORM_HEADERS = ${PLATFORM_HEADERS}")
 
 
 ## Some debug messages
-#message(STATUS "Value of OS_NAME: ${OS_NAME}")
-#message(STATUS "Value of PLATFORM_SRCS: ${PLATFORM_SRCS}")
-#message(STATUS "Value of PLATFORM_HEADERS: ${PLATFORM_HEADERS}")
-#message(STATUS "Value of USER_DEFINITIONS: ${USER_DEFINITIONS}")
+message(STATUS "Value of OS_NAME: ${OS_NAME}")
+message(STATUS "Value of PLATFORM_SRCS: ${PLATFORM_SRCS}")
+message(STATUS "Value of PLATFORM_HEADERS: ${PLATFORM_HEADERS}")
+message(STATUS "Value of USER_DEFINITIONS: ${USER_DEFINITIONS}")
