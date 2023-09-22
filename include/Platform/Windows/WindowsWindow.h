@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Window.h"
+
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
@@ -22,6 +23,7 @@ namespace HazelPVR {
 		bool IsVSync() const override;
 
         [[nodiscard]] inline void* GetNativeWindow() const override { return m_Window; }
+
     private:
 		virtual void Init(const WindowProperties& properties);
 		virtual void Shutdown();

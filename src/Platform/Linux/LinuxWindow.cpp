@@ -7,6 +7,7 @@
 
 #include <glad/glad.h>
 
+
 namespace HazelPVR {
 
     static bool s_GLFWInitialized = false;
@@ -27,7 +28,8 @@ namespace HazelPVR {
         Shutdown();
     }
 
-    void LinuxWindow::Init(const WindowProperties &properties) {
+    void LinuxWindow::Init(const WindowProperties &properties)
+    {
         m_Data.Title = properties.Title;
         m_Data.Width = properties.Width;
         m_Data.Height = properties.Height;
@@ -41,6 +43,8 @@ namespace HazelPVR {
             glfwSetErrorCallback(GLFWErrorCallback);
             s_GLFWInitialized = true;
         }
+
+        glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE);
 
         m_Window = glfwCreateWindow((int) properties.Width, (int) properties.Height, m_Data.Title.c_str(), nullptr, nullptr);
         glfwMakeContextCurrent(m_Window);

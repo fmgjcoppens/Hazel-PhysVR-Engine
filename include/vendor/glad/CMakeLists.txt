@@ -1,5 +1,6 @@
 cmake_minimum_required(VERSION 3.4...3.20 FATAL_ERROR)
 project(GLAD LANGUAGES C)
+set(CMAKE_C_FLAGS "-fPIC")
 
 set(INCLUDE include)
 set(SOURCES src/glad.c)

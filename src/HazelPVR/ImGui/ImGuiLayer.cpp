@@ -10,36 +10,30 @@
 
 // TEMPORARY
 #include <GLFW/glfw3.h>
-#include <glad/glad.h>
+//#include <glad/glad.h>
 
 
 namespace HazelPVR {
 
-	ImGuiLayer::ImGuiLayer() : Layer("ImGuiLayer") {
-	}
+	ImGuiLayer::ImGuiLayer() : Layer("ImGuiLayer") { }
 
 	ImGuiLayer::~ImGuiLayer() = default;
 
-    void ImGuiLayer::OnAttach() {
-
+    void ImGuiLayer::OnAttach()
+    {
         // Setup Dear ImGui context
         IMGUI_CHECKVERSION();
         ImGui::CreateContext();
         ImGuiIO& io = ImGui::GetIO(); (void)io;
-        io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;       // Enable Keyboard Controls
-        //io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
-        io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;           // Enable Docking
-        io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;         // Enable Multi-Viewport / Platform Windows
-        //io.ConfigFlags |= ImGuiConfigFlags_ViewportsNoTaskBarIcons;
-        //io.ConfigFlags |= ImGuiConfigFlags_ViewportsNoMerge;
-
-        // Setup Dear ImGui style
-        ImGui::StyleColorsDark();
+        io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;     // Enable Keyboard Controls
+        io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
+        io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;         // Enable Docking
+        // io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;       // This does not behave properly in i3wm!
 
         // When viewports are enabled we tweak WindowRounding/WindowBg so platform windows can look identical to regular ones.
-        ImGuiStyle& style = ImGui::GetStyle();
         if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
         {
+            ImGuiStyle& style = ImGui::GetStyle();
             style.WindowRounding = 0.0f;
             style.Colors[ImGuiCol_WindowBg].w = 1.0f;
         }
@@ -51,9 +45,17 @@ namespace HazelPVR {
         const char* glsl_version = "#version 130";
         ImGui_ImplGlfw_InitForOpenGL(window, true);
         ImGui_ImplOpenGL3_Init(glsl_version);
+
+        // Setup Dear ImGui style
+        ImGui::StyleColorsDark();
+
+        // Load Fonts
+        ImFont* f_noto = io.Fonts->AddFontFromFileTTF("/usr/share/fonts/noto/NotoSans-Regular.ttf", 22.0f);
+        IM_ASSERT(f_noto != nullptr);
     }
 
-	void ImGuiLayer::OnDetach() {
+	void ImGuiLayer::OnDetach()
+    {
         ImGui_ImplOpenGL3_Shutdown();
         ImGui_ImplGlfw_Shutdown();
         ImGui::DestroyContext();
@@ -67,25 +69,25 @@ namespace HazelPVR {
 	}
 
     void ImGuiLayer::End() {
-        ImGuiIO& io = ImGui::GetIO();
-        Application& app = Application::Get();
-        io.DisplaySize = ImVec2(app.GetWindow().GetWidth(), app.GetWindow().GetHeight());
+        // ImGuiIO& io = ImGui::GetIO();
+        // Application& app = Application::Get();
+        // io.DisplaySize = ImVec2(app.GetWindow().GetWidth(), app.GetWindow().GetHeight());
 
         // Rendering
         ImGui::Render();
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
-        if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable) {
-            GLFWwindow* backup_current_context = glfwGetCurrentContext();
-            ImGui::UpdatePlatformWindows();
-            ImGui::RenderPlatformWindowsDefault();
-            glfwMakeContextCurrent(backup_current_context);
-        }
+        // if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable) {
+        //     GLFWwindow* backup_current_context = glfwGetCurrentContext();
+        //     ImGui::UpdatePlatformWindows();
+        //     ImGui::RenderPlatformWindowsDefault();
+        //     glfwMakeContextCurrent(backup_current_context);
+        // }
     }
 
     void ImGuiLayer::OnImGuiRender() {
-        static bool show = true;
-        ImGui::ShowDemoWindow(&show);
+        // static bool show = true;
+        // ImGui::ShowDemoWindow();
     }
 
 }

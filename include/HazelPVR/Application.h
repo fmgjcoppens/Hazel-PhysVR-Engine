@@ -9,25 +9,27 @@
 
 namespace HazelPVR {
 
-    class HAZELPVR_API Application {
-    public:
-        Application();
-        virtual ~Application();
-        void Run();
-        void onEvent(Event& event);
-        void PushLayer(Layer* layer);
-        void PushOverlay(Layer* layer);
-        inline Window& GetWindow() { return *m_Window; }
-        inline static Application& Get() { return *s_Instance; }
+    class HAZELPVR_API Application
+    {
+        public:
+            Application();
+            virtual ~Application();
+            void Run();
+            void onEvent(Event& event);
+            void PushLayer(Layer* layer);
+            void PushOverlay(Layer* layer);
+            inline Window& GetWindow() { return *m_Window; }
+            inline static Application& Get() { return *s_Instance; }
 
-    private:
-        bool onWindowClose(WindowCloseEvent& event);
+        private:
+            bool onWindowClose(WindowCloseEvent& event);
 
-        std::unique_ptr<Window> m_Window;
-        ImGuiLayer* m_ImGuiLayer;
-        bool m_Running = true;
-        LayerStack  m_LayerStack;
-        static Application* s_Instance;
+        private:
+            std::unique_ptr<Window> m_Window;
+            ImGuiLayer* m_ImGuiLayer;
+            bool m_Running = true;
+            LayerStack  m_LayerStack;
+            static Application* s_Instance;
     };
 
     // To be defined in the CLIENT

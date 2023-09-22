@@ -1,7 +1,9 @@
 #!/usr/bin/env bash
 
-rm -rfv _build/ bin/ &&  cmake -S . -B _build/ && (cd _build/ && make)
+# BUILD_DIR=_build_linux
 
-mkdir bin
-mv -v _build/SandboxApp bin/
+source vars.sh
 
+(cd ${BUILD_DIR} && make -j)
+
+[[ -f "${BUILD_DIR}/SandboxApp" ]] && ln -svf ${BUILD_DIR}/SandboxApp ${APP_NAME}

@@ -4,6 +4,8 @@ cmake_minimum_required(VERSION 3.16)
 project(HazelPVR LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 17)
 
+set(CMAKE_CXX_FLAGS "-g")
+
 ## Toplevel name and project dirs
 set(ENGINE_NAME     HazelPVR)   # Name used in all folder paths and targets (same as proj name)
 set(SRC_DIR         src)        # Source implementation files
