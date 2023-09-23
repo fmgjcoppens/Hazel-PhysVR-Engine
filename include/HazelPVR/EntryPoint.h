@@ -1,7 +1,5 @@
 #pragma once
 
-//extern HazelPVR::Application* HazelPVR::CreateApplication(); // REDUNDANT DECLARATION
-
 int main (int argc, char** argv)
 {
     HazelPVR::Log::Init();

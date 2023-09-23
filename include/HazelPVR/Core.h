@@ -1,11 +1,15 @@
 #pragma once
 
-#if defined HZPVR_PLATFORM_WINDOWS
+#ifdef HZPVR_PLATFORM_WINDOWS
+#if HZ_DYNAMIC_LINK
     #ifdef HZPVR_BUILD_DLL
         #define HAZELPVR_API __declspec(dllexport)
     #else
         #define HAZELPVR_API __declspec(dllimport)
     #endif
+#else
+    #define HAZELPVR_API
+#endif
 #elif defined HZPVR_PLATFORM_MACOS
     #define HAZELPVR_API
 #elif defined HZPVR_PLATFORM_LINUX

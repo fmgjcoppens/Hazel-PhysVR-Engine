@@ -2,9 +2,10 @@
 ## General project settings
 cmake_minimum_required(VERSION 3.16)
 project(HazelPVR LANGUAGES CXX)
-set(CMAKE_CXX_STANDARD 17)
 
-set(CMAKE_CXX_FLAGS "-g")
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS OFF)
 
 ## Toplevel name and project dirs
 set(ENGINE_NAME     HazelPVR)   # Name used in all folder paths and targets (same as proj name)
@@ -53,7 +54,8 @@ set(SANDBOX_HEADERS
 
 #==================== BUILD TARGETS ====================
 ## The HazelPVR build target
-add_library(${ENGINE_NAME} SHARED
+# add_library(${ENGINE_NAME} SHARED
+add_library(${ENGINE_NAME} STATIC
         ${ENGINE_SRCS}
         ${ENGINE_HEADERS}
         ${PLATFORM_SRCS}
