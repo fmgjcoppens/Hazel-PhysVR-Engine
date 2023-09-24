@@ -73,11 +73,12 @@ class ExampleLayer : public HazelPVR::Layer
                     ImGui::MenuItem("Padding", NULL, &opt_padding);
                     ImGui::EndMenu();
                 }
+                ImGui::EndMenuBar();
             }
-            ImGui::EndMenuBar();
 
             // A viewport window
             ImGui::Begin("Viewport");
+
             ImGui::End();
 
             ImGui::End();
@@ -85,10 +86,16 @@ class ExampleLayer : public HazelPVR::Layer
 
         void OnEvent(HazelPVR::Event& event) override
         {
-            if (event.GetEventType() == HazelPVR::EventType::KeyPressed) {
-                auto& e = (HazelPVR::KeyPressedEvent&)event;
-                if (e.GetKeyCode() == HZPVR_KEY_TAB)
-                    HZPVR_TRACE("Tab key is pressed (event)!");
+            if (event.GetEventType() == HazelPVR::EventType::KeyPressed)
+            {
+                auto& e = (HazelPVR::KeyPressedEvent&) event;
+
+                if (e.GetKeyCode() == HZPVR_KEY_ESCAPE)
+                {
+                    HazelPVR::Application& app = HazelPVR::Application::Get();
+                    app.Close();
+                }
+                
                 HZPVR_TRACE("{0}", (char)e.GetKeyCode());
             }
         }

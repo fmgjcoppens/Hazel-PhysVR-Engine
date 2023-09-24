@@ -14,13 +14,15 @@ namespace HazelPVR {
         public:
             Application();
             virtual ~Application();
+
+        public:
             void Run();
             void onEvent(Event& event);
             void PushLayer(Layer* layer);
             void PushOverlay(Layer* layer);
             inline Window& GetWindow() { return *m_Window; }
+            unsigned int GetVertexArray() { return m_VertexArray; }
             inline static Application& Get() { return *s_Instance; }
-
             void Close();
 
         private:
@@ -32,6 +34,8 @@ namespace HazelPVR {
             bool m_Running = true;
             LayerStack m_LayerStack;
             static Application* s_Instance;
+
+            unsigned int m_VertexArray, m_VertexBuffer, m_IndexBuffer;
     };
 
     // To be defined in the CLIENT
