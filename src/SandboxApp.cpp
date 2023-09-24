@@ -4,12 +4,16 @@
 class ExampleLayer : public HazelPVR::Layer
 {
     public:
-        ExampleLayer() : Layer("Example") {}
+        ExampleLayer() : Layer("Example") { HZPVR_INFO("Creating new ExampleLayer instance"); }
+
+        ~ExampleLayer() { HZPVR_INFO("Destroying ExampleLayer instance"); }
 
         void OnUpdate() override
         {
             if (HazelPVR::Input::IsKeyPressed(HZPVR_KEY_TAB))
+            {
                 HZPVR_TRACE("Tab key is pressed (poll)!");
+            }
         }
 
         void OnImGuiRender() override
@@ -54,22 +58,23 @@ class ExampleLayer : public HazelPVR::Layer
                 ImGui::DockSpace(dockspace_id, ImVec2(0.0f, 0.0f), dockspace_flags);
             }
 
+            HazelPVR::Application& app = HazelPVR::Application::Get();
             if (ImGui::BeginMenuBar())
             {
+                if (ImGui::BeginMenu("File"))
+                {
+                    if (ImGui::MenuItem("Exit HazelPVR", "CTRL+Q")) app.Close();
+                    ImGui::EndMenu();
+                }
+
                 if (ImGui::BeginMenu("Options"))
                 {
                     ImGui::MenuItem("Fullscreen", NULL, &opt_fullscreen);
                     ImGui::MenuItem("Padding", NULL, &opt_padding);
                     ImGui::EndMenu();
                 }
-                ImGui::EndMenuBar();
             }
-
-            // A small window just to quit the application
-            ImGui::Begin("Exit application");
-            HazelPVR::Application& app = HazelPVR::Application::Get();
-            if (ImGui::Button("Quit")) app.SetState(false);
-            ImGui::End();
+            ImGui::EndMenuBar();
 
             // A viewport window
             ImGui::Begin("Viewport");
@@ -80,7 +85,6 @@ class ExampleLayer : public HazelPVR::Layer
 
         void OnEvent(HazelPVR::Event& event) override
         {
-
             if (event.GetEventType() == HazelPVR::EventType::KeyPressed) {
                 auto& e = (HazelPVR::KeyPressedEvent&)event;
                 if (e.GetKeyCode() == HZPVR_KEY_TAB)
@@ -95,19 +99,15 @@ class Sandbox : public HazelPVR::Application
     public:
         Sandbox()
         {
-            HZPVR_INFO("Creating new instance of Sandbox");
-            // PushOverlay(new HazelPVR::ImGuiLayer());     // I chose to do this in the constructor of HazelPVR::Application because without this overlay we can't really do anything. So since it always needs to be created (not optional) we might as well do it in the contructor.
+            HZPVR_INFO("Creating new Sandbox instance");
             PushLayer(new ExampleLayer());
         }
 
-        ~Sandbox() override
-        {
-            HZPVR_INFO("Destroying instance of Sandbox");
-        }
+        ~Sandbox() override { HZPVR_INFO("Destroying Sandbox instance"); }
 };
 
 HazelPVR::Application* HazelPVR::CreateApplication()
 {
-    HZPVR_INFO("Creating HazelPVR application");
+    HZPVR_INFO("Creating application");
     return new Sandbox();
 }

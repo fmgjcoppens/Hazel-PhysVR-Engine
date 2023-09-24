@@ -7,26 +7,32 @@
 
 #include "Input.h"
 
-namespace HazelPVR {
+namespace HazelPVR
+{
 
 #define BIND_EVENT_FN(x) std::bind(&Application::x, this, std::placeholders::_1)
 
     Application* Application::s_Instance = nullptr;
 
-    Application::Application() {
+    Application::Application()
+    {
         HZPVR_CORE_ASSERT(!s_Instance, "Application already exists!");
+        HZPVR_CORE_INFO("Creating new Application instance");
         s_Instance = this;
         m_Window = std::unique_ptr<Window>(Window::Create());
         m_Window->SetEventCallback(BIND_EVENT_FN(onEvent));
 
         // This can also be done in the Sandbox class (SandBoxApp.cpp) on the application side, but I chose to do it here because its creation is not optional; if it's not created GLFW/ImGui will not initialize correctly!
         m_ImGuiLayer = new ImGuiLayer();
+
         PushOverlay(m_ImGuiLayer);
+
+        // Vertex array
+        // Vertex buffer
+        // Index buffer
     }
 
-    Application::~Application() {
-        HZPVR_INFO("Destroying instance of Application");
-    }
+    Application::~Application() { HZPVR_INFO("Destroying Application instance"); }
 
     void Application::PushLayer(Layer* layer) {
         m_LayerStack.PushLayer(layer);
@@ -54,8 +60,7 @@ namespace HazelPVR {
     void Application::Run() {
         while (m_Running)
         {
-//            glClearColor(0.0, 0.180392, 0.388235, 1); // Cool Black blue
-            glClearColor(0.298039, 0.317647, 0.427451, 1); // Independence blue
+            glClearColor(0.1f, 0.1f, 0.1f, 1); // Independence blue
             glClear(GL_COLOR_BUFFER_BIT);
 
             for (Layer* layer : m_LayerStack) layer->OnUpdate();
@@ -68,10 +73,7 @@ namespace HazelPVR {
         }
     }
 
-    void Application::SetState(bool state)
-    {
-        m_Running = state;
-    }
+    void Application::Close() { m_Running = false; }
 
     bool Application::onWindowClose(WindowCloseEvent& event) {
         m_Running = false;

@@ -33,7 +33,8 @@ namespace HazelPVR {
 
 #define EVENT_CLASS_CATEGORY(category) virtual int GetCategoryFlags() const override { return category; }
 
-	class HAZELPVR_API Event {
+	class HAZELPVR_API Event
+	{
 	public:
         bool Handled = false;
 
@@ -66,7 +67,8 @@ namespace HazelPVR {
 		Event& m_Event;
 	};
 
-	inline std::ostream& operator<<(std::ostream& os, const Event& event) {
+	inline std::ostream& operator<<(std::ostream& os, const Event& event)
+	{
 		return os << event.ToString();
 	}
 }

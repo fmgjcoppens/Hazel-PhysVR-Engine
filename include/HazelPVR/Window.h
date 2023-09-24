@@ -13,7 +13,7 @@ namespace HazelPVR
 		unsigned int Width;
 		unsigned int Height;
 
-		explicit WindowProperties(std::string title = "HL Physics/VR Engine",
+		explicit WindowProperties(std::string title = "Hazel-like Physics/VR Engine",
                          unsigned int width = 1720,
                          unsigned int height = 720)
 			: Title(std::move(title)), Width(width), Height(height)

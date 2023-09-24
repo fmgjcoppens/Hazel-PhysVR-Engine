@@ -32,7 +32,7 @@ namespace HazelPVR {
         m_Data.Width = properties.Width;
         m_Data.Height = properties.Height;
 
-        HZPVR_CORE_INFO("Creating window '{0} ({1}, {2})'", properties.Title, properties.Width, properties.Height);
+        HZPVR_CORE_INFO("Creating Linux window '{0} ({1}, {2})'", properties.Title, properties.Width, properties.Height);
 
         if (!s_GLFWInitialized) {
             // TODO: glfwTerminate on system shutdown
@@ -74,9 +74,8 @@ namespace HazelPVR {
             data.EventCallback(event);
         });
 
-        glfwSetKeyCallback(m_Window, [](GLFWwindow *window, int key, int scancode, int action, int mods) {
+        glfwSetKeyCallback(m_Window,[](GLFWwindow *window, int key, int scancode, int action, int mods) {
             WindowData &data = *(WindowData *) glfwGetWindowUserPointer(window);
-
             switch (action) {
                 case GLFW_PRESS: {
                     KeyPressedEvent event(key, 0);

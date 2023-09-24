@@ -13,11 +13,11 @@
 //#include <glad/glad.h>
 
 
-namespace HazelPVR {
+namespace HazelPVR
+{
+	ImGuiLayer::ImGuiLayer() : Layer("ImGuiLayer") { HZPVR_CORE_INFO("Creating new ImGuiLayer instance"); }
 
-	ImGuiLayer::ImGuiLayer() : Layer("ImGuiLayer") { }
-
-	ImGuiLayer::~ImGuiLayer() = default;
+	ImGuiLayer::~ImGuiLayer() { HZPVR_CORE_INFO("Destroying ImGuiLayer instance"); }
 
     void ImGuiLayer::OnAttach()
     {
@@ -86,9 +86,5 @@ namespace HazelPVR {
         }
     }
 
-    void ImGuiLayer::OnImGuiRender() {
-        // static bool show = true;
-        // ImGui::ShowDemoWindow();
-    }
-
+    void ImGuiLayer::OnImGuiRender() {}
 }
