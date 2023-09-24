@@ -41,6 +41,7 @@ file(GLOB ENGINE_HEADERS
         ${ENGINE_INCL_DIR}/*.h
         ${ENGINE_INCL_DIR}/Events/*.h
         ${ENGINE_INCL_DIR}/ImGui/*.h
+        ${ENGINE_INCL_DIR}/Renderer/*.h
 )
 
 ## Sandbox Application sources and headers

@@ -1,7 +1,9 @@
-#include "hzpvrpch.h" // Precompiled header. Include not necessary with CMake
+ #include "hzpvrpch.h" // Precompiled header. Include not necessary with CMake
+ 
+ #include <spdlog/sinks/stdout_color_sinks.h>
 
-namespace HazelPVR {
-
+namespace HazelPVR
+{
     std::shared_ptr<spdlog::logger> Log::s_CoreLogger;
     std::shared_ptr<spdlog::logger> Log::s_ClientLogger;
 
@@ -15,5 +17,4 @@ namespace HazelPVR {
         s_ClientLogger->set_level(spdlog::level::trace);
         HZPVR_INFO("Initialised Client Logger!");
     }
-
 } // HazelPVR

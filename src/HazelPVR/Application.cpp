@@ -68,6 +68,11 @@ namespace HazelPVR {
         }
     }
 
+    void Application::SetState(bool state)
+    {
+        m_Running = state;
+    }
+
     bool Application::onWindowClose(WindowCloseEvent& event) {
         m_Running = false;
         return true;

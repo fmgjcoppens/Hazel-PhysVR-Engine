@@ -1,45 +1,43 @@
 #pragma once
 
 #include "Window.h"
+#include "Renderer/GraphicsContext.h"
 
-#include <glad/glad.h>
-#include <GLFW/glfw3.h>
+namespace HazelPVR
+{
+	class LinuxWindow : public Window
+	{
+		public:
+			explicit LinuxWindow(const WindowProperties& properties);
+			~LinuxWindow() override;
 
-namespace HazelPVR {
+			void OnUpdate() override;
 
-	class LinuxWindow : public Window {
-	public:
-		explicit LinuxWindow(const WindowProperties& properties);
-		~LinuxWindow() override;
+			inline unsigned int GetWidth() const override { return m_Data.Width; }
+			inline unsigned int GetHeight() const override { return m_Data.Height; }
 
-		void OnUpdate() override;
+			// Window attributes
+			inline void SetEventCallback(const EventCallbackFn& callback) override { m_Data.EventCallback = callback; }
+			void SetVSync(bool enabled) override;
+			bool IsVSync() const override;
 
-		[[nodiscard]] inline unsigned int GetWidth() const override { return m_Data.Width; }
-		[[nodiscard]] inline unsigned int GetHeight() const override { return m_Data.Height; }
+			inline void* GetNativeWindow() const override { return m_Window; }
 
-		// Window attributes
-		inline void SetEventCallback(const EventCallbackFn& callback) override { m_Data.EventCallback = callback; }
-		void SetVSync(bool enabled) override;
-		bool IsVSync() const override;
+		private:
+			virtual void Init(const WindowProperties& properties);
+			virtual void Shutdown();
 
-        [[nodiscard]] inline void* GetNativeWindow() const override { return m_Window; }
+			GLFWwindow* m_Window;
+			GraphicsContext* m_Context;
 
-    private:
-		virtual void Init(const WindowProperties& properties);
-		virtual void Shutdown();
+			struct WindowData
+			{
+				std::string Title;
+				unsigned int Width, Height;
+				bool VSync;
+				EventCallbackFn EventCallback;
+			};
 
-		GLFWwindow* m_Window{};
-
-		struct WindowData
-		{
-			std::string Title;
-			unsigned int Width, Height;
-			bool VSync;
-
-			EventCallbackFn EventCallback;
-		};
-
-		WindowData m_Data;
+			WindowData m_Data;
 	};
-
 }

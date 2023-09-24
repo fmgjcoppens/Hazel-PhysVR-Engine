@@ -21,6 +21,8 @@ namespace HazelPVR {
             inline Window& GetWindow() { return *m_Window; }
             inline static Application& Get() { return *s_Instance; }
 
+            void SetState(bool state);
+
         private:
             bool onWindowClose(WindowCloseEvent& event);
 
@@ -34,5 +36,4 @@ namespace HazelPVR {
 
     // To be defined in the CLIENT
     Application* CreateApplication();
-
 }

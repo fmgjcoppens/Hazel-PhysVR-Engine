@@ -1,8 +1,5 @@
 #include <HazelPVR.h>
-
 #include <imgui.h>
-
-#include <GLFW/glfw3.h>
 
 class ExampleLayer : public HazelPVR::Layer
 {
@@ -17,10 +14,6 @@ class ExampleLayer : public HazelPVR::Layer
 
         void OnImGuiRender() override
         {
-            // ImGui::Begin("Test");
-            // ImGui::Text("Hello World");;
-            // ImGui::End();
-
             static bool opt_fullscreen = true;
             static bool opt_padding = false;
             static ImGuiDockNodeFlags dockspace_flags = ImGuiDockNodeFlags_None;
@@ -45,14 +38,13 @@ class ExampleLayer : public HazelPVR::Layer
             if (dockspace_flags & ImGuiDockNodeFlags_PassthruCentralNode)
                 window_flags |= ImGuiWindowFlags_NoBackground;
 
-            if (!opt_padding)
-                ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0.0f, 0.0f));
-            ImGui::Begin("DockSpace Demo", nullptr, window_flags);
-            if (!opt_padding)
-                ImGui::PopStyleVar();
+            if (!opt_padding) ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0.0f, 0.0f));
 
-            if (opt_fullscreen)
-                ImGui::PopStyleVar(2);
+            ImGui::Begin("DockSpace", nullptr, window_flags);
+
+            if (!opt_padding) ImGui::PopStyleVar();
+
+            if (opt_fullscreen) ImGui::PopStyleVar(2);
 
             // Submit the DockSpace
             ImGuiIO& io = ImGui::GetIO();
@@ -75,7 +67,8 @@ class ExampleLayer : public HazelPVR::Layer
 
             // A small window just to quit the application
             ImGui::Begin("Exit application");
-            // if (ImGui::Button("Quit")) CloseLoop();
+            HazelPVR::Application& app = HazelPVR::Application::Get();
+            if (ImGui::Button("Quit")) app.SetState(false);
             ImGui::End();
 
             // A viewport window
