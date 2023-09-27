@@ -7,6 +7,8 @@
 
 #include "ImGui/ImGuiLayer.h"
 
+#include "Renderer/Shader.h"
+
 namespace HazelPVR {
 
     class HAZELPVR_API Application
@@ -36,6 +38,7 @@ namespace HazelPVR {
             static Application* s_Instance;
 
             unsigned int m_VertexArray, m_VertexBuffer, m_IndexBuffer;
+            std::unique_ptr<Shader> m_Shader;
     };
 
     // To be defined in the CLIENT

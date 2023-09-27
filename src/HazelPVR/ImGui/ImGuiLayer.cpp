@@ -50,7 +50,7 @@ namespace HazelPVR
         ImGui::StyleColorsDark();
 
         // Load Fonts
-        ImFont* f_noto = io.Fonts->AddFontFromFileTTF("/usr/share/fonts/noto/NotoSans-Regular.ttf", 22.0f);
+        ImFont* f_noto = io.Fonts->AddFontFromFileTTF("/usr/share/fonts/noto/NotoSans-Regular.ttf", 36.0f);
         IM_ASSERT(f_noto != nullptr);
     }
 

@@ -35,6 +35,7 @@ set(PCH ${INCL_DIR}/hzpvrpch.h)
 file(GLOB ENGINE_SRCS
         ${ENGINE_SRC_DIR}/*.cpp
         ${ENGINE_SRC_DIR}/ImGui/*.cpp
+        ${ENGINE_SRC_DIR}/Renderer/*.cpp
 )
 
 file(GLOB ENGINE_HEADERS
