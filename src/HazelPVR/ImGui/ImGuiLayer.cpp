@@ -86,5 +86,8 @@ namespace HazelPVR
         }
     }
 
-    void ImGuiLayer::OnImGuiRender() {}
+    void ImGuiLayer::OnImGuiRender()
+    {
+        ImGui::ShowDemoWindow();
+    }
 }

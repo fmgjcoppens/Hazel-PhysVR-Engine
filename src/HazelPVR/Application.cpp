@@ -24,8 +24,7 @@ namespace HazelPVR
 
         // This can also be done in the Sandbox class (SandBoxApp.cpp) on the application side, but I chose to do it here because its creation is not optional; if it's not created GLFW/ImGui will not initialize correctly!
         m_ImGuiLayer = new ImGuiLayer();
-
-        PushOverlay(m_ImGuiLayer);
+		PushOverlay(m_ImGuiLayer);
 
         glGenVertexArrays(1, &m_VertexArray);
         glBindVertexArray(m_VertexArray);
