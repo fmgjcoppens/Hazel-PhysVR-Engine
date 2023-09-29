@@ -23,7 +23,7 @@ namespace HazelPVR
             case ShaderDataType::Mat3:   return 4 * 3 * 3;
             case ShaderDataType::Mat4:   return 4 * 4 * 4;
         }
-        
+
         HZPVR_CORE_ASSERT(false, "Unknown ShaderDataType!");
         return 0;
     }
@@ -36,9 +36,8 @@ namespace HazelPVR
         uint32_t Offset
 
         BufferElement(const std::string& name, ShaderDataType type)
-            : Name(name), Type(type), Size(0), Offset(0)
+            : Name(name), Type(type), Size(ShaderDataTypeSize(type)), Offset(0)
         {
-            
         }
     };
 
