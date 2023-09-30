@@ -3,7 +3,7 @@
 source build.vars
 ACTION=$1
 
-configure () {
+config () {
     cmake \
         -DCMAKE_CXX_COMPILER=${COMPILER} \
         -DCMAKE_CXX_FLAGS="${CXXFLAGS}" \
@@ -21,8 +21,8 @@ clean () {
 }
 
 case $ACTION in
-    configure)
-        configure
+    config)
+        config
         ;;
     build)
         build
