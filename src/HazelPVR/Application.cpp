@@ -1,12 +1,7 @@
 #include "hzpvrpch.h" // Precompiled header. Include not necessary with CMake
 #include "Application.h"
 
-#include "Events/ApplicationEvent.h"
-
-#include <glad/glad.h>
 #include "Renderer/Renderer.h"
-
-#include "Input.h"
 
 namespace HazelPVR
 {
