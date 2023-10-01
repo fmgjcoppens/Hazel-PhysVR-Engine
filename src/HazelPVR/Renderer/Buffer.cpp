@@ -11,8 +11,8 @@ namespace HazelPVR
     {
         switch (Renderer::GetAPI())
         {
-            case RendererAPI::None:     HZPVR_CORE_ASSERT(false, "RendererAPI::None is currently not supported!");
-            case RendererAPI::OpenGL:   return new OpenGLVertexBuffer(vertices, size);
+            case RendererAPI::API::None:     HZPVR_CORE_ASSERT(false, "RendererAPI::None is currently not supported!");
+            case RendererAPI::API::OpenGL:   return new OpenGLVertexBuffer(vertices, size);
         }
 
         HZPVR_CORE_ASSERT(false, "Unknown RendererAPI!");
@@ -23,8 +23,8 @@ namespace HazelPVR
     {
         switch (Renderer::GetAPI())
         {
-            case RendererAPI::None:     HZPVR_CORE_ASSERT(false, "RendererAPI::None is currently not supported!");
-            case RendererAPI::OpenGL:   return new OpenGLIndexBuffer(indices, size);
+            case RendererAPI::API::None:     HZPVR_CORE_ASSERT(false, "RendererAPI::None is currently not supported!");
+            case RendererAPI::API::OpenGL:   return new OpenGLIndexBuffer(indices, size);
         }
 
         HZPVR_CORE_ASSERT(false, "Unknown RendererAPI!");

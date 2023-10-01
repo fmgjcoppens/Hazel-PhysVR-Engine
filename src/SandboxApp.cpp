@@ -10,10 +10,6 @@ class ExampleLayer : public HazelPVR::Layer
 
         void OnUpdate() override
         {
-            if (HazelPVR::Input::IsKeyPressed(HZPVR_KEY_TAB))
-            {
-                HZPVR_TRACE("Tab key is pressed (poll)!");
-            }
         }
 
         void OnImGuiRender() override
@@ -90,7 +86,7 @@ class ExampleLayer : public HazelPVR::Layer
             {
                 auto& e = (HazelPVR::KeyPressedEvent&) event;
 
-                if (e.GetKeyCode() == HZPVR_KEY_ESCAPE)
+                if (e.GetKeyCode() == HZPVR_KEY_ESCAPE || e.GetKeyCode() == HZPVR_KEY_Q)
                 {
                     HazelPVR::Application& app = HazelPVR::Application::Get();
                     app.Close();
