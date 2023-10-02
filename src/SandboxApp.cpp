@@ -3,98 +3,163 @@
 
 class ExampleLayer : public HazelPVR::Layer
 {
-    public:
-        ExampleLayer() : Layer("Example") { HZPVR_INFO("Creating new ExampleLayer instance"); }
+public:
+    ExampleLayer() : Layer("Example")
+    {
+        HZPVR_INFO("Creating new ExampleLayer instance");
 
-        ~ExampleLayer() { HZPVR_INFO("Destroying ExampleLayer instance"); }
+        m_VertexArray.reset(HazelPVR::VertexArray::Create());
 
-        void OnUpdate() override
-        {
-        }
+        float vertices[3 * 7] = {
+            -0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 1.0f, 1.0f,
+             0.5f, -0.5f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f,
+             0.0f,  0.5f, 0.0f, 1.0f, 1.0f, 0.0f, 1.0f
+        };
 
-        void OnImGuiRender() override
-        {
-            // static bool opt_fullscreen = true;
-            // static bool opt_padding = false;
-            // static ImGuiDockNodeFlags dockspace_flags = ImGuiDockNodeFlags_None;
+        std::shared_ptr<HazelPVR::VertexBuffer> vertexBuffer;
+        vertexBuffer.reset(HazelPVR::VertexBuffer::Create(vertices, sizeof(vertices)));
+        HazelPVR::BufferLayout layout = {
+            { HazelPVR::ShaderDataType::Float3, "a_Position" },
+            { HazelPVR::ShaderDataType::Float4, "a_Color" }
+        };
+        vertexBuffer->SetLayout(layout);
+        m_VertexArray->AddVertexBuffer(vertexBuffer);
 
-            // ImGuiWindowFlags window_flags = ImGuiWindowFlags_MenuBar | ImGuiWindowFlags_NoDocking;
-            // if (opt_fullscreen)
-            // {
-            //     const ImGuiViewport* viewport = ImGui::GetMainViewport();
-            //     ImGui::SetNextWindowPos(viewport->WorkPos);
-            //     ImGui::SetNextWindowSize(viewport->WorkSize);
-            //     ImGui::SetNextWindowViewport(viewport->ID);
-            //     ImGui::PushStyleVar(ImGuiStyleVar_WindowRounding, 0.0f);
-            //     ImGui::PushStyleVar(ImGuiStyleVar_WindowBorderSize, 0.0f);
-            //     window_flags |= ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove;
-            //     window_flags |= ImGuiWindowFlags_NoBringToFrontOnFocus | ImGuiWindowFlags_NoNavFocus;
-            // }
-            // else
-            // {
-            //     dockspace_flags &= ~ImGuiDockNodeFlags_PassthruCentralNode;
-            // }
+        uint32_t indices[3] = {0, 1, 2};
+        std::shared_ptr<HazelPVR::IndexBuffer> indexBuffer;
+        indexBuffer.reset(HazelPVR::IndexBuffer::Create(indices, sizeof(indices) / sizeof(uint32_t)));
+        m_VertexArray->SetIndexBuffer(indexBuffer);
 
-            // if (dockspace_flags & ImGuiDockNodeFlags_PassthruCentralNode)
-            //     window_flags |= ImGuiWindowFlags_NoBackground;
+        m_SquareVA.reset(HazelPVR::VertexArray::Create());
 
-            // if (!opt_padding) ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0.0f, 0.0f));
+        float squareVertices[3 * 4] = {
+            -0.75f, -0.75f, 0.0f,
+             0.75f, -0.75f, 0.0f,
+             0.75f,  0.75f, 0.0f,
+            -0.75f,  0.75f, 0.0f
+        };
 
-            // ImGui::Begin("DockSpace", nullptr, window_flags);
+        std::shared_ptr<HazelPVR::VertexBuffer> squareVB;
+        squareVB.reset(HazelPVR::VertexBuffer::Create(squareVertices, sizeof(squareVertices)));
+        squareVB->SetLayout({
+            { HazelPVR::ShaderDataType::Float3, "a_Position" }
+        });
+        m_SquareVA->AddVertexBuffer(squareVB);
 
-            // if (!opt_padding) ImGui::PopStyleVar();
+        uint32_t squareIndices[6] = {0, 1, 2, 2, 3, 0};
+        std::shared_ptr<HazelPVR::IndexBuffer> squareIB;
+        squareIB.reset(HazelPVR::IndexBuffer::Create(squareIndices, sizeof(squareIndices) / sizeof(uint32_t)));
+        m_SquareVA->SetIndexBuffer(squareIB);
 
-            // if (opt_fullscreen) ImGui::PopStyleVar(2);
+        std::string vertexSrc = R"(
+            #version 330 core
 
-            // // Submit the DockSpace
-            // ImGuiIO& io = ImGui::GetIO();
-            // if (io.ConfigFlags & ImGuiConfigFlags_DockingEnable)
-            // {
-            //     ImGuiID dockspace_id = ImGui::GetID("MyDockSpace");
-            //     ImGui::DockSpace(dockspace_id, ImVec2(0.0f, 0.0f), dockspace_flags);
-            // }
+            layout(location = 0) in vec3 a_Position;
+            layout(location = 1) in vec4 a_Color;
 
-            // HazelPVR::Application& app = HazelPVR::Application::Get();
-            // if (ImGui::BeginMenuBar())
-            // {
-            //     if (ImGui::BeginMenu("File"))
-            //     {
-            //         if (ImGui::MenuItem("Exit HazelPVR", "CTRL+Q")) app.Close();
-            //         ImGui::EndMenu();
-            //     }
+            out vec3 v_Position;
+            out vec4 v_Color;
 
-            //     if (ImGui::BeginMenu("Options"))
-            //     {
-            //         ImGui::MenuItem("Fullscreen", NULL, &opt_fullscreen);
-            //         ImGui::MenuItem("Padding", NULL, &opt_padding);
-            //         ImGui::EndMenu();
-            //     }
-            //     ImGui::EndMenuBar();
-            // }
-
-            // // A viewport window
-            // ImGui::Begin("Viewport");
-
-            // ImGui::End();
-
-            // ImGui::End();
-        }
-
-        void OnEvent(HazelPVR::Event& event) override
-        {
-            if (event.GetEventType() == HazelPVR::EventType::KeyPressed)
+            void main()
             {
-                auto& e = (HazelPVR::KeyPressedEvent&) event;
-
-                if (e.GetKeyCode() == HZPVR_KEY_ESCAPE || e.GetKeyCode() == HZPVR_KEY_Q)
-                {
-                    HazelPVR::Application& app = HazelPVR::Application::Get();
-                    app.Close();
-                }
-                
-                HZPVR_TRACE("{0}", (char)e.GetKeyCode());
+                v_Position = a_Position + 0.0;
+                v_Color = a_Color;
+                gl_Position = vec4(a_Position - 0.0, 1.0);
             }
+        )";
+
+        std::string fragmentSrc = R"(
+            #version 330 core
+
+            layout(location = 0) out vec4 color;
+
+            in vec3 v_Position;
+            in vec4 v_Color;
+
+            void main()
+            {
+                color = vec4(v_Position * 0.5 + 0.5, 1.0);
+                color = v_Color;
+            }
+        )";
+
+        m_Shader.reset(new HazelPVR::Shader(vertexSrc, fragmentSrc));
+
+        std::string blueShaderVertexSrc = R"(
+            #version 330 core
+
+            layout(location = 0) in vec3 a_Position;
+
+            out vec3 v_Position;
+
+            void main()
+            {
+                v_Position = a_Position + 0.0;
+                gl_Position = vec4(a_Position - 0.0, 1.0);
+            }
+        )";
+
+        std::string blueShaderFragmentSrc = R"(
+            #version 330 core
+
+            layout(location = 0) out vec4 color;
+
+            in vec3 v_Position;
+
+            void main()
+            {
+                color = vec4(0.2f, 0.3f, 0.8f, 1.0);
+            }
+        )";
+
+        m_BlueShader.reset(new HazelPVR::Shader(blueShaderVertexSrc, blueShaderFragmentSrc));
+    }
+
+    ~ExampleLayer() { HZPVR_INFO("Destroying ExampleLayer instance"); }
+
+public:
+    void OnUpdate() override
+    {
+        HazelPVR::RenderCommand::SetClearColor({0.1f, 0.1f, 0.1f, 1});
+        HazelPVR::RenderCommand::Clear();
+
+        HazelPVR::Renderer::BeginScene();
+        {
+            m_BlueShader->Bind();  
+            HazelPVR::Renderer::Submit(m_SquareVA);
+            
+            m_Shader->Bind();
+            HazelPVR::Renderer::Submit(m_VertexArray);
         }
+        HazelPVR::Renderer::EndScene();
+    }
+
+    void OnImGuiRender() override
+    {
+    }
+
+    void OnEvent(HazelPVR::Event& event) override
+    {
+        if (event.GetEventType() == HazelPVR::EventType::KeyPressed)
+        {
+            auto& e = (HazelPVR::KeyPressedEvent&) event;
+
+            if (e.GetKeyCode() == HZPVR_KEY_ESCAPE || e.GetKeyCode() == HZPVR_KEY_Q)
+            {
+                HazelPVR::Application& app = HazelPVR::Application::Get();
+                app.Close();
+            }
+            
+            HZPVR_TRACE("{0}", (char)e.GetKeyCode());
+        }
+    }
+
+private:
+    std::shared_ptr<HazelPVR::Shader> m_Shader;
+    std::shared_ptr<HazelPVR::VertexArray> m_VertexArray;
+
+    std::shared_ptr<HazelPVR::Shader> m_BlueShader;
+    std::shared_ptr<HazelPVR::VertexArray> m_SquareVA;
 };
 
 class Sandbox : public HazelPVR::Application
@@ -106,7 +171,10 @@ class Sandbox : public HazelPVR::Application
             PushLayer(new ExampleLayer());
         }
 
-        ~Sandbox() override { HZPVR_INFO("Destroying Sandbox instance"); }
+        ~Sandbox()
+        {
+            HZPVR_INFO("Destroying Sandbox instance");
+        }
 };
 
 HazelPVR::Application* HazelPVR::CreateApplication()
