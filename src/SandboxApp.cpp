@@ -4,7 +4,8 @@
 class ExampleLayer : public HazelPVR::Layer
 {
 public:
-    ExampleLayer() : Layer("Example")
+    ExampleLayer()
+        : Layer("Example"), m_Camera(-1.0f, 1.0f, -1.0f, 1.0f)
     {
         HZPVR_INFO("Creating new ExampleLayer instance");
 
@@ -57,6 +58,8 @@ public:
             layout(location = 0) in vec3 a_Position;
             layout(location = 1) in vec4 a_Color;
 
+            uniform mat4 u_ViewProjection;
+
             out vec3 v_Position;
             out vec4 v_Color;
 
@@ -64,7 +67,7 @@ public:
             {
                 v_Position = a_Position + 0.0;
                 v_Color = a_Color;
-                gl_Position = vec4(a_Position - 0.0, 1.0);
+                gl_Position = u_ViewProjection * vec4(a_Position - 0.0, 1.0);
             }
         )";
 
@@ -90,12 +93,14 @@ public:
 
             layout(location = 0) in vec3 a_Position;
 
+            uniform mat4 u_ViewProjection;
+
             out vec3 v_Position;
 
             void main()
             {
                 v_Position = a_Position + 0.0;
-                gl_Position = vec4(a_Position - 0.0, 1.0);
+                gl_Position = u_ViewProjection * vec4(a_Position - 0.0, 1.0);
             }
         )";
 
@@ -125,10 +130,12 @@ public:
 
         HazelPVR::Renderer::BeginScene();
         {
-            m_BlueShader->Bind();  
+            m_BlueShader->Bind();
+            m_BlueShader->UploadUniformMat4("u_ViewProjection", m_Camera.GetViewProjectionMatrix());
             HazelPVR::Renderer::Submit(m_SquareVA);
             
             m_Shader->Bind();
+            m_Shader->UploadUniformMat4("u_ViewProjection", m_Camera.GetViewProjectionMatrix());
             HazelPVR::Renderer::Submit(m_VertexArray);
         }
         HazelPVR::Renderer::EndScene();
@@ -160,6 +167,8 @@ private:
 
     std::shared_ptr<HazelPVR::Shader> m_BlueShader;
     std::shared_ptr<HazelPVR::VertexArray> m_SquareVA;
+
+    HazelPVR::OrhographicCamera m_Camera;
 };
 
 class Sandbox : public HazelPVR::Application
