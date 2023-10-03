@@ -18,7 +18,7 @@
 #include "HazelPVR/Renderer/Shader.h"
 #include "HazelPVR/Renderer/VertexArray.h"
 
-#include "HazelPVR/Renderer/OrhographicCamera.h"
+#include "HazelPVR/Renderer/OrthographicCamera.h"
 // -----------------------------------------
 
 // -------------- Entry point --------------

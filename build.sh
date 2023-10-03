@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-
 source build.vars
 ACTION=$1
 
@@ -7,11 +6,11 @@ config () {
     cmake \
         -DCMAKE_CXX_COMPILER=${COMPILER} \
         -DCMAKE_CXX_FLAGS="${CXXFLAGS}" \
-        -S . -B ${BUILD_DIR}
+        -S . -B ${BUILD_DIR} -G "${SYSTEM}"
 }
 
 build () {
-    (cd ${BUILD_DIR} && make -j)
+    cmake --build ${BUILD_DIR} -j ${NCORES}
     [[ -f "${BUILD_DIR}/SandboxApp" ]] && ln -svf ${BUILD_DIR}/SandboxApp ${APP_NAME}
 }
 

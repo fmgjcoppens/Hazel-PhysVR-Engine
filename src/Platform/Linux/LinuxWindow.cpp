@@ -43,6 +43,7 @@ namespace HazelPVR {
         }
 
         glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE);
+        // glfwWindowHint(GLFW_RESIZABLE, GLFW_TRUE); // This gives all sorts of problems in i3. Dont do it!
 
         m_Window = glfwCreateWindow((int) properties.Width, (int) properties.Height, m_Data.Title.c_str(), nullptr, nullptr);
         m_Context = new OpenGLContext(m_Window);

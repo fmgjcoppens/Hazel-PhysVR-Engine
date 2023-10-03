@@ -5,7 +5,7 @@ class ExampleLayer : public HazelPVR::Layer
 {
 public:
     ExampleLayer()
-        : Layer("Example"), m_Camera(-1.0f, 1.0f, -1.0f, 1.0f)
+        : Layer("Example"), m_Camera(-1.6f, 1.6f, -1.0f, 1.0f)
     {
         HZPVR_INFO("Creating new ExampleLayer instance");
 
@@ -125,18 +125,16 @@ public:
 public:
     void OnUpdate() override
     {
-        HazelPVR::RenderCommand::SetClearColor({0.1f, 0.1f, 0.1f, 1});
+        HazelPVR::RenderCommand::SetClearColor({0.1f, 0.1f, 0.15f, 1});
         HazelPVR::RenderCommand::Clear();
 
-        HazelPVR::Renderer::BeginScene();
+        m_Camera.SetPosition({0.5f, 0.5f, 0.0f});
+        m_Camera.SetRotation(45.0f);
+
+        HazelPVR::Renderer::BeginScene(m_Camera);
         {
-            m_BlueShader->Bind();
-            m_BlueShader->UploadUniformMat4("u_ViewProjection", m_Camera.GetViewProjectionMatrix());
-            HazelPVR::Renderer::Submit(m_SquareVA);
-            
-            m_Shader->Bind();
-            m_Shader->UploadUniformMat4("u_ViewProjection", m_Camera.GetViewProjectionMatrix());
-            HazelPVR::Renderer::Submit(m_VertexArray);
+            HazelPVR::Renderer::Submit(m_BlueShader, m_SquareVA);
+            HazelPVR::Renderer::Submit(m_Shader, m_VertexArray);
         }
         HazelPVR::Renderer::EndScene();
     }
@@ -168,7 +166,7 @@ private:
     std::shared_ptr<HazelPVR::Shader> m_BlueShader;
     std::shared_ptr<HazelPVR::VertexArray> m_SquareVA;
 
-    HazelPVR::OrhographicCamera m_Camera;
+    HazelPVR::OrthographicCamera m_Camera;
 };
 
 class Sandbox : public HazelPVR::Application
