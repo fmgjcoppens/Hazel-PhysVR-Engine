@@ -1,12 +1,10 @@
 #pragma once
 
 #include "Window.h"
+#include "Renderer/GraphicsContext.h"
 
-#include <glad/glad.h>
-#include <GLFW/glfw3.h>
-
-namespace HazelPVR {
-
+namespace HazelPVR
+{
 	class WindowsWindow : public Window {
 	public:
 		explicit WindowsWindow(const WindowProperties& properties);
@@ -14,32 +12,31 @@ namespace HazelPVR {
 
 		void OnUpdate() override;
 
-		[[nodiscard]] inline unsigned int GetWidth() const override { return m_Data.Width; }
-		[[nodiscard]] inline unsigned int GetHeight() const override { return m_Data.Height; }
+		inline unsigned int GetWidth() const override { return m_Data.Width; }
+		inline unsigned int GetHeight() const override { return m_Data.Height; }
 
 		// Window attributes
 		inline void SetEventCallback(const EventCallbackFn& callback) override { m_Data.EventCallback = callback; }
 		void SetVSync(bool enabled) override;
 		bool IsVSync() const override;
 
-        [[nodiscard]] inline void* GetNativeWindow() const override { return m_Window; }
+        inline void* GetNativeWindow() const override { return m_Window; }
 
     private:
 		virtual void Init(const WindowProperties& properties);
 		virtual void Shutdown();
 
-		GLFWwindow* m_Window{};
+		GLFWwindow* m_Window;
+		GraphicsContext* m_Context;
 
 		struct WindowData
 		{
 			std::string Title;
 			unsigned int Width, Height;
 			bool VSync;
-
 			EventCallbackFn EventCallback;
 		};
 
 		WindowData m_Data;
 	};
-
 }

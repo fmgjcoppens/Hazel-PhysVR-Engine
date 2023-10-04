@@ -1,5 +1,6 @@
 #include "hzpvrpch.h"
 #include "Windows/WindowsWindow.h"
+#include "OpenGL/OpenGLContext.h"
 
 #include "Events/ApplicationEvent.h"
 #include "Events/MouseEvent.h"
@@ -30,7 +31,7 @@ namespace HazelPVR {
         m_Data.Width = properties.Width;
         m_Data.Height = properties.Height;
 
-        HZPVR_CORE_INFO("Creating window '{0} ({1}, {2})'", properties.Title, properties.Width, properties.Height);
+        HZPVR_CORE_INFO("Creating Windows window '{0} ({1}, {2})'", properties.Title, properties.Width, properties.Height);
 
         if (!s_GLFWInitialized) {
             // TODO: glfwTerminate on system shutdown
@@ -40,13 +41,12 @@ namespace HazelPVR {
             s_GLFWInitialized = true;
         }
 
-        glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-        glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 0);
+        glfwWindowHint(GLFW_RESIZABLE, GLFW_TRUE);
 
-        m_Window = glfwCreateWindow((int) properties.Width, (int) properties.Height, m_Data.Title.c_str(), nullptr,nullptr);
-        glfwMakeContextCurrent(m_Window);
-        int status = gladLoadGLLoader((GLADloadproc) glfwGetProcAddress);
-        HZPVR_CORE_ASSERT(status, "Failed to initialize Glad!");
+        m_Window = glfwCreateWindow((int) properties.Width, (int) properties.Height, m_Data.Title.c_str(), nullptr, nullptr);
+        m_Context = new OpenGLContext(m_Window);
+        m_Context->Init();
+
         glfwSetWindowUserPointer(m_Window, &m_Data);
         SetVSync(true);
 
@@ -75,7 +75,6 @@ namespace HazelPVR {
 
         glfwSetKeyCallback(m_Window, [](GLFWwindow *window, int key, int scancode, int action, int mods) {
             WindowData &data = *(WindowData *) glfwGetWindowUserPointer(window);
-
             switch (action) {
                 case GLFW_PRESS: {
                     KeyPressedEvent event(key, 0);
@@ -141,7 +140,7 @@ namespace HazelPVR {
 
     void WindowsWindow::OnUpdate() {
         glfwPollEvents();
-        glfwSwapBuffers(m_Window);
+        m_Context->SwapBuffers();
     }
 
     void WindowsWindow::SetVSync(bool enabled) {

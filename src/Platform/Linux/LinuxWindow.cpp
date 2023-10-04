@@ -75,7 +75,7 @@ namespace HazelPVR {
             data.EventCallback(event);
         });
 
-        glfwSetKeyCallback(m_Window,[](GLFWwindow *window, int key, int scancode, int action, int mods) {
+        glfwSetKeyCallback(m_Window, [](GLFWwindow *window, int key, int scancode, int action, int mods) {
             WindowData &data = *(WindowData *) glfwGetWindowUserPointer(window);
             switch (action) {
                 case GLFW_PRESS: {
