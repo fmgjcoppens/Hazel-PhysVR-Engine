@@ -5,7 +5,7 @@ class ExampleLayer : public HazelPVR::Layer
 {
 public:
     ExampleLayer()
-        : Layer("Example"), m_Camera(-1.6f, 1.6f, -1.0f, 1.0f)
+        : Layer("Example"), m_Camera(-1.6f, 1.6f, -1.0f, 1.0f), m_CameraPosition(0.0f), m_CameraRotation(0.0f)
     {
         HZPVR_INFO("Creating new ExampleLayer instance");
 
@@ -125,11 +125,26 @@ public:
 public:
     void OnUpdate() override
     {
+        if (HazelPVR::Input::IsKeyPressed(HZPVR_KEY_LEFT))
+            m_CameraPosition.x += m_CameraMoveSpeed;
+        else if (HazelPVR::Input::IsKeyPressed(HZPVR_KEY_RIGHT))
+            m_CameraPosition.x -= m_CameraMoveSpeed;
+
+        if (HazelPVR::Input::IsKeyPressed(HZPVR_KEY_UP))
+            m_CameraPosition.y -= m_CameraMoveSpeed;
+        else if (HazelPVR::Input::IsKeyPressed(HZPVR_KEY_DOWN))
+            m_CameraPosition.y += m_CameraMoveSpeed;
+
+        if (HazelPVR::Input::IsKeyPressed(HZPVR_KEY_A))
+            m_CameraRotation -= m_CameraRotationSpeed;
+        if (HazelPVR::Input::IsKeyPressed(HZPVR_KEY_D))
+            m_CameraRotation += m_CameraRotationSpeed;
+
         HazelPVR::RenderCommand::SetClearColor({0.1f, 0.1f, 0.15f, 1});
         HazelPVR::RenderCommand::Clear();
 
-        m_Camera.SetPosition({0.5f, 0.5f, 0.0f});
-        m_Camera.SetRotation(45.0f);
+        m_Camera.SetPosition(m_CameraPosition);
+        m_Camera.SetRotation(m_CameraRotation);
 
         HazelPVR::Renderer::BeginScene(m_Camera);
         {
@@ -145,18 +160,19 @@ public:
 
     void OnEvent(HazelPVR::Event& event) override
     {
-        if (event.GetEventType() == HazelPVR::EventType::KeyPressed)
-        {
-            auto& e = (HazelPVR::KeyPressedEvent&) event;
+        HazelPVR::EventDispatcher keyPressDispacher(event);
+        keyPressDispacher.Dispatch<HazelPVR::KeyPressedEvent>(HZPVR_BIND_EVENT_FN(ExampleLayer::OnKeyPressedEvent));
+    }
 
-            if (e.GetKeyCode() == HZPVR_KEY_ESCAPE || e.GetKeyCode() == HZPVR_KEY_Q)
-            {
-                HazelPVR::Application& app = HazelPVR::Application::Get();
-                app.Close();
-            }
-            
-            HZPVR_TRACE("{0}", (char)e.GetKeyCode());
+    bool OnKeyPressedEvent(HazelPVR::KeyPressedEvent& event)
+    {
+        if (event.GetKeyCode() == HZPVR_KEY_ESCAPE || event.GetKeyCode() == HZPVR_KEY_Q)
+        {
+            HazelPVR::Application& app = HazelPVR::Application::Get();
+            app.Close();
         }
+
+        return false;
     }
 
 private:
@@ -167,6 +183,11 @@ private:
     std::shared_ptr<HazelPVR::VertexArray> m_SquareVA;
 
     HazelPVR::OrthographicCamera m_Camera;
+    glm::vec3 m_CameraPosition;
+    float m_CameraMoveSpeed = 0.1f;
+
+    float m_CameraRotation = 0.0f;
+    float m_CameraRotationSpeed = 1.5f;
 };
 
 class Sandbox : public HazelPVR::Application

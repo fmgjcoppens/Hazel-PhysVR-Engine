@@ -5,7 +5,6 @@
 
 namespace HazelPVR
 {
-
     class Shader
     {
         public:
@@ -19,7 +18,6 @@ namespace HazelPVR
             void UploadUniformMat4(const std::string& name, const glm::mat4& matrix);
         
         private:
-            u_int32_t m_RendererID;
+            uint32_t m_RendererID;
     };
-
 }
