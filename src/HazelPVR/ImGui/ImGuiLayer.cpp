@@ -51,14 +51,10 @@ namespace HazelPVR
 
         // Load Fonts
         float fontSize = 22.0f;// *2.0f;
-        
-        ImFont * notosans_light = io.Fonts->AddFontFromFileTTF("assets/fonts/notosans/NotoSans-Light.ttf", fontSize);
-        IM_ASSERT(notosans_light != nullptr);
         ImFont* notosans_regular = io.Fonts->AddFontFromFileTTF("assets/fonts/notosans/NotoSans-Regular.ttf", fontSize);
         IM_ASSERT(notosans_regular != nullptr);
         ImFont* notosans_bold = io.Fonts->AddFontFromFileTTF("assets/fonts/notosans/NotoSans-Bold.ttf", fontSize);
         IM_ASSERT(notosans_bold != nullptr);
-
         io.FontDefault = notosans_regular;
     }
 
