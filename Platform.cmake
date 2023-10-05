@@ -21,17 +21,17 @@ set(PLATFORM_SRC_DIR ${SRC_DIR}/${PLATFORM_DIR})
 set(PLATFORM_INCL_DIR ${INCL_DIR}/${PLATFORM_DIR})
 
 file(GLOB PLATFORM_SRCS
-        ${PLATFORM_SRC_DIR}/${OS_NAME}/${OS_NAME}*.cpp
-        ${PLATFORM_SRC_DIR}/OpenGL/*.cpp
+    ${PLATFORM_SRC_DIR}/${OS_NAME}/${OS_NAME}*.cpp
+    ${PLATFORM_SRC_DIR}/OpenGL/*.cpp
 )
 
 file(GLOB PLATFORM_HEADERS
-        ${PLATFORM_INCL_DIR}/${OS_NAME}/${OS_NAME}*.h
-        ${PLATFORM_INCL_DIR}/OpenGL/*.h
+    ${PLATFORM_INCL_DIR}/${OS_NAME}/${OS_NAME}*.h
+    ${PLATFORM_INCL_DIR}/OpenGL/*.h
 )
 
-## Some debug messages
-message(STATUS "Value of OS_NAME: ${OS_NAME}")
-message(STATUS "Value of PLATFORM_SRCS: ${PLATFORM_SRCS}")
-message(STATUS "Value of PLATFORM_HEADERS: ${PLATFORM_HEADERS}")
-message(STATUS "Value of USER_DEFINITIONS: ${USER_DEFINITIONS}")
+# ## Some debug messages that could be useful
+# message(STATUS "Value of OS_NAME: ${OS_NAME}")
+# message(STATUS "Value of PLATFORM_SRCS: ${PLATFORM_SRCS}")
+# message(STATUS "Value of PLATFORM_HEADERS: ${PLATFORM_HEADERS}")
+# message(STATUS "Value of USER_DEFINITIONS: ${USER_DEFINITIONS}")

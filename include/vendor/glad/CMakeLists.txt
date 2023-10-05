@@ -1,13 +1,11 @@
 cmake_minimum_required(VERSION 3.4...3.20 FATAL_ERROR)
-project(GLAD LANGUAGES C)
+project(glad LANGUAGES C)
 set(CMAKE_C_FLAGS "-fPIC")
 
 set(INCLUDE include)
-set(SOURCES src/glad.c)
-set(HEADERS
-        ${INCLUDE}/glad/glad.h
-        ${INCLUDE}/KHR/khrplatform.h)
+set(SOURCES src/glad.c )
+set(HEADERS ${INCLUDE}/glad/glad.h ${INCLUDE}/KHR/khrplatform.h)
 
 add_library(glad STATIC ${SOURCES} ${HEADERS})
-target_include_directories(glad PUBLIC ${INCLUDE})  # Use PUBLIC scope here, otherwise glad headers will
-                                                    # not be available/found for other CLion/CMake projects.
+target_include_directories(${PROJECT_NAME} PUBLIC ${INCLUDE})  # Use PUBLIC scope here, otherwise glad headers will
+                                                               # not be available in higer level CMakeLists.txt.
