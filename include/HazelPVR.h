@@ -3,8 +3,10 @@
 // For use by HazelPVR applications
 
 #include "HazelPVR/Application.h"
-#include "HazelPVR/Log.h"
 #include "HazelPVR/ImGui/ImGuiLayer.h"
+#include "HazelPVR/Log.h"
+
+#include "HazelPVR/Core/Timestep.h"
 
 #include "HazelPVR/Input.h"
 #include "HazelPVR/KeyCodes.h"

@@ -3,6 +3,8 @@
 
 #include "Renderer/Renderer.h"
 
+#include <GLFW/glfw3.h>
+
 namespace HazelPVR
 {
     #define BIND_EVENT_FN(x) std::bind(&Application::x, this, std::placeholders::_1)
@@ -50,12 +52,18 @@ namespace HazelPVR
     void Application::Run() {
         while (m_Running)
         {
+            float time = (float)glfwGetTime(); // Should go into Platform
+            Timestep timestep = m_LastFrameRenderTime - time;
+            m_LastFrameRenderTime = time;
+
             for (Layer* layer : m_LayerStack)
-                layer->OnUpdate();
+                layer->OnUpdate(timestep);
 
             m_ImGuiLayer->Begin();
+
             for (Layer* layer : m_LayerStack)
                 layer->OnImGuiRender();
+                
             m_ImGuiLayer->End();
 
             m_Window->OnUpdate();

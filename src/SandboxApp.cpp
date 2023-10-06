@@ -123,8 +123,10 @@ public:
     ~ExampleLayer() { HZPVR_INFO("Destroying ExampleLayer instance"); }
 
 public:
-    void OnUpdate() override
+    void OnUpdate(HazelPVR::Timestep ts) override
     {
+        HZPVR_TRACE("Delta time: {0}s, {1}ms", ts.GetSeconds(), ts.GetMilliseconds());
+
         if (HazelPVR::Input::IsKeyPressed(HZPVR_KEY_LEFT))
             m_CameraPosition.x += m_CameraMoveSpeed;
         else if (HazelPVR::Input::IsKeyPressed(HZPVR_KEY_RIGHT))

@@ -50,7 +50,7 @@ namespace HazelPVR
         ImGui::StyleColorsDark();
 
         // Load Fonts
-        float fontSize = 22.0f;// *2.0f;
+        float fontSize = 32.0f;// *2.0f;
         ImFont* notosans_regular = io.Fonts->AddFontFromFileTTF("assets/fonts/notosans/NotoSans-Regular.ttf", fontSize);
         IM_ASSERT(notosans_regular != nullptr);
         ImFont* notosans_bold = io.Fonts->AddFontFromFileTTF("assets/fonts/notosans/NotoSans-Bold.ttf", fontSize);

@@ -6,6 +6,8 @@
 #include "LayerStack.h"
 #include "ImGui/ImGuiLayer.h"
 
+#include "HazelPVR/Core/Timestep.h"
+
 namespace HazelPVR {
 
     class Application
@@ -31,6 +33,7 @@ namespace HazelPVR {
             ImGuiLayer* m_ImGuiLayer;
             bool m_Running = true;
             LayerStack m_LayerStack;
+            float m_LastFrameRenderTime = 0.0f;
 
         private:
             static Application* s_Instance;
