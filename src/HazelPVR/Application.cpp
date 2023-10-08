@@ -53,7 +53,7 @@ namespace HazelPVR
         while (m_Running)
         {
             float time = (float)glfwGetTime(); // Should go into Platform
-            Timestep timestep = m_LastFrameRenderTime - time;
+            Timestep timestep = time - m_LastFrameRenderTime;
             m_LastFrameRenderTime = time;
 
             for (Layer* layer : m_LayerStack)

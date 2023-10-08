@@ -1,5 +1,4 @@
 #include <HazelPVR.h>
-#include <imgui.h>
 
 class ExampleLayer : public HazelPVR::Layer
 {
@@ -185,6 +184,7 @@ private:
     std::shared_ptr<HazelPVR::VertexArray> m_SquareVA;
 
     HazelPVR::OrthographicCamera m_Camera;
+
     glm::vec3 m_CameraPosition;
     float m_CameraMoveSpeed = 0.1f;
 
