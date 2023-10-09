@@ -1,9 +1,9 @@
 project(HazelPVR LANGUAGES CXX)
 
-include(FileStructure.cmake)
+include("FileStructure.cmake")
 
 # Platform detection
-include(Platform.cmake)
+include("Platform.cmake")
 
 add_subdirectory(${GLFW})
 add_subdirectory(${IMGUI})
