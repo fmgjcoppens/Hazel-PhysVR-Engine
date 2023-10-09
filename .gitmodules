@@ -1,15 +1,15 @@
 [submodule "include/vendor/spdlog"]
-	path = include/vendor/spdlog
+	path = HazelPVR/vendor/spdlog
 	url = https://github.com/gabime/spdlog.git
 [submodule "include/vendor/glfw"]
-	path = include/vendor/glfw
+	path = HazelPVR/vendor/glfw
 	url = https://github.com/glfw/glfw.git
 [submodule ".\\include\\vendor\\spdlog"]
 	path = .\\include\\vendor\\spdlog
 	url = https://github.com/gabime/spdlog.git
 [submodule "include/vendor/imgui"]
-	path = include/vendor/imgui
+	path = HazelPVR/vendor/imgui
 	url = git@github.com:fmgjcoppens/imgui.git
 [submodule "include/vendor/glm"]
-	path = include/vendor/glm
+	path = HazelPVR/vendor/glm
 	url = https://github.com/g-truc/glm.git
