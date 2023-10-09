@@ -80,4 +80,5 @@ fabric.properties
 # Ignore all files/dirs starting with '_'
 _*
 
-/bin/
+build/*
+imgui.ini
