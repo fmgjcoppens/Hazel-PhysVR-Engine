@@ -1,6 +1,7 @@
 #pragma once
 
-#include "Input.hpp"
+#include "HazelPVR/Input.hpp"
+
 #include <utility>
 
 namespace HazelPVR {

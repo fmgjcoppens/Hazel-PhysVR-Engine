@@ -14,8 +14,8 @@ namespace HazelPVR
     {
         glfwMakeContextCurrent(m_windowHandle);
 
-        int status = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
-        HZPVR_CORE_ASSERT(status, "Failed to initialize Glad!");
+        int success = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
+        HZPVR_CORE_ASSERT(success, "Failed to initialize Glad!");
 
         HZPVR_CORE_INFO("OpenGL Info:");
         HZPVR_CORE_INFO("  Vendor: {0}", (const char*) glGetString(GL_VENDOR));

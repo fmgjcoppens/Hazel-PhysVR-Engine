@@ -1,15 +1,8 @@
-## Platform detection
+## OS detection
 if(CMAKE_SYSTEM_NAME STREQUAL "Linux")
-    set(OS_NAME Linux)
     add_compile_definitions(HZPVR_PLATFORM_LINUX)
-# elseif(CMAKE_SYSTEM_NAME STREQUAL "Darwin")
-#     set(OS_NAME macOS)
-#     add_compile_definitions(HZPVR_PLATFORM_MACOS)
-#     find_library(COCOA_LIB Cocoa)
-#     find_library(IOKIT_LIB IOKit)
+elseif(CMAKE_SYSTEM_NAME STREQUAL "Darwin")
+    add_compile_definitions(HZPVR_PLATFORM_MACOS)
 elseif(CMAKE_SYSTEM_NAME STREQUAL "Windows")
-    set(OS_NAME Windows)
     add_compile_definitions(HZPVR_PLATFORM_WINDOWS)
-else()
-    set(OS_NAME Unknown)
 endif()

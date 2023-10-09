@@ -2,7 +2,7 @@
 
 #include "Platform/Linux/LinuxInput.hpp"
 
-#include "HazelPVRApplication.hpp"
+#include "HazelPVR/Application.hpp"
 
 #include <GLFW/glfw3.h>
 

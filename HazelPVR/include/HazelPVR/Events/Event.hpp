@@ -1,7 +1,7 @@
 #pragma once
 
 #include "hzpvrpch.hpp" // Precompiled header. Include not necessary with CMake
-#include "Core.hpp"
+#include "HazelPVR/Core.hpp"
 
 namespace HazelPVR {
 

@@ -11,12 +11,25 @@ config () {
 
 build () {
     cmake --build ${BUILD_DIR} -j ${NCORES}
-    # [[ -f "${BUILD_DIR}/SandboxApp" ]] && ln -svf ${BUILD_DIR}/SandboxApp ${APP_NAME}
+}
+
+install () {
+    mkdir -v ${INSTALL_DIR}
+    cp -av ${BUILD_DIR}/Sandbox/Sandbox ${INSTALL_DIR}
+    cp -av Sandbox/assets ${INSTALL_DIR}
+}
+
+run () {
+    (cd ${INSTALL_DIR} && ./Sandbox)
 }
 
 clean () {
     rm -rfv ${BUILD_DIR}
-    # rm -fv ${APP_NAME}
+}
+
+distclean () {
+    rm -rfv ${BUILD_DIR}
+    rm -rfv ${INSTALL_DIR}
 }
 
 case $ACTION in
@@ -26,8 +39,17 @@ case $ACTION in
     build)
         build
         ;;
+    install)
+        install
+        ;;
+    run)
+        run
+        ;;
     clean)
         clean
+        ;;
+    distclean)
+        distclean
         ;;
     *)
         build
