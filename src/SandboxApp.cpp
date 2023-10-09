@@ -1,4 +1,4 @@
-#include <HazelPVR.h>
+#include <HazelPVR.hpp>
 
 class ExampleLayer : public HazelPVR::Layer
 {

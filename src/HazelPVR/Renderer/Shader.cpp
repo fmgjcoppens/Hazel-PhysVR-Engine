@@ -1,5 +1,5 @@
-#include "hzpvrpch.h"
-#include "Renderer/Shader.h"
+#include "hzpvrpch.hpp"
+#include "Renderer/Shader.hpp"
 
 #include <glad/glad.h>
 

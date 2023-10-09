@@ -1,9 +1,9 @@
 #pragma once
 
-#include "Renderer/RenderCommand.h"
+#include "Renderer/RenderCommand.hpp"
 
-#include "Renderer/OrthographicCamera.h"
-#include "Renderer/Shader.h"
+#include "Renderer/OrthographicCamera.hpp"
+#include "Renderer/Shader.hpp"
 
 namespace HazelPVR
 {

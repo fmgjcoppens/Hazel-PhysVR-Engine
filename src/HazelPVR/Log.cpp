@@ -1,4 +1,4 @@
- #include "hzpvrpch.h" // Precompiled header. Include not necessary with CMake
+ #include "hzpvrpch.hpp" // Precompiled header. Include not necessary with CMake
  
  #include <spdlog/sinks/stdout_color_sinks.h>
 

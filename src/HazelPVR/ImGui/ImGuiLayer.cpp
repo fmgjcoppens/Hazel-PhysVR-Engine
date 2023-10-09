@@ -1,12 +1,12 @@
-#include "hzpvrpch.h"
-#include "ImGui/ImGuiLayer.h"
-#include "Core.h"
+#include "hzpvrpch.hpp"
+#include "ImGui/ImGuiLayer.hpp"
+#include "Core.hpp"
 
 #include "imgui.h"
 #include "backends/imgui_impl_glfw.h"
 #include "backends/imgui_impl_opengl3.h"
 
-#include "Application.h"
+#include "Application.hpp"
 
 // TEMPORARY
 #include <GLFW/glfw3.h>

@@ -1,7 +1,7 @@
-#include "hzpvrpch.h"
-#include "Linux/LinuxInput.h"
+#include "hzpvrpch.hpp"
+#include "Linux/LinuxInput.hpp"
 
-#include "Application.h"
+#include "Application.hpp"
 #include <GLFW/glfw3.h>
 
 namespace HazelPVR {

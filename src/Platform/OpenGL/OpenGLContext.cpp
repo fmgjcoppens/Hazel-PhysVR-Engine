@@ -1,5 +1,5 @@
-#include "hzpvrpch.h"
-#include "OpenGL/OpenGLContext.h"
+#include "hzpvrpch.hpp"
+#include "OpenGL/OpenGLContext.hpp"
 
 namespace HazelPVR
 {

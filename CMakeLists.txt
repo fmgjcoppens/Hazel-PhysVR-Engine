@@ -29,7 +29,7 @@ include(Platform.cmake)
 
 #==================== SRCS AND HEADERS TO TRACK ====================
 # Precompiled headers
-set(PCH ${INCL_DIR}/hzpvrpch.h)
+set(PCH ${INCL_DIR}/hzpvrpch.hpp)
 
 # HazelPVR sources and headers
 file(GLOB ENGINE_SRCS
@@ -39,10 +39,10 @@ file(GLOB ENGINE_SRCS
 )
 
 file(GLOB ENGINE_HEADERS
-        ${ENGINE_INCL_DIR}/*.h
-        ${ENGINE_INCL_DIR}/Events/*.h
-        ${ENGINE_INCL_DIR}/ImGui/*.h
-        ${ENGINE_INCL_DIR}/Renderer/*.h
+        ${ENGINE_INCL_DIR}/*.hpp
+        ${ENGINE_INCL_DIR}/Events/*.hpp
+        ${ENGINE_INCL_DIR}/ImGui/*.hpp
+        ${ENGINE_INCL_DIR}/Renderer/*.hpp
 )
 
 ## Sandbox Application sources and headers
@@ -51,7 +51,7 @@ set(SANDBOX_SRCS
 )
 
 set(SANDBOX_HEADERS
-        ${INCL_DIR}/HazelPVR.h
+        ${INCL_DIR}/HazelPVR.hpp
 )
 
 #==================== BUILD TARGETS ====================

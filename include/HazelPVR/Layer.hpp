@@ -1,9 +1,9 @@
 #pragma once
 
-#include "Core.h"
-#include "Events/Event.h"
+#include "Core.hpp"
+#include "Events/Event.hpp"
 
-#include "Core/Timestep.h"
+#include "Core/Timestep.hpp"
 
 namespace HazelPVR
 {

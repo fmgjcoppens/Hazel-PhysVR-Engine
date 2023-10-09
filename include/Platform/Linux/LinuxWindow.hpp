@@ -1,7 +1,7 @@
 #pragma once
 
-#include "Window.h"
-#include "Renderer/GraphicsContext.h"
+#include "Window.hpp"
+#include "Renderer/GraphicsContext.hpp"
 
 namespace HazelPVR
 {

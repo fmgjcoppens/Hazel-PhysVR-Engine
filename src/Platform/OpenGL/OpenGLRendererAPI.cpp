@@ -1,5 +1,5 @@
-#include "hzpvrpch.h"
-#include "OpenGL/OpenGLRendererAPI.h"
+#include "hzpvrpch.hpp"
+#include "OpenGL/OpenGLRendererAPI.hpp"
 
 #include <glad/glad.h>
 

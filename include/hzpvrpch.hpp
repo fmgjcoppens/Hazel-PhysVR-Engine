@@ -13,8 +13,8 @@
 #include <unordered_map>
 #include <unordered_set>
 
-#include "HazelPVR/Log.h"
+#include "HazelPVR/Log.hpp"
 
 #ifdef HZPVR_PLATFORM_WINDOWS
-#include <Windows.h>
+#include <Windows.hpp>
 #endif

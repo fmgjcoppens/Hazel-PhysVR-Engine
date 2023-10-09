@@ -1,8 +1,8 @@
-#include "hzpvrpch.h"
-#include "macOS/macOSInput.h"
+#include "hzpvrpch.hpp"
+#include "macOS/macOSInput.hpp"
 
-#include "Application.h"
-#include <GLFW/glfw3.h>
+#include "Application.hpp"
+#include <GLFW/glfw3.hpp>
 
 namespace HazelPVR {
 

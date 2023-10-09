@@ -1,7 +1,7 @@
 #pragma once
 
-#include "Window.h"
-#include "Renderer/GraphicsContext.h"
+#include "Window.hpp"
+#include "Renderer/GraphicsContext.hpp"
 
 namespace HazelPVR
 {
@@ -13,7 +13,7 @@ namespace HazelPVR
 		void OnUpdate() override;
 
 		inline unsigned int GetWidth() const override { return m_Data.Width; }
-		inline unsigned int GetHeight() const override { return m_Data.Height; }
+		inline unsigned int GetHeight() const override { return m_Data.hppeight; }
 
 		// Window attributes
 		inline void SetEventCallback(const EventCallbackFn& callback) override { m_Data.EventCallback = callback; }

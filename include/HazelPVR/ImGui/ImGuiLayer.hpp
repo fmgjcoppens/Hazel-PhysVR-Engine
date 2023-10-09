@@ -1,9 +1,9 @@
 #pragma once
 
-#include "Layer.h"
-#include "Events/MouseEvent.h"
-#include "Events/KeyEvent.h"
-#include "Events/ApplicationEvent.h"
+#include "Layer.hpp"
+#include "Events/MouseEvent.hpp"
+#include "Events/KeyEvent.hpp"
+#include "Events/ApplicationEvent.hpp"
 
 namespace HazelPVR {
 

@@ -1,12 +1,12 @@
 #pragma once
 
-#include "Core.h"
+#include "Core.hpp"
 
-#include "Window.h"
-#include "LayerStack.h"
-#include "ImGui/ImGuiLayer.h"
+#include "Window.hpp"
+#include "LayerStack.hpp"
+#include "ImGui/ImGuiLayer.hpp"
 
-#include "HazelPVR/Core/Timestep.h"
+#include "HazelPVR/Core/Timestep.hpp"
 
 namespace HazelPVR {
 

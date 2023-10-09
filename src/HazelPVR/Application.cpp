@@ -1,7 +1,7 @@
-#include "hzpvrpch.h" // Precompiled header. Include not necessary with CMake
-#include "Application.h"
+#include "hzpvrpch.hpp" // Precompiled header. Include not necessary with CMake
+#include "Application.hpp"
 
-#include "Renderer/Renderer.h"
+#include "Renderer/Renderer.hpp"
 
 #include <GLFW/glfw3.h>
 

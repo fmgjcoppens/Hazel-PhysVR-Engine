@@ -1,6 +1,6 @@
-#include "hzpvrpch.h"
+#include "hzpvrpch.hpp"
 
-#include "OpenGL/OpenGLBuffer.h"
+#include "OpenGL/OpenGLBuffer.hpp"
 
 #include <glad/glad.h>
 

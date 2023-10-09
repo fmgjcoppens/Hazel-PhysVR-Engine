@@ -1,5 +1,5 @@
-#include "hzpvrpch.h"
-#include "OpenGL/OpenGLVertexArray.h"
+#include "hzpvrpch.hpp"
+#include "OpenGL/OpenGLVertexArray.hpp"
 
 #include <glad/glad.h>
 

@@ -1,10 +1,10 @@
-#include "hzpvrpch.h"
-#include "Linux/LinuxWindow.h"
-#include "OpenGL/OpenGLContext.h"
+#include "hzpvrpch.hpp"
+#include "Linux/LinuxWindow.hpp"
+#include "OpenGL/OpenGLContext.hpp"
 
-#include "Events/ApplicationEvent.h"
-#include "Events/MouseEvent.h"
-#include "Events/KeyEvent.h"
+#include "Events/ApplicationEvent.hpp"
+#include "Events/MouseEvent.hpp"
+#include "Events/KeyEvent.hpp"
 
 namespace HazelPVR {
 

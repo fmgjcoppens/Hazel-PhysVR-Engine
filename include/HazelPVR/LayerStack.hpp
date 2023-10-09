@@ -1,7 +1,7 @@
 #pragma once
 
-#include "Core.h"
-#include "Layer.h"
+#include "Core.hpp"
+#include "Layer.hpp"
 
 namespace HazelPVR {
 

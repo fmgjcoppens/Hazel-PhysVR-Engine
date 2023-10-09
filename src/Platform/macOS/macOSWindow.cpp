@@ -1,9 +1,9 @@
-#include "hzpvrpch.h"
-#include "macOS/macOSWindow.h"
+#include "hzpvrpch.hpp"
+#include "macOS/macOSWindow.hpp"
 
-#include "Events/ApplicationEvent.h"
-#include "Events/MouseEvent.h"
-#include "Events/KeyEvent.h"
+#include "Events/ApplicationEvent.hpp"
+#include "Events/MouseEvent.hpp"
+#include "Events/KeyEvent.hpp"
 
 namespace HazelPVR {
 
@@ -28,9 +28,9 @@ namespace HazelPVR {
     void macOSWindow::Init(const WindowProperties &properties) {
         m_Data.Title = properties.Title;
         m_Data.Width = properties.Width;
-        m_Data.Height = properties.Height;
+        m_Data.hppeight = properties.hppeight;
 
-        HZPVR_CORE_INFO("Creating window '{0} ({1}, {2})'", properties.Title, properties.Width, properties.Height);
+        HZPVR_CORE_INFO("Creating window '{0} ({1}, {2})'", properties.Title, properties.Width, properties.hppeight);
 
         if (!s_GLFWInitialized) {
             // TODO: glfwTerminate on system shutdown
@@ -45,7 +45,7 @@ namespace HazelPVR {
 //        glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);  // 3.2+ only
 //        glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);            // Required on Mac
 
-        m_Window = glfwCreateWindow((int) properties.Width, (int) properties.Height, m_Data.Title.c_str(), nullptr, nullptr);
+        m_Window = glfwCreateWindow((int) properties.Width, (int) properties.hppeight, m_Data.Title.c_str(), nullptr, nullptr);
         glfwMakeContextCurrent(m_Window);
         int status = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
         HZPVR_CORE_ASSERT(status, "Failed to initialize Glad!");
@@ -56,7 +56,7 @@ namespace HazelPVR {
         glfwSetWindowSizeCallback(m_Window, [](GLFWwindow *window, int width, int height) {
             WindowData &data = *(WindowData *) glfwGetWindowUserPointer(window);
             data.Width = width;
-            data.Height = height;
+            data.hppeight = height;
 
             WindowResizeEvent event(width, height);
             data.EventCallback(event);

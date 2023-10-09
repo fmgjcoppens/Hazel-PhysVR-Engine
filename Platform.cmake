@@ -26,8 +26,8 @@ file(GLOB PLATFORM_SRCS
 )
 
 file(GLOB PLATFORM_HEADERS
-    ${PLATFORM_INCL_DIR}/${OS_NAME}/${OS_NAME}*.h
-    ${PLATFORM_INCL_DIR}/OpenGL/*.h
+    ${PLATFORM_INCL_DIR}/${OS_NAME}/${OS_NAME}*.hpp
+    ${PLATFORM_INCL_DIR}/OpenGL/*.hpp
 )
 
 # ## Some debug messages that could be useful

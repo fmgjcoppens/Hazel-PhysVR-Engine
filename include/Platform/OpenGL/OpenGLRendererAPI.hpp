@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Renderer/RendererAPI.h"
+#include "Renderer/RendererAPI.hpp"
 
 namespace HazelPVR
 {

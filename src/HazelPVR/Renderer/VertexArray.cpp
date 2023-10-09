@@ -1,8 +1,8 @@
-#include "hzpvrpch.h"
-#include "Renderer/VertexArray.h"
+#include "hzpvrpch.hpp"
+#include "Renderer/VertexArray.hpp"
 
-#include "Renderer/Renderer.h"
-#include "OpenGL/OpenGLVertexArray.h"
+#include "Renderer/Renderer.hpp"
+#include "OpenGL/OpenGLVertexArray.hpp"
 
 
 namespace HazelPVR

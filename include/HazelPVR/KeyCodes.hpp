@@ -1,6 +1,6 @@
 #pragma once
 
-// From glfw3.h
+// From glfw3.hpp
 #define HZPVR_KEY_SPACE              32
 #define HZPVR_KEY_APOSTROPHE         39  /* ' */
 #define HZPVR_KEY_COMMA              44  /* , */

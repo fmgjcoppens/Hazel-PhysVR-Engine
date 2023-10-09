@@ -1,7 +1,7 @@
-#include "hzpvrpch.h"
-#include "Renderer/RenderCommand.h"
+#include "hzpvrpch.hpp"
+#include "Renderer/RenderCommand.hpp"
 
-#include "OpenGL/OpenGLRendererAPI.h"
+#include "OpenGL/OpenGLRendererAPI.hpp"
 
 namespace HazelPVR
 {

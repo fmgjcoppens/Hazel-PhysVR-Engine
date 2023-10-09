@@ -1,5 +1,5 @@
-#include "hzpvrpch.h"
-#include "Renderer/RendererAPI.h"
+#include "hzpvrpch.hpp"
+#include "Renderer/RendererAPI.hpp"
 
 namespace HazelPVR
 {
