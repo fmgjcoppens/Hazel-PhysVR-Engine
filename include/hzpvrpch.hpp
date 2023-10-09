@@ -16,5 +16,5 @@
 #include "HazelPVR/Log.hpp"
 
 #ifdef HZPVR_PLATFORM_WINDOWS
-#include <Windows.hpp>
+#include <Windows.h>
 #endif

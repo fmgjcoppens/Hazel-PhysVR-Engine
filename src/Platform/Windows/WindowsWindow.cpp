@@ -29,9 +29,9 @@ namespace HazelPVR {
     void WindowsWindow::Init(const WindowProperties &properties) {
         m_Data.Title = properties.Title;
         m_Data.Width = properties.Width;
-        m_Data.hppeight = properties.hppeight;
+        m_Data.Height = properties.Height;
 
-        HZPVR_CORE_INFO("Creating Windows window '{0} ({1}, {2})'", properties.Title, properties.Width, properties.hppeight);
+        HZPVR_CORE_INFO("Creating Windows window '{0} ({1}, {2})'", properties.Title, properties.Width, properties.Height);
 
         if (!s_GLFWInitialized) {
             // TODO: glfwTerminate on system shutdown
@@ -43,7 +43,7 @@ namespace HazelPVR {
 
         glfwWindowHint(GLFW_RESIZABLE, GLFW_TRUE);
 
-        m_Window = glfwCreateWindow((int) properties.Width, (int) properties.hppeight, m_Data.Title.c_str(), nullptr, nullptr);
+        m_Window = glfwCreateWindow((int) properties.Width, (int) properties.Height, m_Data.Title.c_str(), nullptr, nullptr);
         m_Context = new OpenGLContext(m_Window);
         m_Context->Init();
 
@@ -54,7 +54,7 @@ namespace HazelPVR {
         glfwSetWindowSizeCallback(m_Window, [](GLFWwindow *window, int width, int height) {
             WindowData &data = *(WindowData *) glfwGetWindowUserPointer(window);
             data.Width = width;
-            data.hppeight = height;
+            data.Height = height;
 
             WindowResizeEvent event(width, height);
             data.EventCallback(event);

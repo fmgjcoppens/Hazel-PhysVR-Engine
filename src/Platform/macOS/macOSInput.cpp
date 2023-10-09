@@ -2,7 +2,8 @@
 #include "macOS/macOSInput.hpp"
 
 #include "Application.hpp"
-#include <GLFW/glfw3.hpp>
+
+#include <GLFW/glfw3.h>
 
 namespace HazelPVR {
 

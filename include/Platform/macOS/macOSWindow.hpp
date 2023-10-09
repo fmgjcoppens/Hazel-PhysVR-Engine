@@ -1,8 +1,9 @@
 #pragma once
 
 #include "Window.hpp"
-#include <glad/glad.hpp>
-#include <GLFW/glfw3.hpp>
+
+#include <glad/glad.h>
+#include <GLFW/glfw3.h>
 
 namespace HazelPVR {
 
@@ -14,7 +15,7 @@ namespace HazelPVR {
 		void OnUpdate() override;
 
 		[[nodiscard]] inline unsigned int GetWidth() const override { return m_Data.Width; }
-		[[nodiscard]] inline unsigned int GetHeight() const override { return m_Data.hppeight; }
+		[[nodiscard]] inline unsigned int GetHeight() const override { return m_Data.Height; }
 
 		// Window attributes
 		inline void SetEventCallback(const EventCallbackFn& callback) override { m_Data.EventCallback = callback; }
