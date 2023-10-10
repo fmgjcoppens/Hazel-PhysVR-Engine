@@ -1,10 +1,15 @@
 #include <HazelPVR.hpp>
 
+#include <glm/gtc/matrix_transform.hpp>
+
 class ExampleLayer : public HazelPVR::Layer
 {
 public:
     ExampleLayer()
-        : Layer("Example"), m_Camera(-1.6f, 1.6f, -1.0f, 1.0f), m_CameraPosition(0.0f), m_CameraRotation(0.0f)
+        : Layer("Example"),
+          m_Camera(-1.6f, 1.6f, -1.0f, 1.0f),
+          m_CameraPosition(0.0f),
+          m_SquarePosition(0.0f)
     {
         HZPVR_INFO("Creating new ExampleLayer instance");
 
@@ -58,6 +63,7 @@ public:
             layout(location = 1) in vec4 a_Color;
 
             uniform mat4 u_ViewProjection;
+            uniform mat4 u_Transform;
 
             out vec3 v_Position;
             out vec4 v_Color;
@@ -66,7 +72,7 @@ public:
             {
                 v_Position = a_Position + 0.0;
                 v_Color = a_Color;
-                gl_Position = u_ViewProjection * vec4(a_Position - 0.0, 1.0);
+                gl_Position = u_ViewProjection * u_Transform * vec4(a_Position - 0.0, 1.0);
             }
         )";
 
@@ -93,13 +99,14 @@ public:
             layout(location = 0) in vec3 a_Position;
 
             uniform mat4 u_ViewProjection;
+            uniform mat4 u_Transform;
 
             out vec3 v_Position;
 
             void main()
             {
                 v_Position = a_Position + 0.0;
-                gl_Position = u_ViewProjection * vec4(a_Position - 0.0, 1.0);
+                gl_Position = u_ViewProjection * u_Transform * vec4(a_Position - 0.0, 1.0);
             }
         )";
 
@@ -127,19 +134,29 @@ public:
         HZPVR_TRACE("Delta time: {0}s, {1}ms", ts.GetSeconds(), ts.GetMilliseconds());
 
         if (HazelPVR::Input::IsKeyPressed(HZPVR_KEY_LEFT))
-            m_CameraPosition.x += m_CameraMoveSpeed;
+            m_CameraPosition.x -= m_CameraMoveSpeed * ts;
         else if (HazelPVR::Input::IsKeyPressed(HZPVR_KEY_RIGHT))
-            m_CameraPosition.x -= m_CameraMoveSpeed;
+            m_CameraPosition.x += m_CameraMoveSpeed * ts;
 
         if (HazelPVR::Input::IsKeyPressed(HZPVR_KEY_UP))
-            m_CameraPosition.y -= m_CameraMoveSpeed;
+            m_CameraPosition.y += m_CameraMoveSpeed * ts;
         else if (HazelPVR::Input::IsKeyPressed(HZPVR_KEY_DOWN))
-            m_CameraPosition.y += m_CameraMoveSpeed;
+            m_CameraPosition.y -= m_CameraMoveSpeed * ts;
 
         if (HazelPVR::Input::IsKeyPressed(HZPVR_KEY_A))
-            m_CameraRotation -= m_CameraRotationSpeed;
+            m_CameraRotation += m_CameraRotationSpeed * ts;
         if (HazelPVR::Input::IsKeyPressed(HZPVR_KEY_D))
-            m_CameraRotation += m_CameraRotationSpeed;
+            m_CameraRotation -= m_CameraRotationSpeed * ts;
+
+        if (HazelPVR::Input::IsKeyPressed(HZPVR_KEY_J))
+            m_SquarePosition.x -= m_SquareMoveSpeed * ts;
+        else if (HazelPVR::Input::IsKeyPressed(HZPVR_KEY_L))
+            m_SquarePosition.x += m_SquareMoveSpeed * ts;
+
+        if (HazelPVR::Input::IsKeyPressed(HZPVR_KEY_I))
+            m_SquarePosition.y += m_SquareMoveSpeed * ts;
+        else if (HazelPVR::Input::IsKeyPressed(HZPVR_KEY_K))
+            m_SquarePosition.y -= m_SquareMoveSpeed * ts;
 
         HazelPVR::RenderCommand::SetClearColor({0.1f, 0.1f, 0.15f, 1});
         HazelPVR::RenderCommand::Clear();
@@ -148,10 +165,12 @@ public:
         m_Camera.SetRotation(m_CameraRotation);
 
         HazelPVR::Renderer::BeginScene(m_Camera);
-        {
-            HazelPVR::Renderer::Submit(m_BlueShader, m_SquareVA);
-            HazelPVR::Renderer::Submit(m_Shader, m_VertexArray);
-        }
+
+        glm::mat4 transform = glm::translate(glm::mat4(1.0f), m_SquarePosition);
+
+        HazelPVR::Renderer::Submit(m_BlueShader, m_SquareVA, transform);
+        HazelPVR::Renderer::Submit(m_Shader, m_VertexArray);
+
         HazelPVR::Renderer::EndScene();
     }
 
@@ -186,10 +205,13 @@ private:
     HazelPVR::OrthographicCamera m_Camera;
 
     glm::vec3 m_CameraPosition;
-    float m_CameraMoveSpeed = 0.1f;
+    float m_CameraMoveSpeed = 1.0f;
 
     float m_CameraRotation = 0.0f;
-    float m_CameraRotationSpeed = 1.5f;
+    float m_CameraRotationSpeed = 180.0f;
+
+    glm::vec3 m_SquarePosition;
+    float m_SquareMoveSpeed = 1.0f;
 };
 
 class Sandbox : public HazelPVR::Application
