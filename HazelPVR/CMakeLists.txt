@@ -17,17 +17,15 @@ add_library(${PROJECT_NAME} STATIC
     ${SRC_PLATFORM_OPENGL}
 )
 
-target_precompile_headers(${PROJECT_NAME} PUBLIC
-    ${HDR_ROOT_DIR}/hzpvrpch.hpp
-)
+target_precompile_headers(${PROJECT_NAME} PUBLIC ${PCH})
 
 target_include_directories(${PROJECT_NAME} PUBLIC
     ${HDR_ROOT_DIR}
-    ${SPDLOG}/include
-    ${GLAD}/include
+    ${SPDLOG_HDR}
+    ${GLAD_HDR}
     ${GLM}
     ${IMGUI}
-    ${GLFW}/include
+    ${GLFW_HDR}
 )
 
 target_link_libraries(${PROJECT_NAME}
