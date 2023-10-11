@@ -7,14 +7,14 @@
 
 namespace HazelPVR
 {
-    Shader::Shader(const std::string &vertexSrc, const std::string &fragmentSrc)
+    Shader::Shader(const std::string& vertexSrc, const std::string& fragmentSrc)
     {
         // Create an empty vertex shader handle
         GLuint vertexShader = glCreateShader(GL_VERTEX_SHADER);
 
         // Send the vertex shader source code to GL
         // Note that std::string's .c_str is NULL character terminated.
-        const GLchar *source = vertexSrc.c_str();
+        const GLchar* source = vertexSrc.c_str();
         glShaderSource(vertexShader, 1, &source, 0);
 
         // Compile the vertex shader
@@ -22,7 +22,7 @@ namespace HazelPVR
 
         GLint isCompiled = 0;
         glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &isCompiled);
-        if(isCompiled == GL_FALSE)
+        if (isCompiled == GL_FALSE)
         {
             GLint maxLength = 0;
             glGetShaderiv(vertexShader, GL_INFO_LOG_LENGTH, &maxLength);
@@ -30,7 +30,7 @@ namespace HazelPVR
             // The maxLength includes the NULL character
             std::vector<GLchar> infoLog(maxLength);
             glGetShaderInfoLog(vertexShader, maxLength, &maxLength, &infoLog[0]);
-            
+
             // We don't need the shader anymore.
             glDeleteShader(vertexShader);
 
@@ -59,7 +59,7 @@ namespace HazelPVR
             // The maxLength includes the NULL character
             std::vector<GLchar> infoLog(maxLength);
             glGetShaderInfoLog(fragmentShader, maxLength, &maxLength, &infoLog[0]);
-            
+
             // We don't need the shader anymore.
             glDeleteShader(fragmentShader);
             // Either of them. Don't leak shaders.
@@ -84,7 +84,7 @@ namespace HazelPVR
 
         // Note the different functions here: glGetProgram* instead of glGetShader*.
         GLint isLinked = 0;
-        glGetProgramiv(m_RendererID, GL_LINK_STATUS, (int *)&isLinked);
+        glGetProgramiv(m_RendererID, GL_LINK_STATUS, (int*)&isLinked);
         if (isLinked == GL_FALSE)
         {
             GLint maxLength = 0;
@@ -93,7 +93,7 @@ namespace HazelPVR
             // The maxLength includes the NULL character
             std::vector<GLchar> infoLog(maxLength);
             glGetProgramInfoLog(m_RendererID, maxLength, &maxLength, &infoLog[0]);
-            
+
             // We don't need the program anymore.
             glDeleteProgram(m_RendererID);
             // Don't leak shaders either.
@@ -125,10 +125,15 @@ namespace HazelPVR
         glUseProgram(0);
     }
 
-    void Shader::UploadUniformMat4(const std::string& name, const glm::mat4 &matrix)
+    void Shader::UploadUniformFloat4(const std::string& name, const glm::vec4& vector)
     {
-        GLint location =  glGetUniformLocation(m_RendererID, name.c_str());
+        GLint location = glGetUniformLocation(m_RendererID, name.c_str());
+        glUniform4f(location, vector.x, vector.y, vector.z, vector.w);
+    }
+
+    void Shader::UploadUniformMat4(const std::string& name, const glm::mat4& matrix)
+    {
+        GLint location = glGetUniformLocation(m_RendererID, name.c_str());
         glUniformMatrix4fv(location, 1, GL_FALSE, glm::value_ptr(matrix));
     }
-}
-
+} // namespace HazelPVR

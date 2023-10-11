@@ -11,7 +11,7 @@ add_compile_definitions(
 )
 
 # OS detection
-include(Platform.cmake)
+include(DetectOs.cmake)
 
 # Build HazelPVR lib
 add_subdirectory(HazelPVR)

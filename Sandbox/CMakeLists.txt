@@ -1,5 +1,6 @@
 project(Sandbox LANGUAGES CXX)
 
+# Sandbox file structure
 include(FileStructure.cmake)
 
 add_executable(${PROJECT_NAME} ${SRC_ROOT})

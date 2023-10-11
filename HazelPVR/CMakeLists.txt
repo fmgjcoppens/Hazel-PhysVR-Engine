@@ -10,7 +10,7 @@ project(HazelPVR LANGUAGES CXX)
 include(FileStructure.cmake)
 
 # HazelPVR-specific platform settings
-include(Platform.cmake)
+include(SetPlatformAttributes.cmake)
 
 # Build and import GLFW (docs, tests & examples force-disabled)
 set(GLFW_BUILD_DOCS OFF CACHE BOOL "" FORCE)

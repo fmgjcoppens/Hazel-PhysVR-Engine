@@ -1,8 +1,11 @@
 ## OS detection
 if(CMAKE_SYSTEM_NAME STREQUAL Linux)
+    set(OS Linux)
     add_compile_definitions(HZPVR_PLATFORM_LINUX)
 elseif(CMAKE_SYSTEM_NAME STREQUAL Darwin)
+    set(OS macOS)
     add_compile_definitions(HZPVR_PLATFORM_MACOS)
 elseif(CMAKE_SYSTEM_NAME STREQUAL Windows)
+    set(OS Windows)
     add_compile_definitions(HZPVR_PLATFORM_WINDOWS)
 endif()
