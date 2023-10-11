@@ -38,10 +38,10 @@ public:
         m_SquareVA.reset(HazelPVR::VertexArray::Create());
 
         float squareVertices[3 * 4] = {
-            -0.75f, -0.75f, 0.0f,
-             0.75f, -0.75f, 0.0f,
-             0.75f,  0.75f, 0.0f,
-            -0.75f,  0.75f, 0.0f
+            -0.5f, -0.5f, 0.0f,
+             0.5f, -0.5f, 0.0f,
+             0.5f,  0.5f, 0.0f,
+            -0.5f,  0.5f, 0.0f
         };
 
         std::shared_ptr<HazelPVR::VertexBuffer> squareVB;
@@ -131,7 +131,17 @@ public:
 public:
     void OnUpdate(HazelPVR::Timestep ts) override
     {
-        HZPVR_TRACE("Delta time: {0}s, {1}ms", ts.GetSeconds(), ts.GetMilliseconds());
+        // HZPVR_TRACE("Delta time: {0}s, {1}ms", ts.GetSeconds(), ts.GetMilliseconds());
+
+        if (HazelPVR::Input::IsKeyPressed(HZPVR_KEY_J))
+            m_SquarePosition.x -= m_SquareMoveSpeed * ts;
+        else if (HazelPVR::Input::IsKeyPressed(HZPVR_KEY_L))
+            m_SquarePosition.x += m_SquareMoveSpeed * ts;
+
+        if (HazelPVR::Input::IsKeyPressed(HZPVR_KEY_I))
+            m_SquarePosition.y += m_SquareMoveSpeed * ts;
+        else if (HazelPVR::Input::IsKeyPressed(HZPVR_KEY_K))
+            m_SquarePosition.y -= m_SquareMoveSpeed * ts;
 
         if (HazelPVR::Input::IsKeyPressed(HZPVR_KEY_LEFT))
             m_CameraPosition.x -= m_CameraMoveSpeed * ts;
@@ -148,16 +158,6 @@ public:
         if (HazelPVR::Input::IsKeyPressed(HZPVR_KEY_D))
             m_CameraRotation -= m_CameraRotationSpeed * ts;
 
-        if (HazelPVR::Input::IsKeyPressed(HZPVR_KEY_J))
-            m_SquarePosition.x -= m_SquareMoveSpeed * ts;
-        else if (HazelPVR::Input::IsKeyPressed(HZPVR_KEY_L))
-            m_SquarePosition.x += m_SquareMoveSpeed * ts;
-
-        if (HazelPVR::Input::IsKeyPressed(HZPVR_KEY_I))
-            m_SquarePosition.y += m_SquareMoveSpeed * ts;
-        else if (HazelPVR::Input::IsKeyPressed(HZPVR_KEY_K))
-            m_SquarePosition.y -= m_SquareMoveSpeed * ts;
-
         HazelPVR::RenderCommand::SetClearColor({0.1f, 0.1f, 0.15f, 1});
         HazelPVR::RenderCommand::Clear();
 
@@ -166,9 +166,20 @@ public:
 
         HazelPVR::Renderer::BeginScene(m_Camera);
 
-        glm::mat4 transform = glm::translate(glm::mat4(1.0f), m_SquarePosition);
+        static glm::mat4 scale = glm::scale(glm::mat4(1.0f), glm::vec3(0.075f));
+        glm::mat4 translate = glm::translate(glm::mat4(1.0f), m_SquarePosition);
 
-        HazelPVR::Renderer::Submit(m_BlueShader, m_SquareVA, transform);
+        for (int i = 0; i < 20; ++i)
+        {
+            for (int j = 0; j < 20; ++j)
+            {
+                glm::vec3 pos(0.085f * i, 0.085f * j, 0.0f);
+                glm::mat4 transform = glm::translate(glm::mat4(1.0f), pos) * translate * scale;
+                HazelPVR::Renderer::Submit(m_BlueShader, m_SquareVA, transform);
+            }
+        }
+
+        // HazelPVR::Renderer::Submit(m_BlueShader, m_SquareVA, translate);
         HazelPVR::Renderer::Submit(m_Shader, m_VertexArray);
 
         HazelPVR::Renderer::EndScene();
