@@ -1,10 +1,10 @@
 ## Platform detection
-if(CMAKE_SYSTEM_NAME STREQUAL "Linux")
+if(CMAKE_SYSTEM_NAME STREQUAL Linux)
     set(SRC_PLATFORM_OS ${SRC_PLATFORM_LINUX})
-elseif(CMAKE_SYSTEM_NAME STREQUAL "Darwin")
+elseif(CMAKE_SYSTEM_NAME STREQUAL Darwin)
     set(SRC_PLATFORM_OS ${SRC_PLATFORM_MACOS})
     find_library(COCOA_LIB Cocoa)
     find_library(IOKIT_LIB IOKit)
-elseif(CMAKE_SYSTEM_NAME STREQUAL "Windows")
+elseif(CMAKE_SYSTEM_NAME STREQUAL Windows)
     set(SRC_PLATFORM_OS ${SRC_PLATFORM_WINDOWS})
 endif()
