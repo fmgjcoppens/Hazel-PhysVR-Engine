@@ -1,5 +1,7 @@
 #pragma once
 
+#include <memory>
+
 #ifdef HZPVR_PLATFORM_WINDOWS
 #if HZ_DYNAMIC_LINK
     #ifdef HZPVR_BUILD_DLL
@@ -34,7 +36,6 @@
     #define HZPVR_DEBUGBREAK()
 #endif
 
-
 #ifdef HZPVR_ENABLE_ASSERTS
     #define HZPVR_ASSERT(x, ...) { if(!(x)) { HZPVR_ERROR("Assertion Failed: {0}", __VA_ARGS__); HZPVR_DEBUGBREAK(); } }
     #define HZPVR_CORE_ASSERT(x, ...) { if(!(x)) { HZPVR_CORE_ERROR("Assertion Failed: {0}", __VA_ARGS__); HZPVR_DEBUGBREAK(); } }
@@ -46,3 +47,13 @@
 #define BIT(x) (1 << x)
 
 #define HZPVR_BIND_EVENT_FN(fn) std::bind(&fn, this, std::placeholders::_1)
+
+namespace HazelPVR
+{
+    template <typename T>
+    using Scope = std::unique_ptr<T>;
+
+    template <typename T>
+    using Ref = std::shared_ptr<T>;
+}
+

@@ -1,13 +1,15 @@
- #include "hzpvrpch.hpp" // Precompiled header. Include not necessary with CMake
- 
- #include <spdlog/sinks/stdout_color_sinks.h>
+#include "hzpvrpch.hpp" // Precompiled header. Include not necessary with CMake
+#include "HazelPVR/Log.hpp"
+
+#include <spdlog/sinks/stdout_color_sinks.h>
 
 namespace HazelPVR
 {
     std::shared_ptr<spdlog::logger> Log::s_CoreLogger;
     std::shared_ptr<spdlog::logger> Log::s_ClientLogger;
 
-    void Log::Init() {
+    void Log::Init()
+    {
         spdlog::set_pattern("%^[%T] %n: %v%$");
         s_CoreLogger = spdlog::stdout_color_mt("HAZELPVR");
         s_CoreLogger->set_level(spdlog::level::trace);
@@ -15,4 +17,4 @@ namespace HazelPVR
         s_ClientLogger = spdlog::stdout_color_mt("APP");
         s_ClientLogger->set_level(spdlog::level::trace);
     }
-} // HazelPVR
+} // namespace HazelPVR

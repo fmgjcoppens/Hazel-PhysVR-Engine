@@ -24,7 +24,7 @@ class ExampleLayer : public HazelPVR::Layer
             float vertices[3 * 7] = {-0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 1.0f, 1.0f, 0.5f, -0.5f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f, 0.5f,
                 0.0f, 1.0f, 1.0f, 0.0f, 1.0f};
 
-            std::shared_ptr<HazelPVR::VertexBuffer> vertexBuffer;
+            HazelPVR::Ref<HazelPVR::VertexBuffer> vertexBuffer;
             vertexBuffer.reset(HazelPVR::VertexBuffer::Create(vertices, sizeof(vertices)));
             HazelPVR::BufferLayout layout = {
                 {HazelPVR::ShaderDataType::Float3, "a_Position"}, {HazelPVR::ShaderDataType::Float4, "a_Color"}};
@@ -32,7 +32,7 @@ class ExampleLayer : public HazelPVR::Layer
             m_VertexArray->AddVertexBuffer(vertexBuffer);
 
             uint32_t indices[3] = {0, 1, 2};
-            std::shared_ptr<HazelPVR::IndexBuffer> indexBuffer;
+            HazelPVR::Ref<HazelPVR::IndexBuffer> indexBuffer;
             indexBuffer.reset(HazelPVR::IndexBuffer::Create(indices, sizeof(indices) / sizeof(uint32_t)));
             m_VertexArray->SetIndexBuffer(indexBuffer);
 
@@ -40,13 +40,13 @@ class ExampleLayer : public HazelPVR::Layer
 
             float squareVertices[3 * 4] = {-0.5f, -0.5f, 0.0f, 0.5f, -0.5f, 0.0f, 0.5f, 0.5f, 0.0f, -0.5f, 0.5f, 0.0f};
 
-            std::shared_ptr<HazelPVR::VertexBuffer> squareVB;
+            HazelPVR::Ref<HazelPVR::VertexBuffer> squareVB;
             squareVB.reset(HazelPVR::VertexBuffer::Create(squareVertices, sizeof(squareVertices)));
             squareVB->SetLayout({{HazelPVR::ShaderDataType::Float3, "a_Position"}});
             m_SquareVA->AddVertexBuffer(squareVB);
 
             uint32_t squareIndices[6] = {0, 1, 2, 2, 3, 0};
-            std::shared_ptr<HazelPVR::IndexBuffer> squareIB;
+            HazelPVR::Ref<HazelPVR::IndexBuffer> squareIB;
             squareIB.reset(HazelPVR::IndexBuffer::Create(squareIndices, sizeof(squareIndices) / sizeof(uint32_t)));
             m_SquareVA->SetIndexBuffer(squareIB);
 
@@ -228,11 +228,11 @@ class ExampleLayer : public HazelPVR::Layer
         }
 
     private:
-        std::shared_ptr<HazelPVR::Shader> m_Shader;
-        std::shared_ptr<HazelPVR::VertexArray> m_VertexArray;
+        HazelPVR::Ref<HazelPVR::Shader> m_Shader;
+        HazelPVR::Ref<HazelPVR::VertexArray> m_VertexArray;
 
-        std::shared_ptr<HazelPVR::Shader> m_FlatColorShader;
-        std::shared_ptr<HazelPVR::VertexArray> m_SquareVA;
+        HazelPVR::Ref<HazelPVR::Shader> m_FlatColorShader;
+        HazelPVR::Ref<HazelPVR::VertexArray> m_SquareVA;
 
         HazelPVR::OrthographicCamera m_Camera;
 
