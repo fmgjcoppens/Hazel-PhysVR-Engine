@@ -47,13 +47,19 @@ class ExampleLayer : public HazelPVR::Layer
                 -0.5f, -0.5f, 0.0f, 0.0f, 0.0f,
                  0.5f, -0.5f, 0.0f, 1.0f, 0.0f,
                  0.5f,  0.5f, 0.0f, 1.0f, 1.0f,
-                -0.5f,  0.5f, 0.0f, 1.0f, 0.0f
+                -0.5f,  0.5f, 0.0f, 0.0f, 1.0f
             };
             // clang-format on
 
             HazelPVR::Ref<HazelPVR::VertexBuffer> squareVB;
             squareVB.reset(HazelPVR::VertexBuffer::Create(squareVertices, sizeof(squareVertices)));
-            squareVB->SetLayout({{HazelPVR::ShaderDataType::Float3, "a_Position"}});
+
+            // clang-format off
+            squareVB->SetLayout({
+                {HazelPVR::ShaderDataType::Float3, "a_Position"},
+                {HazelPVR::ShaderDataType::Float2, "a_TexCoord"}
+            });
+            // clang-format on
             m_SquareVA->AddVertexBuffer(squareVB);
 
             uint32_t squareIndices[6] = {0, 1, 2, 2, 3, 0};
@@ -111,7 +117,7 @@ class ExampleLayer : public HazelPVR::Layer
             void main()
             {
                 v_Position = a_Position + 0.0;
-                gl_Position = u_ViewProjection * u_Transform * vec4(a_Position - 0.0, 1.0);
+                gl_Position = u_ViewProjection * u_Transform * vec4(a_Position, 1.0);
             }
         )";
 
@@ -131,6 +137,41 @@ class ExampleLayer : public HazelPVR::Layer
         )";
 
             m_FlatColorShader.reset(HazelPVR::Shader::Create(flatColorShaderVertexSrc, flatColorShaderFragmentSrc));
+
+            std::string textureShaderVertexSrc = R"(
+            #version 330 core
+
+            layout(location = 0) in vec3 a_Position;
+            layout(location = 1) in vec2 a_TexCoord;
+
+            uniform mat4 u_ViewProjection;
+            uniform mat4 u_Transform;
+
+            out vec2 v_TexCoord;
+
+            void main()
+            {
+                v_TexCoord = a_TexCoord;
+                gl_Position = u_ViewProjection * u_Transform * vec4(a_Position, 1.0);
+            }
+        )";
+
+            std::string textureShaderFragmentSrc = R"(
+            #version 330 core
+
+            layout(location = 0) out vec4 color;
+
+            in vec2 v_TexCoord;
+
+            uniform vec4 u_Color;
+
+            void main()
+            {
+                color = vec4(v_TexCoord, 0.0, 1.0);
+            }
+        )";
+
+            m_TextureShader.reset(HazelPVR::Shader::Create(textureShaderVertexSrc, textureShaderFragmentSrc));
         }
 
         ~ExampleLayer()
@@ -206,7 +247,7 @@ class ExampleLayer : public HazelPVR::Layer
             // Render triangle
             // HazelPVR::Renderer::Submit(m_Shader, m_VertexArray);
 
-            HazelPVR::Renderer::Submit(m_FlatColorShader, m_SquareVA, glm::scale(glm::mat4(1.0f), glm::vec3(1.5f)));
+            HazelPVR::Renderer::Submit(m_TextureShader, m_SquareVA, glm::scale(glm::mat4(1.0f), glm::vec3(1.5f)));
 
             HazelPVR::Renderer::EndScene();
         }
@@ -242,7 +283,7 @@ class ExampleLayer : public HazelPVR::Layer
         HazelPVR::Ref<HazelPVR::Shader> m_Shader;
         HazelPVR::Ref<HazelPVR::VertexArray> m_VertexArray;
 
-        HazelPVR::Ref<HazelPVR::Shader> m_FlatColorShader;
+        HazelPVR::Ref<HazelPVR::Shader> m_FlatColorShader, m_TextureShader;
         HazelPVR::Ref<HazelPVR::VertexArray> m_SquareVA;
 
         HazelPVR::OrthographicCamera m_Camera;
