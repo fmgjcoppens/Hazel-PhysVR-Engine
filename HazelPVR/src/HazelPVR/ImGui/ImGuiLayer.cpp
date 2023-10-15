@@ -10,23 +10,30 @@
 
 #include <GLFW/glfw3.h>
 
-
 namespace HazelPVR
 {
-	ImGuiLayer::ImGuiLayer() : Layer("ImGuiLayer") { HZPVR_CORE_INFO("Creating new ImGuiLayer instance"); }
+    ImGuiLayer::ImGuiLayer()
+        : Layer("ImGuiLayer")
+    {
+        HZPVR_CORE_INFO("Creating new ImGuiLayer instance");
+    }
 
-	ImGuiLayer::~ImGuiLayer() { HZPVR_CORE_INFO("Destroying ImGuiLayer instance"); }
+    ImGuiLayer::~ImGuiLayer()
+    {
+        HZPVR_CORE_INFO("Destroying ImGuiLayer instance");
+    }
 
     void ImGuiLayer::OnAttach()
     {
         // Setup Dear ImGui context
         IMGUI_CHECKVERSION();
         ImGui::CreateContext();
-        ImGuiIO& io = ImGui::GetIO(); (void)io;
-        io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;     // Enable Keyboard Controls
-        io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
-        io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;         // Enable Docking
-        io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;       // This does not behave properly in i3wm!
+        ImGuiIO& io = ImGui::GetIO();
+        (void)io;
+        io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard; // Enable Keyboard Controls
+        io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;  // Enable Gamepad Controls
+        io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;     // Enable Docking
+        io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;   // This does not behave properly in i3wm!
 
         // When viewports are enabled we tweak WindowRounding/WindowBg so platform windows can look identical to regular ones.
         if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
@@ -48,7 +55,8 @@ namespace HazelPVR
         ImGui::StyleColorsDark();
 
         // Load Fonts
-        float fontSize = 32.0f;// *2.0f;
+        // float fontSize = 32.0f;
+        float fontSize = 22.0f;
         ImFont* notosans_regular = io.Fonts->AddFontFromFileTTF("assets/fonts/noto/NotoSans-Regular.ttf", fontSize);
         IM_ASSERT(notosans_regular != nullptr);
         ImFont* notosans_bold = io.Fonts->AddFontFromFileTTF("assets/fonts/noto/NotoSans-Bold.ttf", fontSize);
@@ -56,7 +64,7 @@ namespace HazelPVR
         io.FontDefault = notosans_regular;
     }
 
-	void ImGuiLayer::OnDetach()
+    void ImGuiLayer::OnDetach()
     {
         ImGui_ImplOpenGL3_Shutdown();
         ImGui_ImplGlfw_Shutdown();
@@ -68,7 +76,7 @@ namespace HazelPVR
         ImGui_ImplOpenGL3_NewFrame();
         ImGui_ImplGlfw_NewFrame();
         ImGui::NewFrame();
-	}
+    }
 
     void ImGuiLayer::End()
     {
@@ -80,7 +88,8 @@ namespace HazelPVR
         Application& app = Application::Get();
         io.DisplaySize = ImVec2(app.GetWindow().GetWidth(), app.GetWindow().GetHeight());
 
-        if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable) {
+        if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
+        {
             GLFWwindow* backup_current_context = glfwGetCurrentContext();
             ImGui::UpdatePlatformWindows();
             ImGui::RenderPlatformWindowsDefault();
@@ -92,4 +101,4 @@ namespace HazelPVR
     {
         // ImGui::ShowDemoWindow();
     }
-}
+} // namespace HazelPVR
