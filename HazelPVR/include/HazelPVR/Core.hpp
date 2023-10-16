@@ -69,10 +69,4 @@ namespace HazelPVR
 
     template<typename T>
     using Ref = std::shared_ptr<T>;
-
-    // template<typename T>
-    // using makeScope = std::make_unique<T>;
-
-    // template<typename T>
-    // using makeRef = std::make_shared<T>;
 } // namespace HazelPVR

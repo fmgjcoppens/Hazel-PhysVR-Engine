@@ -18,6 +18,7 @@
 
 #include "HazelPVR/Renderer/Buffer.hpp"
 #include "HazelPVR/Renderer/Shader.hpp"
+#include "HazelPVR/Renderer/Texture.hpp"
 #include "HazelPVR/Renderer/VertexArray.hpp"
 
 #include "HazelPVR/Renderer/OrthographicCamera.hpp"
@@ -26,4 +27,3 @@
 // -------------- Entry point --------------
 #include "HazelPVR/EntryPoint.hpp"
 // -----------------------------------------
-

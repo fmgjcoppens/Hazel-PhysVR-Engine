@@ -163,15 +163,18 @@ class ExampleLayer : public HazelPVR::Layer
 
             in vec2 v_TexCoord;
 
-            uniform vec4 u_Color;
+            uniform sampler2D u_Texture;
 
             void main()
             {
-                color = vec4(v_TexCoord, 0.0, 1.0);
+                color = texture(u_Texture, v_TexCoord);
             }
         )";
 
             m_TextureShader.reset(HazelPVR::Shader::Create(textureShaderVertexSrc, textureShaderFragmentSrc));
+            m_Texture = HazelPVR::Texture2D::Create("assets/textures/Checkerboard.png");
+            std::dynamic_pointer_cast<HazelPVR::OpenGLShader>(m_TextureShader)->Bind();
+            std::dynamic_pointer_cast<HazelPVR::OpenGLShader>(m_TextureShader)->UploadUniformInt("u_Texture", 0);
         }
 
         ~ExampleLayer()
@@ -247,6 +250,7 @@ class ExampleLayer : public HazelPVR::Layer
             // Render triangle
             // HazelPVR::Renderer::Submit(m_Shader, m_VertexArray);
 
+            m_Texture->Bind();
             HazelPVR::Renderer::Submit(m_TextureShader, m_SquareVA, glm::scale(glm::mat4(1.0f), glm::vec3(1.5f)));
 
             HazelPVR::Renderer::EndScene();
@@ -285,6 +289,8 @@ class ExampleLayer : public HazelPVR::Layer
 
         HazelPVR::Ref<HazelPVR::Shader> m_FlatColorShader, m_TextureShader;
         HazelPVR::Ref<HazelPVR::VertexArray> m_SquareVA;
+
+        HazelPVR::Ref<HazelPVR::Texture2D> m_Texture;
 
         HazelPVR::OrthographicCamera m_Camera;
 
