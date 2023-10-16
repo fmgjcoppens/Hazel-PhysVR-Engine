@@ -31,6 +31,7 @@ add_library(${PROJECT_NAME} STATIC
     ${SRC_HZPVR_RENDERER}
     ${SRC_PLATFORM_OS}
     ${SRC_PLATFORM_OPENGL}
+    ${SRC_STB_IMAGE}
 )
 
 # HazelPVR-specific definitions
@@ -47,6 +48,7 @@ target_include_directories(${PROJECT_NAME} PRIVATE
     ${GLM}
     ${IMGUI}
     ${GLFW_HDR}
+    ${STB_IMAGE}
 )
 
 target_link_libraries(${PROJECT_NAME}
