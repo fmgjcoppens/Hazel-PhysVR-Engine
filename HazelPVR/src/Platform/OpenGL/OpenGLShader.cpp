@@ -4,9 +4,15 @@
 
 #include <glad/glad.h>
 #include <glm/gtc/type_ptr.hpp>
+#include <fstream>
 
 namespace HazelPVR
 {
+    OpenGLShader::OpenGLShader(const std::string& filePath)
+    {
+        std::string shaderSource = ReadFile(filePath);
+    }
+
     OpenGLShader::OpenGLShader(const std::string& vertexSrc, const std::string& fragmentSrc)
     {
         // Create an empty vertex shader handle
@@ -113,6 +119,26 @@ namespace HazelPVR
     OpenGLShader::~OpenGLShader()
     {
         glDeleteProgram(m_RendererID);
+    }
+
+    std::string OpenGLShader::ReadFile(const std::string& filePath)
+    {
+        std::string result;
+        std::ifstream in(filePath, std::ios::in, std::ios::binary);
+        if (in)
+        {
+            in.seekg(0, std::ios::end);
+            result.resize(in.tellg());
+            in.seekg(0, std::ios::beg);
+            in.read(&result[0], result.size());
+            in.close();
+        }
+        else
+        {
+            HZPVR_CORE_ERROR("Could not open shader file {0}", filePath);
+        }
+
+        return result;
     }
 
     void OpenGLShader::Bind() const
