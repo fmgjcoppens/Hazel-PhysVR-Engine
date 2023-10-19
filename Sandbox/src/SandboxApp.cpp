@@ -172,7 +172,10 @@ class ExampleLayer : public HazelPVR::Layer
         )";
 
             m_TextureShader.reset(HazelPVR::Shader::Create(textureShaderVertexSrc, textureShaderFragmentSrc));
+
             m_Texture = HazelPVR::Texture2D::Create("assets/textures/Checkerboard.png");
+            m_MyLogoTexture = HazelPVR::Texture2D::Create("assets/textures/ChernoLogo.png");
+
             std::dynamic_pointer_cast<HazelPVR::OpenGLShader>(m_TextureShader)->Bind();
             std::dynamic_pointer_cast<HazelPVR::OpenGLShader>(m_TextureShader)->UploadUniformInt("u_Texture", 0);
         }
@@ -253,6 +256,9 @@ class ExampleLayer : public HazelPVR::Layer
             m_Texture->Bind();
             HazelPVR::Renderer::Submit(m_TextureShader, m_SquareVA, glm::scale(glm::mat4(1.0f), glm::vec3(1.5f)));
 
+            m_MyLogoTexture->Bind();
+            HazelPVR::Renderer::Submit(m_TextureShader, m_SquareVA, glm::scale(glm::mat4(1.0f), glm::vec3(1.5f)));
+
             HazelPVR::Renderer::EndScene();
         }
 
@@ -291,6 +297,7 @@ class ExampleLayer : public HazelPVR::Layer
         HazelPVR::Ref<HazelPVR::VertexArray> m_SquareVA;
 
         HazelPVR::Ref<HazelPVR::Texture2D> m_Texture;
+        HazelPVR::Ref<HazelPVR::Texture2D> m_MyLogoTexture;
 
         HazelPVR::OrthographicCamera m_Camera;
 
