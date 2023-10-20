@@ -2,6 +2,7 @@
 
 #include "HazelPVR/Renderer/Shader.hpp"
 
+#include <glad/glad.h>
 #include <glm/glm.hpp>
 
 namespace HazelPVR
@@ -29,7 +30,8 @@ namespace HazelPVR
 
         private:
             std::string ReadFile(const std::string& filePath);
-            void Compile();
+            std::unordered_map<GLenum, std::string> PreProcess(const std::string& source);
+            void Compile(const std::unordered_map<GLenum, std::string>& shaderSources);
 
         private:
             uint32_t m_RendererID;
