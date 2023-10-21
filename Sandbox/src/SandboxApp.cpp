@@ -219,8 +219,8 @@ class ExampleLayer : public HazelPVR::Layer
         glm::vec3 m_SquareScaleFactor;
         float m_SquareScaleSpeed = 0.1f;
 
-        glm::vec4 m_SquareColor1 = {0.2f, 0.3f, 0.8f, 0.5f};
-        glm::vec4 m_SquareColor2 = {0.8f, 0.3f, 0.2f, 0.5f};
+        glm::vec4 m_SquareColor1 = {0.2f, 0.3f, 0.8f, 1.0f};
+        glm::vec4 m_SquareColor2 = {0.8f, 0.3f, 0.2f, 1.0f};
 };
 
 class Sandbox : public HazelPVR::Application
