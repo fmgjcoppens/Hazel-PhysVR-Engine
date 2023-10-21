@@ -87,7 +87,9 @@ namespace HazelPVR
     void OpenGLShader::Compile(const std::unordered_map<GLenum, std::string>& shaderSources)
     {
         GLuint program = glCreateProgram();
-        std::vector<GLenum> glShaderIDs(shaderSources.size());
+        HZPVR_CORE_ASSERT(shaderSources.size() <= 2, "Number of shaders in shaderSources too large. Must be <= 2!");
+        std::array<GLenum, 2> glShaderIDs;
+        int glShaderIDIndex = 0;
         for (auto& kv : shaderSources)
         {
             GLenum type = kv.first;
@@ -118,7 +120,7 @@ namespace HazelPVR
             }
 
             glAttachShader(program, shader);
-            glShaderIDs.push_back(shader);
+            glShaderIDs[glShaderIDIndex++] = shader;
         }
 
         glLinkProgram(program);
