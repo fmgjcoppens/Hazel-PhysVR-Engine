@@ -1,10 +1,10 @@
 #include <HazelPVR.hpp>
+
 #include "Platform/OpenGL/OpenGLShader.hpp"
 
+#include <imgui/imgui.h>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
-
-#include <imgui/imgui.h>
 
 class ExampleLayer : public HazelPVR::Layer
 {
@@ -29,15 +29,17 @@ class ExampleLayer : public HazelPVR::Layer
             // clang-format on
 
             HazelPVR::Ref<HazelPVR::VertexBuffer> vertexBuffer;
-            vertexBuffer.reset(HazelPVR::VertexBuffer::Create(vertices, sizeof(vertices)));
+            vertexBuffer = HazelPVR::VertexBuffer::Create(vertices, sizeof(vertices));
+
             HazelPVR::BufferLayout layout = {
                 {HazelPVR::ShaderDataType::Float3, "a_Position"}, {HazelPVR::ShaderDataType::Float4, "a_Color"}};
             vertexBuffer->SetLayout(layout);
+
             m_VertexArray->AddVertexBuffer(vertexBuffer);
 
             uint32_t indices[3] = {0, 1, 2};
             HazelPVR::Ref<HazelPVR::IndexBuffer> indexBuffer;
-            indexBuffer.reset(HazelPVR::IndexBuffer::Create(indices, sizeof(indices) / sizeof(uint32_t)));
+            indexBuffer = HazelPVR::IndexBuffer::Create(indices, sizeof(indices) / sizeof(uint32_t));
             m_VertexArray->SetIndexBuffer(indexBuffer);
 
             m_SquareVA.reset(HazelPVR::VertexArray::Create());
@@ -52,7 +54,7 @@ class ExampleLayer : public HazelPVR::Layer
             // clang-format on
 
             HazelPVR::Ref<HazelPVR::VertexBuffer> squareVB;
-            squareVB.reset(HazelPVR::VertexBuffer::Create(squareVertices, sizeof(squareVertices)));
+            squareVB = HazelPVR::VertexBuffer::Create(squareVertices, sizeof(squareVertices));
 
             // clang-format off
             squareVB->SetLayout({
@@ -64,18 +66,18 @@ class ExampleLayer : public HazelPVR::Layer
 
             uint32_t squareIndices[6] = {0, 1, 2, 2, 3, 0};
             HazelPVR::Ref<HazelPVR::IndexBuffer> squareIB;
-            squareIB.reset(HazelPVR::IndexBuffer::Create(squareIndices, sizeof(squareIndices) / sizeof(uint32_t)));
+            squareIB = HazelPVR::IndexBuffer::Create(squareIndices, sizeof(squareIndices) / sizeof(uint32_t));
             m_SquareVA->SetIndexBuffer(squareIB);
 
-            m_Shader.reset(HazelPVR::Shader::Create("assets/shaders/Basic.glsl"));
-            m_FlatColorShader.reset(HazelPVR::Shader::Create("assets/shaders/FlatColor.glsl"));
-            m_TextureShader.reset(HazelPVR::Shader::Create("assets/shaders/Texture.glsl"));
+            auto basicShader = m_ShaderLibrary.Load("assets/shaders/Basic.glsl");
+            auto flatColorShader = m_ShaderLibrary.Load("assets/shaders/FlatColor.glsl");
+            auto textureShader = m_ShaderLibrary.Load("assets/shaders/Texture.glsl");
 
             m_Texture = HazelPVR::Texture2D::Create("assets/textures/Checkerboard.png");
             m_MyLogoTexture = HazelPVR::Texture2D::Create("assets/textures/ChernoLogo.png");
 
-            std::dynamic_pointer_cast<HazelPVR::OpenGLShader>(m_TextureShader)->Bind();
-            std::dynamic_pointer_cast<HazelPVR::OpenGLShader>(m_TextureShader)->UploadUniformInt("u_Texture", 0);
+            std::dynamic_pointer_cast<HazelPVR::OpenGLShader>(textureShader)->Bind();
+            std::dynamic_pointer_cast<HazelPVR::OpenGLShader>(textureShader)->UploadUniformInt("u_Texture", 0);
         }
 
         ~ExampleLayer()
@@ -125,38 +127,45 @@ class ExampleLayer : public HazelPVR::Layer
             m_Camera.SetRotation(m_CameraRotation);
 
             HazelPVR::Renderer::BeginScene(m_Camera);
-
-            glm::mat4 scale = glm::scale(glm::mat4(1.0f), m_SquareScaleFactor);
-            glm::mat4 translate = glm::translate(glm::mat4(1.0f), m_SquarePosition);
-
-            std::dynamic_pointer_cast<HazelPVR::OpenGLShader>(m_FlatColorShader)->Bind();
-
-            for (int x = 0; x < 20; ++x)
             {
-                for (int y = 0; y < 20; ++y)
-                {
-                    glm::vec3 pos(0.085f * x, 0.085f * y, 0.0f);
-                    glm::mat4 transform = glm::translate(glm::mat4(1.0f), pos) * translate * scale;
-                    if ((x + y) % 2 == 0)
-                        std::dynamic_pointer_cast<HazelPVR::OpenGLShader>(m_FlatColorShader)
-                            ->UploadUniformFloat4("u_Color", m_SquareColor1);
-                    else
-                        std::dynamic_pointer_cast<HazelPVR::OpenGLShader>(m_FlatColorShader)
-                            ->UploadUniformFloat4("u_Color", m_SquareColor2);
+                { // Grid of colored squares
+                    glm::mat4 scale = glm::scale(glm::mat4(1.0f), m_SquareScaleFactor);
+                    glm::mat4 translate = glm::translate(glm::mat4(1.0f), m_SquarePosition);
 
-                    HazelPVR::Renderer::Submit(m_FlatColorShader, m_SquareVA, transform);
+                    auto flatColorShader = m_ShaderLibrary.Get("FlatColor");
+                    std::dynamic_pointer_cast<HazelPVR::OpenGLShader>(flatColorShader)->Bind();
+                    for (int x = 0; x < 20; ++x)
+                    {
+                        for (int y = 0; y < 20; ++y)
+                        {
+                            glm::vec3 pos(0.085f * x, 0.085f * y, 0.0f);
+                            glm::mat4 transform = glm::translate(glm::mat4(1.0f), pos) * translate * scale;
+                            if ((x + y) % 2 == 0)
+                                std::dynamic_pointer_cast<HazelPVR::OpenGLShader>(flatColorShader)
+                                    ->UploadUniformFloat4("u_Color", m_SquareColor1);
+                            else
+                                std::dynamic_pointer_cast<HazelPVR::OpenGLShader>(flatColorShader)
+                                    ->UploadUniformFloat4("u_Color", m_SquareColor2);
+
+                            HazelPVR::Renderer::Submit(flatColorShader, m_SquareVA, transform);
+                        }
+                    }
+                }
+
+                // { // Render triangle
+                //     auto basicShader = m_ShaderLibrary.Get("Basic");
+                //     HazelPVR::Renderer::Submit(basicShader, m_VertexArray);
+                // }
+
+                { // A square with 2 superimposed textures with blending
+                    auto textureShader = m_ShaderLibrary.Get("Texture");
+                    m_Texture->Bind();
+                    HazelPVR::Renderer::Submit(textureShader, m_SquareVA, glm::scale(glm::mat4(1.0f), glm::vec3(1.5f)));
+
+                    m_MyLogoTexture->Bind();
+                    HazelPVR::Renderer::Submit(textureShader, m_SquareVA, glm::scale(glm::mat4(1.0f), glm::vec3(1.5f)));
                 }
             }
-
-            // Render triangle
-            // HazelPVR::Renderer::Submit(m_Shader, m_VertexArray);
-
-            m_Texture->Bind();
-            HazelPVR::Renderer::Submit(m_TextureShader, m_SquareVA, glm::scale(glm::mat4(1.0f), glm::vec3(1.5f)));
-
-            m_MyLogoTexture->Bind();
-            HazelPVR::Renderer::Submit(m_TextureShader, m_SquareVA, glm::scale(glm::mat4(1.0f), glm::vec3(1.5f)));
-
             HazelPVR::Renderer::EndScene();
         }
 
@@ -188,10 +197,9 @@ class ExampleLayer : public HazelPVR::Layer
         }
 
     private:
-        HazelPVR::Ref<HazelPVR::Shader> m_Shader;
-        HazelPVR::Ref<HazelPVR::VertexArray> m_VertexArray;
+        HazelPVR::ShaderLibrary m_ShaderLibrary;
 
-        HazelPVR::Ref<HazelPVR::Shader> m_FlatColorShader, m_TextureShader;
+        HazelPVR::Ref<HazelPVR::VertexArray> m_VertexArray;
         HazelPVR::Ref<HazelPVR::VertexArray> m_SquareVA;
 
         HazelPVR::Ref<HazelPVR::Texture2D> m_Texture;

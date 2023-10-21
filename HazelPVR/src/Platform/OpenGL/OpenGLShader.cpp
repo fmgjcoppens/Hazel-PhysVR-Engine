@@ -3,7 +3,6 @@
 #include "Platform/OpenGL/OpenGLShader.hpp"
 
 #include <glm/gtc/type_ptr.hpp>
-#include <fstream>
 
 namespace HazelPVR
 {
@@ -24,9 +23,12 @@ namespace HazelPVR
         std::string source = ReadFile(filePath);
         auto shaderSources = PreProcess(source);
         Compile(shaderSources);
+
+        m_Name = std::filesystem::path(filePath).stem();
     }
 
-    OpenGLShader::OpenGLShader(const std::string& vertexSrc, const std::string& fragmentSrc)
+    OpenGLShader::OpenGLShader(const std::string& name, const std::string& vertexSrc, const std::string& fragmentSrc)
+        : m_Name(name)
     {
         std::unordered_map<GLenum, std::string> shaderSources;
         shaderSources[GL_VERTEX_SHADER] = vertexSrc;
