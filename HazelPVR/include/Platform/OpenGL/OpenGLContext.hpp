@@ -2,6 +2,8 @@
 
 #include "HazelPVR/Renderer/GraphicsContext.hpp"
 
+#include <GLFW/glfw3.h>
+
 namespace HazelPVR
 {
     class OpenGLContext : public GraphicsContext
@@ -15,4 +17,4 @@ namespace HazelPVR
         private:
             GLFWwindow* m_windowHandle;
     };
-}
+} // namespace HazelPVR

@@ -22,9 +22,9 @@ namespace HazelPVR
             void onEvent(Event& event);
             void PushLayer(Layer* layer);
             void PushOverlay(Layer* layer);
-            inline Window& GetWindow()
+            inline Scope<Window>& GetWindow()
             {
-                return *m_Window;
+                return m_Window;
             }
             inline static Application& Get()
             {
@@ -36,7 +36,7 @@ namespace HazelPVR
             bool onWindowClose(WindowCloseEvent& event);
 
         private:
-            Scope<Window> m_Window;
+            Scope<Window> m_Window; // Contains a member function that returns a raw pointer to the native window object (GLFW)
             ImGuiLayer* m_ImGuiLayer;
             bool m_Running = true;
             LayerStack m_LayerStack;

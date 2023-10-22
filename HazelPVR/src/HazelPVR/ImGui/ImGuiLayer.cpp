@@ -44,7 +44,7 @@ namespace HazelPVR
         }
 
         Application& app = Application::Get();
-        auto* window = static_cast<GLFWwindow*>(app.GetWindow().GetNativeWindow());
+        auto* window = static_cast<GLFWwindow*>(app.GetWindow()->GetNativeWindow());
 
         // Setup Platform/Renderer backends
         const char* glsl_version = "#version 130";
@@ -86,7 +86,7 @@ namespace HazelPVR
 
         ImGuiIO& io = ImGui::GetIO();
         Application& app = Application::Get();
-        io.DisplaySize = ImVec2(app.GetWindow().GetWidth(), app.GetWindow().GetHeight());
+        io.DisplaySize = ImVec2(app.GetWindow()->GetWidth(), app.GetWindow()->GetHeight());
 
         if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
         {
