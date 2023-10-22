@@ -24,7 +24,7 @@ namespace HazelPVR
 
         // This can also be done in the Sandbox constructor (SandBoxApp.cpp) on the application side, but I chose to do it here because its
         // creation is not optional; if it's not created GLFW/ImGui will not initialize correctly!
-        m_ImGuiLayer = new ImGuiLayer();
+        m_ImGuiLayer = std::make_shared<ImGuiLayer>();
         PushOverlay(m_ImGuiLayer);
     }
 
@@ -33,13 +33,13 @@ namespace HazelPVR
         HZPVR_INFO("Destroying Application instance");
     }
 
-    void Application::PushLayer(Layer* layer)
+    void Application::PushLayer(Ref<Layer> layer)
     {
         m_LayerStack.PushLayer(layer);
         layer->OnAttach();
     }
 
-    void Application::PushOverlay(Layer* layer)
+    void Application::PushOverlay(Ref<Layer> layer)
     {
         m_LayerStack.PushOverlay(layer);
         layer->OnAttach();
@@ -68,12 +68,12 @@ namespace HazelPVR
             Timestep timestep = time - m_LastFrameRenderTime;
             m_LastFrameRenderTime = time;
 
-            for (Layer* layer : m_LayerStack)
+            for (Ref<Layer> layer : m_LayerStack)
                 layer->OnUpdate(timestep);
 
             m_ImGuiLayer->Begin();
 
-            for (Layer* layer : m_LayerStack)
+            for (Ref<Layer> layer : m_LayerStack)
                 layer->OnImGuiRender();
 
             m_ImGuiLayer->End();

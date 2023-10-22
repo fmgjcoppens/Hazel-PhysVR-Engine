@@ -229,7 +229,7 @@ class Sandbox : public HazelPVR::Application
         Sandbox()
         {
             HZPVR_INFO("Creating new Sandbox instance");
-            PushLayer(new ExampleLayer());
+            PushLayer(std::make_shared<ExampleLayer>());
         }
 
         ~Sandbox()

@@ -20,8 +20,8 @@ namespace HazelPVR
         public:
             void Run();
             void onEvent(Event& event);
-            void PushLayer(Layer* layer);
-            void PushOverlay(Layer* layer);
+            void PushLayer(Ref<Layer> layer);
+            void PushOverlay(Ref<Layer> layer);
             inline Scope<Window>& GetWindow()
             {
                 return m_Window;
@@ -37,7 +37,7 @@ namespace HazelPVR
 
         private:
             Scope<Window> m_Window; // Contains a member function that returns a raw pointer to the native window object (GLFW)
-            ImGuiLayer* m_ImGuiLayer;
+            Ref<ImGuiLayer> m_ImGuiLayer;
             bool m_Running = true;
             LayerStack m_LayerStack;
             float m_LastFrameRenderTime = 0.0f;
