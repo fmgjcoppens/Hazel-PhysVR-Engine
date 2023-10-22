@@ -28,6 +28,6 @@ namespace HazelPVR
             }
 
         private:
-            static RendererAPI* s_RendererAPI;
+            static Ref<RendererAPI> s_RendererAPI;
     };
 } // namespace HazelPVR

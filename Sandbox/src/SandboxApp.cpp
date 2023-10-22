@@ -18,7 +18,7 @@ class ExampleLayer : public HazelPVR::Layer
         {
             HZPVR_INFO("Creating new ExampleLayer instance");
 
-            m_VertexArray.reset(HazelPVR::VertexArray::Create());
+            m_VertexArray = HazelPVR::VertexArray::Create();
 
             // clang-format off
             float vertices[3 * 7] = {
@@ -42,7 +42,7 @@ class ExampleLayer : public HazelPVR::Layer
             indexBuffer = HazelPVR::IndexBuffer::Create(indices, sizeof(indices) / sizeof(uint32_t));
             m_VertexArray->SetIndexBuffer(indexBuffer);
 
-            m_SquareVA.reset(HazelPVR::VertexArray::Create());
+            m_SquareVA = HazelPVR::VertexArray::Create();
 
             // clang-format off
             float squareVertices[4 * 5] = {

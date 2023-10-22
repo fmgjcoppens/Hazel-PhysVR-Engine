@@ -5,7 +5,7 @@
 
 namespace HazelPVR
 {
-    Renderer::SceneData* Renderer::m_SceneData = new Renderer::SceneData;
+    Ref<Renderer::SceneData> Renderer::m_SceneData = std::make_shared<Renderer::SceneData>();
 
     void Renderer::Init()
     {

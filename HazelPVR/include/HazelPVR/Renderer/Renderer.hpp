@@ -28,6 +28,6 @@ namespace HazelPVR
                     glm::mat4 ViewProjectionMatrix;
             };
 
-            static SceneData* m_SceneData;
+            static Ref<SceneData> m_SceneData;
     };
 } // namespace HazelPVR
