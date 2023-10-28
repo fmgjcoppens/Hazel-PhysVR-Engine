@@ -11,6 +11,7 @@
 #include "HazelPVR/Input.hpp"
 #include "HazelPVR/KeyCodes.hpp"
 #include "HazelPVR/MouseButtonCodes.hpp"
+#include "HazelPVR/OrthographicCameraController.hpp"
 
 // --------------- Renderer ----------------
 #include "HazelPVR/Renderer/Renderer.hpp"

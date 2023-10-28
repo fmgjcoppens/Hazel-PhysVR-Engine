@@ -11,10 +11,7 @@ class ExampleLayer : public HazelPVR::Layer
     public:
         ExampleLayer()
             : Layer("Example")
-            , m_Camera(-1.6f, 1.6f, -1.0f, 1.0f)
-            , m_CameraPosition(0.0f)
-            , m_SquarePosition(0.0f)
-            , m_SquareScaleFactor(0.075f)
+            , m_CameraController(2880.0f / 1800.0f)
         {
             HZPVR_INFO("Creating new ExampleLayer instance");
 
@@ -90,47 +87,35 @@ class ExampleLayer : public HazelPVR::Layer
         {
             // HZPVR_TRACE("Delta time: {0}s, {1}ms", ts.GetSeconds(), ts.GetMilliseconds());
 
-            if (HazelPVR::Input::IsKeyPressed(HZPVR_KEY_J))
+            // Change position of squares
+            if (HazelPVR::Input::IsKeyPressed(HZPVR_KEY_A))
                 m_SquarePosition.x -= m_SquareMoveSpeed * ts;
-            else if (HazelPVR::Input::IsKeyPressed(HZPVR_KEY_L))
+            else if (HazelPVR::Input::IsKeyPressed(HZPVR_KEY_D))
                 m_SquarePosition.x += m_SquareMoveSpeed * ts;
-
-            if (HazelPVR::Input::IsKeyPressed(HZPVR_KEY_I))
+            if (HazelPVR::Input::IsKeyPressed(HZPVR_KEY_W))
                 m_SquarePosition.y += m_SquareMoveSpeed * ts;
-            else if (HazelPVR::Input::IsKeyPressed(HZPVR_KEY_K))
+            else if (HazelPVR::Input::IsKeyPressed(HZPVR_KEY_S))
                 m_SquarePosition.y -= m_SquareMoveSpeed * ts;
 
-            if (HazelPVR::Input::IsKeyPressed(HZPVR_KEY_LEFT))
-                m_CameraPosition.x -= m_CameraMoveSpeed * ts;
-            else if (HazelPVR::Input::IsKeyPressed(HZPVR_KEY_RIGHT))
-                m_CameraPosition.x += m_CameraMoveSpeed * ts;
+            // Scale squares
+            // if (HazelPVR::Input::IsKeyPressed(HZPVR_KEY_W))
+            //     m_SquareScaleFactor += m_SquareScaleSpeed * ts;
+            // else if (HazelPVR::Input::IsKeyPressed(HZPVR_KEY_S))
+            //     m_SquareScaleFactor -= m_SquareScaleSpeed * ts;
 
-            if (HazelPVR::Input::IsKeyPressed(HZPVR_KEY_UP))
-                m_CameraPosition.y += m_CameraMoveSpeed * ts;
-            else if (HazelPVR::Input::IsKeyPressed(HZPVR_KEY_DOWN))
-                m_CameraPosition.y -= m_CameraMoveSpeed * ts;
+            glm::mat4 translate = glm::translate(glm::mat4(1.0f), m_SquarePosition);
+            glm::mat4 scale = glm::scale(glm::mat4(1.0f), m_SquareScaleFactor);
 
-            if (HazelPVR::Input::IsKeyPressed(HZPVR_KEY_A))
-                m_CameraRotation += m_CameraRotationSpeed * ts;
-            else if (HazelPVR::Input::IsKeyPressed(HZPVR_KEY_D))
-                m_CameraRotation -= m_CameraRotationSpeed * ts;
+            // Update Camera
+            m_CameraController.OnUpdate(ts);
 
-            if (HazelPVR::Input::IsKeyPressed(HZPVR_KEY_W))
-                m_SquareScaleFactor += m_SquareScaleSpeed * ts;
-            else if (HazelPVR::Input::IsKeyPressed(HZPVR_KEY_S))
-                m_SquareScaleFactor -= m_SquareScaleSpeed * ts;
-
+            // Render
             HazelPVR::RenderCommand::SetClearColor({0.1f, 0.1f, 0.15f, 1});
             HazelPVR::RenderCommand::Clear();
 
-            m_Camera.SetPosition(m_CameraPosition);
-            m_Camera.SetRotation(m_CameraRotation);
-
-            HazelPVR::Renderer::BeginScene(m_Camera);
+            HazelPVR::Renderer::BeginScene(m_CameraController.GetCamera());
             {
                 { // Grid of colored squares
-                    glm::mat4 scale = glm::scale(glm::mat4(1.0f), m_SquareScaleFactor);
-                    glm::mat4 translate = glm::translate(glm::mat4(1.0f), m_SquarePosition);
 
                     auto flatColorShader = m_ShaderLibrary.Get("FlatColor");
                     std::dynamic_pointer_cast<HazelPVR::OpenGLShader>(flatColorShader)->Bind();
@@ -179,15 +164,17 @@ class ExampleLayer : public HazelPVR::Layer
             ImGui::End();
         }
 
-        void OnEvent(HazelPVR::Event& event) override
+        void OnEvent(HazelPVR::Event& e) override
         {
-            HazelPVR::EventDispatcher keyPressDispacher(event);
+            HazelPVR::EventDispatcher keyPressDispacher(e);
             keyPressDispacher.Dispatch<HazelPVR::KeyPressedEvent>(HZPVR_BIND_EVENT_FN(ExampleLayer::OnKeyPressedEvent));
+
+            m_CameraController.OnEvent(e);
         }
 
-        bool OnKeyPressedEvent(HazelPVR::KeyPressedEvent& event)
+        bool OnKeyPressedEvent(HazelPVR::KeyPressedEvent& e)
         {
-            if (event.GetKeyCode() == HZPVR_KEY_ESCAPE || event.GetKeyCode() == HZPVR_KEY_Q)
+            if (e.GetKeyCode() == HZPVR_KEY_ESCAPE || e.GetKeyCode() == HZPVR_KEY_Q)
             {
                 HazelPVR::Application& app = HazelPVR::Application::Get();
                 app.Close();
@@ -205,18 +192,12 @@ class ExampleLayer : public HazelPVR::Layer
         HazelPVR::Ref<HazelPVR::Texture2D> m_Texture;
         HazelPVR::Ref<HazelPVR::Texture2D> m_MyLogoTexture;
 
-        HazelPVR::OrthographicCamera m_Camera;
-
-        glm::vec3 m_CameraPosition;
-        float m_CameraMoveSpeed = 1.0f;
-
-        float m_CameraRotation = 0.0f;
-        float m_CameraRotationSpeed = 180.0f;
+        HazelPVR::OrthographicCameraController m_CameraController;
 
         glm::vec3 m_SquarePosition;
         float m_SquareMoveSpeed = 1.0f;
 
-        glm::vec3 m_SquareScaleFactor;
+        glm::vec3 m_SquareScaleFactor = {0.075f, 0.075f, 0.075f};
         float m_SquareScaleSpeed = 0.1f;
 
         glm::vec4 m_SquareColor1 = {0.2f, 0.3f, 0.8f, 1.0f};
