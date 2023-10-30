@@ -14,6 +14,8 @@ namespace HazelPVR
             OrthographicCameraController(float aspectRatio, bool rotation = false);
 
         public:
+            void OnUpdate(Timestep ts);
+            void OnEvent(Event& e);
             OrthographicCamera& GetCamera()
             {
                 return m_Camera;
@@ -22,8 +24,15 @@ namespace HazelPVR
             {
                 return m_Camera;
             }
-            void OnUpdate(Timestep ts);
-            void OnEvent(Event& e);
+
+            float GetZoomLevel() const
+            {
+                return m_ZoomLevel;
+            }
+            void SetZoomLevel(float level)
+            {
+                m_ZoomLevel = level;
+            };
 
         private:
             bool OnMouseScrolled(MouseScrolledEvent e);

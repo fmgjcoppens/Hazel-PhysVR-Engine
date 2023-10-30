@@ -18,7 +18,7 @@ namespace HazelPVR
         s_Instance = this;
 
         m_Window = Scope<Window>(Window::Create());
-        m_Window->SetEventCallback(BIND_EVENT_FN(onEvent));
+        m_Window->SetEventCallback(BIND_EVENT_FN(OnEvent));
 
         Renderer::Init();
 
@@ -45,17 +45,18 @@ namespace HazelPVR
         layer->OnAttach();
     }
 
-    void Application::onEvent(Event& event)
+    void Application::OnEvent(Event& e)
     {
-        EventDispatcher dispatcher(event);
-        dispatcher.Dispatch<WindowCloseEvent>(BIND_EVENT_FN(onWindowClose));
+        EventDispatcher dispatcher(e);
+        dispatcher.Dispatch<WindowCloseEvent>(BIND_EVENT_FN(OnWindowClose));
+        dispatcher.Dispatch<WindowResizeEvent>(BIND_EVENT_FN(OnWindowResize));
 
-        HZPVR_CORE_TRACE("{0}", event);
+        HZPVR_CORE_TRACE("{0}", e);
 
         for (auto it = m_LayerStack.end(); it != m_LayerStack.begin();)
         {
-            (*--it)->OnEvent(event);
-            if (event.Handled)
+            (*--it)->OnEvent(e);
+            if (e.Handled)
                 break;
         }
     }
@@ -68,14 +69,17 @@ namespace HazelPVR
             Timestep timestep = time - m_LastFrameRenderTime;
             m_LastFrameRenderTime = time;
 
-            for (Ref<Layer> layer : m_LayerStack)
-                layer->OnUpdate(timestep);
+            if (!m_Minimized)
+            {
+                for (Ref<Layer> layer : m_LayerStack)
+                    layer->OnUpdate(timestep);
+            }
 
             m_ImGuiLayer->Begin();
-
-            for (Ref<Layer> layer : m_LayerStack)
-                layer->OnImGuiRender();
-
+            {
+                for (Ref<Layer> layer : m_LayerStack)
+                    layer->OnImGuiRender();
+            }
             m_ImGuiLayer->End();
 
             m_Window->OnUpdate();
@@ -85,11 +89,25 @@ namespace HazelPVR
     void Application::Close()
     {
         m_Running = false;
+        // TODO: return bool here just like the others and rename to OnApplicationClose()
     }
 
-    bool Application::onWindowClose(WindowCloseEvent& event)
+    bool Application::OnWindowClose(WindowCloseEvent& e)
     {
         m_Running = false;
         return true;
+    }
+
+    bool Application::OnWindowResize(WindowResizeEvent& e)
+    {
+        if (e.GetWidth() == 0 || e.GetHeight() == 0)
+        {
+            m_Minimized = true;
+        }
+
+        m_Minimized = false;
+        Renderer::OnWindowResize(e.GetWidth(), e.GetHeight());
+
+        return false;
     }
 } // namespace HazelPVR

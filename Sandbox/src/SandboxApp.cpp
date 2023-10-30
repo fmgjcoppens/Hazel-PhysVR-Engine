@@ -166,10 +166,19 @@ class ExampleLayer : public HazelPVR::Layer
 
         void OnEvent(HazelPVR::Event& e) override
         {
-            HazelPVR::EventDispatcher keyPressDispacher(e);
-            keyPressDispacher.Dispatch<HazelPVR::KeyPressedEvent>(HZPVR_BIND_EVENT_FN(ExampleLayer::OnKeyPressedEvent));
+            HazelPVR::EventDispatcher eventDispatcher(e);
+            eventDispatcher.Dispatch<HazelPVR::KeyPressedEvent>(HZPVR_BIND_EVENT_FN(ExampleLayer::OnKeyPressedEvent));
+            // eventDispatcher.Dispatch<HazelPVR::WindowResizeEvent>(HZPVR_BIND_EVENT_FN(ExampleLayer::OnWindowResizedEvent));
 
             m_CameraController.OnEvent(e);
+
+            if (e.GetEventType() == HazelPVR::EventType::WindowResize)
+            {
+                auto& re = (HazelPVR::WindowResizeEvent&)e;
+                float level = -(float)re.GetHeight() / (float)re.GetWidth();
+
+                m_CameraController.SetZoomLevel(level);
+            }
         }
 
         bool OnKeyPressedEvent(HazelPVR::KeyPressedEvent& e)
@@ -179,9 +188,13 @@ class ExampleLayer : public HazelPVR::Layer
                 HazelPVR::Application& app = HazelPVR::Application::Get();
                 app.Close();
             }
-
             return false;
         }
+
+        // bool OnWindowResizedEvent(HazelPVR::WindowResizeEvent& e)
+        // {
+        //     return false;
+        // }
 
     private:
         HazelPVR::ShaderLibrary m_ShaderLibrary;
