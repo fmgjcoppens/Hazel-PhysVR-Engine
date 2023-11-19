@@ -13,10 +13,10 @@ namespace HazelPVR
             unsigned int Width;
             unsigned int Height;
 
-            explicit WindowProperties(std::string title = "HazelPVR Engine", unsigned int width = 2160, unsigned int height = 1350)
+            explicit WindowProperties(std::string title = "HazelPVR Engine", unsigned int width = 1720, unsigned int height = 720) // AR = 2.3888889
                 : Title(std::move(title))
-                , Width(width)
-                , Height(height)
+                , Width(std::move(width))
+                , Height(std::move(height))
             {}
     };
 

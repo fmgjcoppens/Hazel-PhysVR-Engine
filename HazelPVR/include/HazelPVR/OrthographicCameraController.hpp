@@ -29,14 +29,19 @@ namespace HazelPVR
             {
                 return m_ZoomLevel;
             }
+            float GetAspectRatio() const
+            {
+                return m_AspectRatio;
+            }
             void SetZoomLevel(float level)
             {
                 m_ZoomLevel = level;
             };
 
         private:
-            bool OnMouseScrolled(MouseScrolledEvent e);
-            bool OnWindowResized(WindowResizeEvent e);
+            void OnResize(float width, float height);
+            bool OnMouseScrolled(MouseScrolledEvent& e);
+            bool OnWindowResized(WindowResizeEvent& e);
 
         private:
             float m_AspectRatio;

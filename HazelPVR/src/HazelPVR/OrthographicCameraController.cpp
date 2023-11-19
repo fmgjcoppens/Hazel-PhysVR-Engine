@@ -10,7 +10,7 @@ namespace HazelPVR
     OrthographicCameraController::OrthographicCameraController(float aspectRatio, bool rotation)
         : m_AspectRatio(aspectRatio)
         , m_Rotation(rotation)
-        , m_Camera(-m_AspectRatio * m_ZoomLevel, m_AspectRatio * m_ZoomLevel, -m_ZoomLevel, m_ZoomLevel)
+        , m_Camera(-aspectRatio * m_ZoomLevel, aspectRatio * m_ZoomLevel, -m_ZoomLevel, m_ZoomLevel)
     {}
 
     void OrthographicCameraController::OnUpdate(Timestep ts)
@@ -47,20 +47,33 @@ namespace HazelPVR
         dispacher.Dispatch<WindowResizeEvent>(HZPVR_BIND_EVENT_FN(OrthographicCameraController::OnWindowResized));
     }
 
-    bool OrthographicCameraController::OnMouseScrolled(MouseScrolledEvent e)
-    {
-        m_ZoomLevel -= e.GetYOffset() * 0.5f;
-        m_ZoomLevel = std::max(m_ZoomLevel, 0.25f);
-        m_Camera.SetProjection(-m_AspectRatio * m_ZoomLevel, m_AspectRatio * m_ZoomLevel, -m_ZoomLevel, m_ZoomLevel);
+	void OrthographicCameraController::OnResize(float width, float height)
+	{
+        HZPVR_WARN("Current zoom level: {0}", m_ZoomLevel);
+        HZPVR_WARN("Current aspect ratio: {0}", m_AspectRatio);
+        HZPVR_WARN("Current aspect ratio x zoom level: {0}", m_AspectRatio * m_ZoomLevel);
 
-        return false;
-    }
+		m_AspectRatio = width / height;
 
-    bool OrthographicCameraController::OnWindowResized(WindowResizeEvent e)
-    {
-        m_AspectRatio -= (float)e.GetWidth() / (float)e.GetHeight();
-        m_Camera.SetProjection(-m_AspectRatio * m_ZoomLevel, m_AspectRatio * m_ZoomLevel, -m_ZoomLevel, m_ZoomLevel);
-        return false;
-    }
+        HZPVR_WARN("New window width: {0}", width);
+        HZPVR_WARN("New window height: {0}", height);
+        HZPVR_WARN("New aspect ratio: {0}", m_AspectRatio);
+
+		m_Camera.SetProjection(-m_AspectRatio * m_ZoomLevel, m_AspectRatio * m_ZoomLevel, -m_ZoomLevel, m_ZoomLevel);
+	}
+
+	bool OrthographicCameraController::OnMouseScrolled(MouseScrolledEvent& e)
+	{
+		m_ZoomLevel -= e.GetYOffset() * 0.25f;
+		m_ZoomLevel = std::max(m_ZoomLevel, 0.25f);
+		m_Camera.SetProjection(-m_AspectRatio * m_ZoomLevel, m_AspectRatio * m_ZoomLevel, -m_ZoomLevel, m_ZoomLevel);
+		return false;
+	}
+
+	bool OrthographicCameraController::OnWindowResized(WindowResizeEvent& e)
+	{
+		OnResize((float)e.GetWidth(), (float)e.GetHeight());
+		return false;
+	}
 
 } // namespace HazelPVR

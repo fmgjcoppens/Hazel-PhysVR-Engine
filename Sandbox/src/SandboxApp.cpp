@@ -11,7 +11,8 @@ class ExampleLayer : public HazelPVR::Layer
     public:
         ExampleLayer()
             : Layer("Example")
-            , m_CameraController(2880.0f / 1800.0f)
+            , m_CameraController((float)HazelPVR::Application::Get().GetWindow()->GetWidth() /
+                                 (float)HazelPVR::Application::Get().GetWindow()->GetHeight()) // AR = 2.3888...
         {
             HZPVR_INFO("Creating new ExampleLayer instance");
 
@@ -168,17 +169,7 @@ class ExampleLayer : public HazelPVR::Layer
         {
             HazelPVR::EventDispatcher eventDispatcher(e);
             eventDispatcher.Dispatch<HazelPVR::KeyPressedEvent>(HZPVR_BIND_EVENT_FN(ExampleLayer::OnKeyPressedEvent));
-            // eventDispatcher.Dispatch<HazelPVR::WindowResizeEvent>(HZPVR_BIND_EVENT_FN(ExampleLayer::OnWindowResizedEvent));
-
             m_CameraController.OnEvent(e);
-
-            if (e.GetEventType() == HazelPVR::EventType::WindowResize)
-            {
-                auto& re = (HazelPVR::WindowResizeEvent&)e;
-                float level = -(float)re.GetHeight() / (float)re.GetWidth();
-
-                m_CameraController.SetZoomLevel(level);
-            }
         }
 
         bool OnKeyPressedEvent(HazelPVR::KeyPressedEvent& e)
@@ -191,11 +182,6 @@ class ExampleLayer : public HazelPVR::Layer
             return false;
         }
 
-        // bool OnWindowResizedEvent(HazelPVR::WindowResizeEvent& e)
-        // {
-        //     return false;
-        // }
-
     private:
         HazelPVR::ShaderLibrary m_ShaderLibrary;
 
@@ -207,7 +193,7 @@ class ExampleLayer : public HazelPVR::Layer
 
         HazelPVR::OrthographicCameraController m_CameraController;
 
-        glm::vec3 m_SquarePosition;
+        glm::vec3 m_SquarePosition{};
         float m_SquareMoveSpeed = 1.0f;
 
         glm::vec3 m_SquareScaleFactor = {0.075f, 0.075f, 0.075f};
