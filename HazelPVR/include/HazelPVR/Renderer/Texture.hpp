@@ -1,6 +1,6 @@
 #pragma once
 
-#include "HazelPVR/Core.hpp"
+#include "HazelPVR/Core/Core.hpp"
 
 #include <string>
 

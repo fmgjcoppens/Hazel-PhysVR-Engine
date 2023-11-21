@@ -1,5 +1,5 @@
 #include "hzpvrpch.hpp" // Precompiled header. Include not necessary with CMake
-#include "HazelPVR/Log.hpp"
+#include "HazelPVR/Core/Log.hpp"
 
 #include <spdlog/sinks/stdout_color_sinks.h>
 

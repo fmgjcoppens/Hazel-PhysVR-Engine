@@ -1,8 +1,8 @@
 #include "hzpvrpch.hpp"
 
-#include "Platform/Linux/LinuxInput.hpp"
+#include "HazelPVR/Core/Application.hpp"
 
-#include "HazelPVR/Application.hpp"
+#include "Platform/Linux/LinuxInput.hpp"
 
 #include <GLFW/glfw3.h>
 

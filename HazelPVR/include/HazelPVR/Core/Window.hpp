@@ -2,8 +2,8 @@
 
 #include <utility>
 
-#include "Core.hpp"
-#include "Events/Event.hpp"
+#include "HazelPVR/Core/Core.hpp"
+#include "HazelPVR/Events/Event.hpp"
 
 namespace HazelPVR
 {

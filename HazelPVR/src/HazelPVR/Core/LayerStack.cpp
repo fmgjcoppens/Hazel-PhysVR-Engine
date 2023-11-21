@@ -1,6 +1,6 @@
 #include "hzpvrpch.hpp"
 
-#include "HazelPVR/LayerStack.hpp"
+#include "HazelPVR/Core/LayerStack.hpp"
 
 namespace HazelPVR
 {

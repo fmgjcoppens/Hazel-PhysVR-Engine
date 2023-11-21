@@ -5,9 +5,14 @@
             "includePath": [
                 "${workspaceFolder}/**"
             ],
-            "defines": ["HZPVR_PLATFORM_LINUX"],
+            "defines": [
+                "HZPVR_PLATFORM_LINUX"
+            ],
             "cStandard": "c17",
-            "intelliSenseMode": "linux-clang-x64"
+            "cppStandard": "c++20",
+            "compilerPath": "/usr/bin/clang",
+            "intelliSenseMode": "linux-clang-x64",
+            "configurationProvider": "ms-vscode.cmake-tools"
         }
     ],
     "version": 4

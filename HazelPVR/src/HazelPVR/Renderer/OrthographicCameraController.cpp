@@ -1,9 +1,9 @@
 #include "hzpvrpch.hpp"
 
-#include "HazelPVR/OrthographicCameraController.hpp"
+#include "HazelPVR/Renderer/OrthographicCameraController.hpp"
 
-#include "HazelPVR/Input.hpp"
-#include "HazelPVR/KeyCodes.hpp"
+#include "HazelPVR/Core/Input.hpp"
+#include "HazelPVR/Core/KeyCodes.hpp"
 
 namespace HazelPVR
 {

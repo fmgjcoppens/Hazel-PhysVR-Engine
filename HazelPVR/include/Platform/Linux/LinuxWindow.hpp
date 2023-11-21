@@ -1,6 +1,6 @@
 #pragma once
 
-#include "HazelPVR/Window.hpp"
+#include "HazelPVR/Core/Window.hpp"
 #include "HazelPVR/Renderer/GraphicsContext.hpp"
 
 #include <GLFW/glfw3.h>

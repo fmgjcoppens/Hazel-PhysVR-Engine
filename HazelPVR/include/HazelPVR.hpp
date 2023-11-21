@@ -2,29 +2,35 @@
 
 // For use by HazelPVR applications
 
-#include "HazelPVR/Application.hpp"
-#include "HazelPVR/ImGui/ImGuiLayer.hpp"
-#include "HazelPVR/Log.hpp"
-
+// --------------- Core --------------------
+#include "HazelPVR/Core/Application.hpp"
+#include "HazelPVR/Core/Log.hpp"
 #include "HazelPVR/Core/Timestep.hpp"
 
-#include "HazelPVR/Input.hpp"
-#include "HazelPVR/KeyCodes.hpp"
-#include "HazelPVR/MouseButtonCodes.hpp"
-#include "HazelPVR/OrthographicCameraController.hpp"
+#include "HazelPVR/Core/Input.hpp"
+#include "HazelPVR/Core/KeyCodes.hpp"
+#include "HazelPVR/Core/MouseButtonCodes.hpp"
+// -----------------------------------------
+
+
+// --------------- ImGui -------------------
+#include "HazelPVR/ImGui/ImGuiLayer.hpp"
+// -----------------------------------------
+
 
 // --------------- Renderer ----------------
 #include "HazelPVR/Renderer/Renderer.hpp"
 #include "HazelPVR/Renderer/RenderCommand.hpp"
-
 #include "HazelPVR/Renderer/Buffer.hpp"
 #include "HazelPVR/Renderer/Shader.hpp"
 #include "HazelPVR/Renderer/Texture.hpp"
 #include "HazelPVR/Renderer/VertexArray.hpp"
 
 #include "HazelPVR/Renderer/OrthographicCamera.hpp"
+#include "HazelPVR/Renderer/OrthographicCameraController.hpp"
 // -----------------------------------------
 
+
 // -------------- Entry point --------------
-#include "HazelPVR/EntryPoint.hpp"
+#include "HazelPVR/Core/EntryPoint.hpp"
 // -----------------------------------------

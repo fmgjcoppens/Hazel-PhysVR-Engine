@@ -1,6 +1,6 @@
 #include "hzpvrpch.hpp" // Precompiled header. Include not necessary with CMake
 
-#include "HazelPVR/Application.hpp"
+#include "HazelPVR/Core/Application.hpp"
 #include "HazelPVR/Renderer/Renderer.hpp"
 
 #include <GLFW/glfw3.h>

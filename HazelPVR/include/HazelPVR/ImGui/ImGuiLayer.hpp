@@ -1,6 +1,6 @@
 #pragma once
 
-#include "HazelPVR/Layer.hpp"
+#include "HazelPVR/Core/Layer.hpp"
 
 #include "HazelPVR/Events/MouseEvent.hpp"
 #include "HazelPVR/Events/KeyEvent.hpp"

@@ -26,7 +26,7 @@ add_subdirectory(${GLAD})
 
 # HazelPVR target itself
 add_library(${PROJECT_NAME} STATIC
-    ${SRC_HZPVR}
+    ${SRC_HZPVR_CORE}
     ${SRC_HZPVR_IMGUI}
     ${SRC_HZPVR_RENDERER}
     ${SRC_PLATFORM_OS}

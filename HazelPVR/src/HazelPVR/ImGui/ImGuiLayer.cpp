@@ -1,8 +1,8 @@
 #include "hzpvrpch.hpp"
 
-#include "HazelPVR/Core.hpp"
+#include "HazelPVR/Core/Core.hpp"
+#include "HazelPVR/Core/Application.hpp"
 #include "HazelPVR/ImGui/ImGuiLayer.hpp"
-#include "HazelPVR/Application.hpp"
 
 #include <backends/imgui_impl_glfw.h>
 #include <backends/imgui_impl_opengl3.h>

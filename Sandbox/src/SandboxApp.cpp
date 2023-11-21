@@ -203,6 +203,60 @@ class ExampleLayer : public HazelPVR::Layer
         glm::vec4 m_SquareColor2 = {0.8f, 0.3f, 0.2f, 1.0f};
 };
 
+// class GameLayer : public HazelPVR::Layer
+// {
+//     public:
+//         GameLayer()
+//             : Layer("Game")
+//             , m_CameraController((float)HazelPVR::Application::Get().GetWindow()->GetWidth() /
+//                                  (float)HazelPVR::Application::Get().GetWindow()->GetHeight()) // AR = 2.3888...
+//         {
+//             HZPVR_INFO("Creating new GameLayer instance");
+//         }
+
+//         ~GameLayer()
+//         {
+//             HZPVR_INFO("Destroying ExampleLayer instance");
+//         }
+
+//     public:
+//         void OnUpdate(HazelPVR::Timestep ts) override
+//         {
+//             // Update Camera
+//             m_CameraController.OnUpdate(ts);
+
+//             // Render
+//             HazelPVR::RenderCommand::SetClearColor({0.1f, 0.1f, 0.15f, 1});
+//             HazelPVR::RenderCommand::Clear();
+
+//             HazelPVR::Renderer::BeginScene(m_CameraController.GetCamera());
+//             {
+//             }
+//             HazelPVR::Renderer::EndScene();
+//         }
+
+//         void OnEvent(HazelPVR::Event& e) override
+//         {
+//             HazelPVR::EventDispatcher eventDispatcher(e);
+//             eventDispatcher.Dispatch<HazelPVR::KeyPressedEvent>(HZPVR_BIND_EVENT_FN(GameLayer::OnKeyPressedEvent));
+//             m_CameraController.OnEvent(e);
+//         }
+
+//         bool OnKeyPressedEvent(HazelPVR::KeyPressedEvent& e)
+//         {
+//             if (e.GetKeyCode() == HZPVR_KEY_ESCAPE || e.GetKeyCode() == HZPVR_KEY_Q)
+//             {
+//                 HazelPVR::Application& app = HazelPVR::Application::Get();
+//                 app.Close();
+//             }
+//             return false;
+//         }
+
+//     private:
+//         HazelPVR::ShaderLibrary m_ShaderLibrary;
+//         HazelPVR::OrthographicCameraController m_CameraController;
+// };
+
 class Sandbox : public HazelPVR::Application
 {
     public:
@@ -210,6 +264,7 @@ class Sandbox : public HazelPVR::Application
         {
             HZPVR_INFO("Creating new Sandbox instance");
             PushLayer(std::make_shared<ExampleLayer>());
+            // PushLayer(std::make_shared<GameLayer>());
         }
 
         ~Sandbox()
