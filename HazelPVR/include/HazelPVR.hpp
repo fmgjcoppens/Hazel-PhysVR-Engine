@@ -29,8 +29,3 @@
 #include "HazelPVR/Renderer/OrthographicCamera.hpp"
 #include "HazelPVR/Renderer/OrthographicCameraController.hpp"
 // -----------------------------------------
-
-
-// -------------- Entry point --------------
-#include "HazelPVR/Core/EntryPoint.hpp"
-// -----------------------------------------
