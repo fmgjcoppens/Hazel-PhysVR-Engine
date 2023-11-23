@@ -1,6 +1,7 @@
 #include "hzpvrpch.hpp"
 
 #include "HazelPVR/Renderer/Renderer.hpp"
+#include "HazelPVR/Renderer/Renderer2D.hpp"
 #include "Platform/OpenGL/OpenGLShader.hpp"
 
 namespace HazelPVR
@@ -10,6 +11,7 @@ namespace HazelPVR
     void Renderer::Init()
     {
         RenderCommand::Init();
+        Renderer2D::Init();
     }
 
     void Renderer::OnWindowResize(uint32_t width, uint32_t height)

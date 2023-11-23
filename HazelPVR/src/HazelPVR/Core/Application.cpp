@@ -21,6 +21,7 @@ namespace HazelPVR
         m_Window->SetEventCallback(BIND_EVENT_FN(OnEvent));
 
         Renderer::Init();
+        
 
         // This can also be done in the Sandbox constructor (SandBoxApp.cpp) on the application side, but I chose to do it here because its
         // creation is not optional; if it's not created GLFW/ImGui will not initialize correctly!

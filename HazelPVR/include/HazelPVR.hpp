@@ -20,6 +20,7 @@
 
 // --------------- Renderer ----------------
 #include "HazelPVR/Renderer/Renderer.hpp"
+#include "HazelPVR/Renderer/Renderer2D.hpp"
 #include "HazelPVR/Renderer/RenderCommand.hpp"
 #include "HazelPVR/Renderer/Buffer.hpp"
 #include "HazelPVR/Renderer/Shader.hpp"

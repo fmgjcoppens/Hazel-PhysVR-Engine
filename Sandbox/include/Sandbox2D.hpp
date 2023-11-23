@@ -15,6 +15,7 @@ class Sandbox2D : public HazelPVR::Layer
         void OnUpdate(HazelPVR::Timestep ts) override;
         void OnImGuiRender() override;
         void OnEvent(HazelPVR::Event& e) override;
+        bool OnKeyPressedEvent(HazelPVR::KeyPressedEvent& e);
 
     private:
         HazelPVR::OrthographicCameraController m_CameraController;
