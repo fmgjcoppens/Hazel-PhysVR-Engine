@@ -9,7 +9,10 @@ Sandbox2D::Sandbox2D()
                          (float)HazelPVR::Application::Get().GetWindow()->GetHeight()) // AR = 2.3888...
 {}
 
-void Sandbox2D::OnAttach() {}
+void Sandbox2D::OnAttach()
+{
+    m_CheckerboardTexture = HazelPVR::Texture2D::Create("assets/textures/Checkerboard.png");
+}
 
 void Sandbox2D::OnDetach() {}
 
@@ -24,16 +27,27 @@ void Sandbox2D::OnUpdate(HazelPVR::Timestep ts)
 
     HazelPVR::Renderer2D::BeginScene(m_CameraController.GetCamera());
     {
-        HazelPVR::Renderer2D::DrawQuad({0.0f, 0.0f}, {1.0f, 1.0f}, {0.8f, 0.2f, 0.3f, 1.0f});
+        HazelPVR::Renderer2D::DrawQuad({-1.0f, 0.0f}, {0.8f, 0.8f}, m_QuadColor1);
+        HazelPVR::Renderer2D::DrawQuad({0.5f, -0.5f}, {0.5f, 0.75f}, m_QuadColor2);
+        HazelPVR::Renderer2D::DrawQuad({0.0f, 0.0f, -0.1f}, {10.0f, 10.0f}, m_CheckerboardTexture);
     }
     HazelPVR::Renderer2D::EndScene();
-    // TODO: Add these functions - Shader::SetMat4, Shader::SetFloat4
 }
 
 void Sandbox2D::OnImGuiRender()
 {
-    ImGui::Begin("Settings");
-    ImGui::ColorEdit4("Square Color", glm::value_ptr(m_SquareColor));
+    ImGui::Begin("Settings", nullptr, ImGuiWindowFlags_MenuBar);
+    if (ImGui::BeginMenuBar())
+    {
+        if (ImGui::MenuItem("Exit", "Esc"))
+        {
+            HazelPVR::Application& app = HazelPVR::Application::Get();
+            app.Close();
+        }
+        ImGui::EndMenuBar();
+    }
+    ImGui::ColorEdit4("Quad 1", glm::value_ptr(m_QuadColor1));
+    ImGui::ColorEdit4("Quad 2", glm::value_ptr(m_QuadColor2));
     ImGui::End();
 }
 

@@ -24,5 +24,8 @@ class Sandbox2D : public HazelPVR::Layer
         HazelPVR::Ref<HazelPVR::VertexArray> m_SquareVA;
         HazelPVR::Ref<HazelPVR::Shader> m_FlatColorShader;
 
-        glm::vec4 m_SquareColor = {0.2f, 0.3f, 0.8f, 1.0f};
+        glm::vec4 m_QuadColor1 = {0.8f, 0.2f, 0.3f, 1.0f};
+        glm::vec4 m_QuadColor2 = {0.2f, 0.3f, 0.8f, 1.0f};
+
+        HazelPVR::Ref<HazelPVR::Texture2D> m_CheckerboardTexture;
 };
