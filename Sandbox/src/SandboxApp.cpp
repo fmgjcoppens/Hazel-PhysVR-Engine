@@ -1,8 +1,9 @@
 #include <HazelPVR.hpp>
 #include <HazelPVR/Core/EntryPoint.hpp>
 
-#include "Sandbox2D.hpp"
 // #include "ExampleLayer.hpp"
+#include "Sandbox2D.hpp"
+#include "ParticleSimulation2D.hpp"
 
 class Sandbox : public HazelPVR::Application
 {
@@ -12,6 +13,7 @@ class Sandbox : public HazelPVR::Application
             HZPVR_INFO("Creating new Sandbox instance");
             // PushLayer(std::make_shared<ExampleLayer>());
             PushLayer(std::make_shared<Sandbox2D>());
+            // PushLayer(std::make_shared<ParticleSimulation2D>());
         }
 
         ~Sandbox()

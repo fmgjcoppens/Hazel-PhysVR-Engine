@@ -16,14 +16,14 @@ namespace HazelPVR
     void OrthographicCameraController::OnUpdate(Timestep ts)
     {
 
-        if (Input::IsKeyPressed(HZPVR_KEY_LEFT))
+        if (Input::IsKeyPressed(HZPVR_KEY_J))
             m_CameraPosition.x -= m_CameraTranslationSpeed * ts;
-        else if (Input::IsKeyPressed(HZPVR_KEY_RIGHT))
+        else if (Input::IsKeyPressed(HZPVR_KEY_L))
             m_CameraPosition.x += m_CameraTranslationSpeed * ts;
 
-        if (Input::IsKeyPressed(HZPVR_KEY_UP))
+        if (Input::IsKeyPressed(HZPVR_KEY_I))
             m_CameraPosition.y += m_CameraTranslationSpeed * ts;
-        else if (Input::IsKeyPressed(HZPVR_KEY_DOWN))
+        else if (Input::IsKeyPressed(HZPVR_KEY_K))
             m_CameraPosition.y -= m_CameraTranslationSpeed * ts;
 
         if (m_Rotation)

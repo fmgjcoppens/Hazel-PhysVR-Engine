@@ -1,6 +1,7 @@
 #pragma once
 
 #include <HazelPVR.hpp>
+#include <array>
 
 class Sandbox2D : public HazelPVR::Layer
 {
@@ -23,9 +24,10 @@ class Sandbox2D : public HazelPVR::Layer
         // tmp
         HazelPVR::Ref<HazelPVR::VertexArray> m_SquareVA;
         HazelPVR::Ref<HazelPVR::Shader> m_FlatColorShader;
+        HazelPVR::Ref<HazelPVR::Texture2D> m_Texture;
 
-        glm::vec4 m_QuadColor1 = {0.8f, 0.2f, 0.3f, 1.0f};
-        glm::vec4 m_QuadColor2 = {0.2f, 0.3f, 0.8f, 1.0f};
-
-        HazelPVR::Ref<HazelPVR::Texture2D> m_CheckerboardTexture;
-};
+        glm::vec2 m_Position;
+        glm::vec2 m_Size;
+        glm::vec4 m_Color;
+        float m_MoveSpeed = 5.0f;  
+};  
