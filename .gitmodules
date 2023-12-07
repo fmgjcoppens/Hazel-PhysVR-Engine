@@ -4,9 +4,6 @@
 [submodule "include/vendor/glfw"]
 	path = HazelPVR/vendor/glfw
 	url = https://github.com/glfw/glfw.git
-[submodule ".\\include\\vendor\\spdlog"]
-	path = .\\include\\vendor\\spdlog
-	url = https://github.com/gabime/spdlog.git
 [submodule "include/vendor/imgui"]
 	path = HazelPVR/vendor/imgui
 	url = git@github.com:fmgjcoppens/imgui.git
