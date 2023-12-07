@@ -12,41 +12,54 @@ Sandbox2D::Sandbox2D()
     , m_Color({0.5f, 0.5f, 1.0f, 1.0f})
 {}
 
-void Sandbox2D::OnAttach()
-{
-    m_Texture = HazelPVR::Texture2D::Create("assets/textures/Checkerboard.png");
-}
+void Sandbox2D::OnAttach() { m_Texture = HazelPVR::Texture2D::Create("assets/textures/Checkerboard.png"); }
 
 void Sandbox2D::OnDetach() {}
 
 void Sandbox2D::OnUpdate(HazelPVR::Timestep ts)
 {
-    // Update
-    m_CameraController.OnUpdate(ts);
+    HZPVR_PROFILE_FUNCTION();
 
-    // Change position of squares
-    if (HazelPVR::Input::IsKeyPressed(HZPVR_KEY_LEFT))
-        m_Position.x -= m_MoveSpeed * ts;
-    else if (HazelPVR::Input::IsKeyPressed(HZPVR_KEY_RIGHT))
-        m_Position.x += m_MoveSpeed * ts;
-    if (HazelPVR::Input::IsKeyPressed(HZPVR_KEY_UP))
-        m_Position.y += m_MoveSpeed * ts;
-    else if (HazelPVR::Input::IsKeyPressed(HZPVR_KEY_DOWN))
-        m_Position.y -= m_MoveSpeed * ts;
+    // Update
+    {
+        HZPVR_PROFILE_SCOPE("CameraController::OnUpdate");
+        m_CameraController.OnUpdate(ts);
+    }
+
+    {
+        // Update quad position
+        HZPVR_PROFILE_SCOPE("Update quad position");
+        if (HazelPVR::Input::IsKeyPressed(HZPVR_KEY_LEFT))
+            m_Position.x -= m_MoveSpeed * ts;
+        else if (HazelPVR::Input::IsKeyPressed(HZPVR_KEY_RIGHT))
+            m_Position.x += m_MoveSpeed * ts;
+        if (HazelPVR::Input::IsKeyPressed(HZPVR_KEY_UP))
+            m_Position.y += m_MoveSpeed * ts;
+        else if (HazelPVR::Input::IsKeyPressed(HZPVR_KEY_DOWN))
+            m_Position.y -= m_MoveSpeed * ts;
+    }
 
     // Render
-    HazelPVR::RenderCommand::SetClearColor({0.1f, 0.1f, 0.1f, 1.0f});
-    HazelPVR::RenderCommand::Clear();
-
-    HazelPVR::Renderer2D::BeginScene(m_CameraController.GetCamera());
     {
-        HazelPVR::Renderer2D::DrawQuad(m_Position, m_Size, m_Texture, m_Color);
+        HZPVR_PROFILE_SCOPE("Render Prep.");
+        HazelPVR::RenderCommand::SetClearColor({0.1f, 0.1f, 0.1f, 1.0f});
+        HazelPVR::RenderCommand::Clear();
     }
-    HazelPVR::Renderer2D::EndScene();
+
+    {
+        HZPVR_PROFILE_SCOPE("Render Draw");
+        HazelPVR::Renderer2D::BeginScene(m_CameraController.GetCamera());
+        {
+            HazelPVR::Renderer2D::DrawQuad(m_Position, m_Size, m_Texture, m_Color);
+        }
+        HazelPVR::Renderer2D::EndScene();
+    }
 }
 
 void Sandbox2D::OnImGuiRender()
 {
+    HZPVR_PROFILE_FUNCTION();
+
     ImGui::Begin("Engine controls", nullptr, ImGuiWindowFlags_MenuBar);
     if (ImGui::BeginMenuBar())
     {
@@ -57,8 +70,6 @@ void Sandbox2D::OnImGuiRender()
         }
         ImGui::EndMenuBar();
     }
-    // ImGui::ColorEdit4("Quad 1", glm::value_ptr(m_QuadColor1));
-    // ImGui::ColorEdit4("Quad 2", glm::value_ptr(m_QuadColor2));
     ImGui::End();
 }
 

@@ -18,6 +18,8 @@
 
 #include "HazelPVR/Core/Log.hpp"
 
+#include "HazelPVR/Debug/Instrumentor.hpp"
+
 #ifdef HZPVR_PLATFORM_WINDOWS
 #    include <Windows.h>
 #endif

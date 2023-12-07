@@ -14,6 +14,8 @@ namespace HazelPVR
 
     void OpenGLContext::Init()
     {
+        HZPVR_PROFILE_FUNCTION();
+
         glfwMakeContextCurrent(m_windowHandle);
 
         int success = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
@@ -27,6 +29,8 @@ namespace HazelPVR
 
     void OpenGLContext::SwapBuffers()
     {
+        HZPVR_PROFILE_FUNCTION();
+
         glfwSwapBuffers(m_windowHandle);
     }
 } // namespace HazelPVR

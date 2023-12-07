@@ -96,9 +96,4 @@ namespace HazelPVR
             glfwMakeContextCurrent(backup_current_context);
         }
     }
-
-    void ImGuiLayer::OnImGuiRender()
-    {
-        // ImGui::ShowDemoWindow();
-    }
 } // namespace HazelPVR

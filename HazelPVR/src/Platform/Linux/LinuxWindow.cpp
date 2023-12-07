@@ -9,51 +9,51 @@
 
 namespace HazelPVR
 {
-
     static bool s_GLFWInitialized = false;
+    static uint8_t s_GLFWWindowCount = 0;
 
-    static void GLFWErrorCallback(int error, const char* description)
-    {
-        HZPVR_CORE_ERROR("GLFW Error ({0}): {1}", error, description);
-    }
+    static void GLFWErrorCallback(int error, const char* description) { HZPVR_CORE_ERROR("GLFW Error ({0}): {1}", error, description); }
 
-    Scope<Window> Window::Create(const WindowProperties& properties)
-    {
-        return std::make_unique<LinuxWindow>(properties);
-    }
+    Scope<Window> Window::Create(const WindowProperties& properties) { return CreateScope<LinuxWindow>(properties); }
 
     LinuxWindow::LinuxWindow(const WindowProperties& properties)
     {
+        HZPVR_PROFILE_FUNCTION();
+
         Init(properties);
     }
 
     LinuxWindow::~LinuxWindow()
     {
+        HZPVR_PROFILE_FUNCTION();
+
         Shutdown();
     }
 
     void LinuxWindow::Init(const WindowProperties& properties)
     {
+        HZPVR_PROFILE_FUNCTION();
+
         m_Data.Title = properties.Title;
         m_Data.Width = properties.Width;
         m_Data.Height = properties.Height;
 
         HZPVR_CORE_INFO("Creating Linux window '{0} ({1}, {2})'", properties.Title, properties.Width, properties.Height);
 
-        if (!s_GLFWInitialized)
+        if (s_GLFWWindowCount == 0)
         {
-            // TODO: glfwTerminate on system shutdown
             int success = glfwInit();
             HZPVR_CORE_ASSERT(success, "Could not initialize GLFW!");
             glfwSetErrorCallback(GLFWErrorCallback);
-            s_GLFWInitialized = true;
         }
 
         glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE);
         // glfwWindowHint(GLFW_RESIZABLE, GLFW_TRUE); // This gives all sorts of problems in i3. Dont do it!
 
         m_Window = glfwCreateWindow((int)properties.Width, (int)properties.Height, m_Data.Title.c_str(), nullptr, nullptr);
-        m_Context = std::make_unique<OpenGLContext>(m_Window);
+        ++s_GLFWWindowCount;
+
+        m_Context = CreateScope<OpenGLContext>(m_Window);
         m_Context->Init();
 
         glfwSetWindowUserPointer(m_Window, &m_Data);
@@ -147,17 +147,29 @@ namespace HazelPVR
 
     void LinuxWindow::Shutdown()
     {
+        HZPVR_PROFILE_FUNCTION();
+
         glfwDestroyWindow(m_Window);
+        --s_GLFWWindowCount;
+
+        if (s_GLFWWindowCount == 0)
+        {
+            glfwTerminate();
+        }
     }
 
     void LinuxWindow::OnUpdate()
     {
+        HZPVR_PROFILE_FUNCTION();
+
         glfwPollEvents();
         m_Context->SwapBuffers();
     }
 
     void LinuxWindow::SetVSync(bool enabled)
     {
+        HZPVR_PROFILE_FUNCTION();
+
         if (enabled)
             glfwSwapInterval(1);
         else
@@ -166,9 +178,6 @@ namespace HazelPVR
         m_Data.VSync = enabled;
     }
 
-    bool LinuxWindow::IsVSync() const
-    {
-        return m_Data.VSync;
-    }
+    bool LinuxWindow::IsVSync() const { return m_Data.VSync; }
 
 } // namespace HazelPVR

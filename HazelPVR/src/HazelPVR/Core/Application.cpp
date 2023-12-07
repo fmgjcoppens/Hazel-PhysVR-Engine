@@ -13,6 +13,8 @@ namespace HazelPVR
 
     Application::Application()
     {
+        HZPVR_PROFILE_FUNCTION();
+        
         HZPVR_CORE_ASSERT(!s_Instance, "Application already exists!");
         HZPVR_CORE_INFO("Creating new Application instance");
         s_Instance = this;
