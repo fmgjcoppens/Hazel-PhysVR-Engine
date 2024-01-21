@@ -7,11 +7,7 @@ namespace HazelPVR
 
     LayerStack::LayerStack() {}
 
-    LayerStack::~LayerStack()
-    {
-        // for (Ref<Layer> layer : m_Layers)
-        //     delete layer;
-    }
+    LayerStack::~LayerStack() {}
 
     void LayerStack::PushLayer(Ref<Layer> layer)
     {
@@ -19,10 +15,7 @@ namespace HazelPVR
         m_LayerInsertIndex++;
     }
 
-    void LayerStack::PushOverlay(Ref<Layer> overlay)
-    {
-        m_Layers.emplace_back(overlay);
-    }
+    void LayerStack::PushOverlay(Ref<Layer> overlay) { m_Layers.emplace_back(overlay); }
 
     void LayerStack::PopLayer(Ref<Layer> layer)
     {

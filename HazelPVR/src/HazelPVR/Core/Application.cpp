@@ -14,7 +14,7 @@ namespace HazelPVR
     Application::Application()
     {
         HZPVR_PROFILE_FUNCTION();
-        
+
         HZPVR_CORE_ASSERT(!s_Instance, "Application already exists!");
         HZPVR_CORE_INFO("Creating new Application instance");
         s_Instance = this;
@@ -24,7 +24,6 @@ namespace HazelPVR
 
         Renderer::Init();
         
-
         // This can also be done in the Sandbox constructor (SandBoxApp.cpp) on the application side, but I chose to do it here because its
         // creation is not optional; if it's not created GLFW/ImGui will not initialize correctly!
         m_ImGuiLayer = std::make_shared<ImGuiLayer>();
@@ -33,23 +32,31 @@ namespace HazelPVR
 
     Application::~Application()
     {
+        HZPVR_PROFILE_FUNCTION();
+
         HZPVR_INFO("Destroying Application instance");
     }
 
     void Application::PushLayer(Ref<Layer> layer)
     {
+        HZPVR_PROFILE_FUNCTION();
+
         m_LayerStack.PushLayer(layer);
         layer->OnAttach();
     }
 
     void Application::PushOverlay(Ref<Layer> layer)
     {
+        HZPVR_PROFILE_FUNCTION();
+        
         m_LayerStack.PushOverlay(layer);
         layer->OnAttach();
     }
 
     void Application::OnEvent(Event& e)
     {
+        HZPVR_PROFILE_FUNCTION();
+
         EventDispatcher dispatcher(e);
         dispatcher.Dispatch<WindowCloseEvent>(BIND_EVENT_FN(OnWindowClose));
         dispatcher.Dispatch<WindowResizeEvent>(BIND_EVENT_FN(OnWindowResize));
@@ -66,20 +73,28 @@ namespace HazelPVR
 
     void Application::Run()
     {
+        HZPVR_PROFILE_FUNCTION();
+        
         while (m_Running)
         {
+            HZPVR_PROFILE_SCOPE("RunLoop");
+
             float time = (float)glfwGetTime(); // Should go into Platform
             Timestep timestep = time - m_LastFrameRenderTime;
             m_LastFrameRenderTime = time;
 
             if (!m_Minimized)
             {
+                HZPVR_PROFILE_SCOPE("LayerStack OnUpdate");
+
                 for (Ref<Layer> layer : m_LayerStack)
                     layer->OnUpdate(timestep);
             }
 
             m_ImGuiLayer->Begin();
             {
+                HZPVR_PROFILE_SCOPE("LayerStack OnImGuiRender");
+
                 for (Ref<Layer> layer : m_LayerStack)
                     layer->OnImGuiRender();
             }
@@ -103,6 +118,8 @@ namespace HazelPVR
 
     bool Application::OnWindowResize(WindowResizeEvent& e)
     {
+        HZPVR_PROFILE_FUNCTION();
+
         if (e.GetWidth() == 0 || e.GetHeight() == 0)
         {
             m_Minimized = true;

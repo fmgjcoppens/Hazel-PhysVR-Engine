@@ -25,6 +25,8 @@ namespace HazelPVR
 
     void ImGuiLayer::OnAttach()
     {
+        HZPVR_PROFILE_FUNCTION();
+
         // Setup Dear ImGui context
         IMGUI_CHECKVERSION();
         ImGui::CreateContext();
@@ -66,6 +68,8 @@ namespace HazelPVR
 
     void ImGuiLayer::OnDetach()
     {
+        HZPVR_PROFILE_FUNCTION();
+
         ImGui_ImplOpenGL3_Shutdown();
         ImGui_ImplGlfw_Shutdown();
         ImGui::DestroyContext();
@@ -73,6 +77,8 @@ namespace HazelPVR
 
     void ImGuiLayer::Begin()
     {
+        HZPVR_PROFILE_FUNCTION();
+
         ImGui_ImplOpenGL3_NewFrame();
         ImGui_ImplGlfw_NewFrame();
         ImGui::NewFrame();
@@ -80,6 +86,8 @@ namespace HazelPVR
 
     void ImGuiLayer::End()
     {
+        HZPVR_PROFILE_FUNCTION();
+        
         // Rendering
         ImGui::Render();
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());

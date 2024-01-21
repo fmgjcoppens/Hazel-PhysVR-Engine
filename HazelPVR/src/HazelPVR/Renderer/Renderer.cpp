@@ -10,6 +10,8 @@ namespace HazelPVR
 
     void Renderer::Init()
     {
+        HZPVR_PROFILE_FUNCTION();
+        
         RenderCommand::Init();
         Renderer2D::Init();
     }

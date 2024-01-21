@@ -92,7 +92,7 @@ void ParticleSimulation2D::OnUpdate(HazelPVR::Timestep ts)
     {
         for (auto& particle : m_Particles)
         {
-            HazelPVR::Renderer2D::DrawQuad(particle.GetPosition(), particle.GetSize(), m_ParticleTexture, particle.GetColor());
+            HazelPVR::Renderer2D::DrawQuad(particle.GetPosition(), particle.GetSize(), m_ParticleTexture, 1.0f, particle.GetColor());
         }
     }
     HazelPVR::Renderer2D::EndScene();

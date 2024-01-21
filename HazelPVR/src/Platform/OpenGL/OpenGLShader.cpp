@@ -20,6 +20,8 @@ namespace HazelPVR
 
     OpenGLShader::OpenGLShader(const std::string& filePath)
     {
+        HZPVR_PROFILE_FUNCTION();
+
         std::string source = ReadFile(filePath);
         auto shaderSources = PreProcess(source);
         Compile(shaderSources);
@@ -30,6 +32,8 @@ namespace HazelPVR
     OpenGLShader::OpenGLShader(const std::string& name, const std::string& vertexSrc, const std::string& fragmentSrc)
         : m_Name(name)
     {
+        HZPVR_PROFILE_FUNCTION();
+
         std::unordered_map<GLenum, std::string> shaderSources;
         shaderSources[GL_VERTEX_SHADER] = vertexSrc;
         shaderSources[GL_FRAGMENT_SHADER] = fragmentSrc;
@@ -38,11 +42,15 @@ namespace HazelPVR
 
     OpenGLShader::~OpenGLShader()
     {
+        HZPVR_PROFILE_FUNCTION();
+
         glDeleteProgram(m_RendererID);
     }
 
     std::string OpenGLShader::ReadFile(const std::string& filePath)
     {
+        HZPVR_PROFILE_FUNCTION();
+
         std::string result;
         std::ifstream in(filePath, std::ios::in | std::ios::binary);
         if (in)
@@ -63,6 +71,8 @@ namespace HazelPVR
 
     std::unordered_map<GLenum, std::string> OpenGLShader::PreProcess(const std::string& source)
     {
+        HZPVR_PROFILE_FUNCTION();
+
         std::unordered_map<GLenum, std::string> shaderSources;
 
         const char* typeToken = "#type";
@@ -88,6 +98,8 @@ namespace HazelPVR
 
     void OpenGLShader::Compile(const std::unordered_map<GLenum, std::string>& shaderSources)
     {
+        HZPVR_PROFILE_FUNCTION();
+
         GLuint program = glCreateProgram();
         HZPVR_CORE_ASSERT(shaderSources.size() <= 2, "Number of shaders in shaderSources too large. Must be <= 2!");
         std::array<GLenum, 2> glShaderIDs;
@@ -155,36 +167,50 @@ namespace HazelPVR
 
     void OpenGLShader::Bind() const
     {
+        HZPVR_PROFILE_FUNCTION();
+
         glUseProgram(m_RendererID);
     }
 
     void OpenGLShader::UnBind() const
     {
+        HZPVR_PROFILE_FUNCTION();
+
         glUseProgram(0);
     }
 
     void OpenGLShader::SetInt(const std::string& name, int value)
     {
+        HZPVR_PROFILE_FUNCTION();
+
         UploadUniformInt(name, value);
     }
 
     void OpenGLShader::SetFloat(const std::string& name, float value)
     {
+        HZPVR_PROFILE_FUNCTION();
+
         UploadUniformFloat(name, value);
     }
 
     void OpenGLShader::SetFloat3(const std::string& name, const glm::vec3& value)
     {
+        HZPVR_PROFILE_FUNCTION();
+
         UploadUniformFloat3(name, value);
     }
 
     void OpenGLShader::SetFloat4(const std::string& name, const glm::vec4& value)
     {
+        HZPVR_PROFILE_FUNCTION();
+
         UploadUniformFloat4(name, value);
     }
 
     void OpenGLShader::SetMat4(const std::string& name, const glm::mat4& value)
     {
+        HZPVR_PROFILE_FUNCTION();
+        
         UploadUniformMat4(name, value);
     }
 

@@ -10,8 +10,10 @@ namespace HazelPVR
     {
         switch (Renderer::GetAPI())
         {
-        case RendererAPI::API::None:    HZPVR_CORE_ASSERT(false, "RendererAPI::None is currently not supported!");
-        case RendererAPI::API::OpenGL:  return CreateRef<OpenGLTexture2D>(width, height);
+        case RendererAPI::API::None:
+            HZPVR_CORE_ASSERT(false, "RendererAPI::None is currently not supported!");
+        case RendererAPI::API::OpenGL:
+            return CreateRef<OpenGLTexture2D>(width, height);
         }
 
         HZPVR_CORE_ASSERT(false, "Unknown RendererAPI!");
@@ -22,8 +24,10 @@ namespace HazelPVR
     {
         switch (Renderer::GetAPI())
         {
-        case RendererAPI::API::None:    HZPVR_CORE_ASSERT(false, "RendererAPI::None is currently not supported!");
-        case RendererAPI::API::OpenGL:  return CreateRef<OpenGLTexture2D>(path);
+        case RendererAPI::API::None:
+            HZPVR_CORE_ASSERT(false, "RendererAPI::None is currently not supported!");
+        case RendererAPI::API::OpenGL:
+            return CreateRef<OpenGLTexture2D>(path);
         }
 
         HZPVR_CORE_ASSERT(false, "Unknown RendererAPI!");

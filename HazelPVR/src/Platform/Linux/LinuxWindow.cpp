@@ -14,12 +14,13 @@ namespace HazelPVR
 
     static void GLFWErrorCallback(int error, const char* description) { HZPVR_CORE_ERROR("GLFW Error ({0}): {1}", error, description); }
 
-    Scope<Window> Window::Create(const WindowProperties& properties) { return CreateScope<LinuxWindow>(properties); }
+    Scope<Window> Window::Create(const WindowProperties& properties)
+    {
+        return CreateScope<LinuxWindow>(properties);
+    }
 
     LinuxWindow::LinuxWindow(const WindowProperties& properties)
     {
-        HZPVR_PROFILE_FUNCTION();
-
         Init(properties);
     }
 
@@ -42,6 +43,7 @@ namespace HazelPVR
 
         if (s_GLFWWindowCount == 0)
         {
+            HZPVR_PROFILE_SCOPE("glfwInit")
             int success = glfwInit();
             HZPVR_CORE_ASSERT(success, "Could not initialize GLFW!");
             glfwSetErrorCallback(GLFWErrorCallback);
@@ -50,8 +52,11 @@ namespace HazelPVR
         glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE);
         // glfwWindowHint(GLFW_RESIZABLE, GLFW_TRUE); // This gives all sorts of problems in i3. Dont do it!
 
-        m_Window = glfwCreateWindow((int)properties.Width, (int)properties.Height, m_Data.Title.c_str(), nullptr, nullptr);
-        ++s_GLFWWindowCount;
+        {
+            HZPVR_PROFILE_SCOPE("glfwCreateWindow")
+            m_Window = glfwCreateWindow((int)properties.Width, (int)properties.Height, m_Data.Title.c_str(), nullptr, nullptr);
+            ++s_GLFWWindowCount;
+        }
 
         m_Context = CreateScope<OpenGLContext>(m_Window);
         m_Context->Init();
