@@ -52,9 +52,10 @@ void Sandbox2D::OnUpdate(HazelPVR::Timestep ts)
         HZPVR_PROFILE_SCOPE("Render Draw");
         HazelPVR::Renderer2D::BeginScene(m_CameraController.GetCamera());
         {
-            HazelPVR::Renderer2D::DrawRotatedQuad({0.0f, 0.0f, -0.1}, {10, 10}, glm::radians(10.0f), m_Texture, 10.0f, m_Color);
-            HazelPVR::Renderer2D::DrawRotatedQuad((glm::vec2){-1, 0} + m_Position, {0.8, 0.8}, glm::radians(45.), {0.8, 0.2, 0.3, 1});
-            HazelPVR::Renderer2D::DrawQuad(glm::vec2({0.5, -0.5}) + m_Position, {0.5, 0.75}, {0.2, 0.3, 0.8, 1});
+            // HazelPVR::Renderer2D::DrawRotatedQuad({0.0f, 0.0f, -0.1}, {10, 10}, glm::radians(10.0f), m_Texture, 10.0f, m_Color);
+            // HazelPVR::Renderer2D::DrawRotatedQuad((glm::vec2){-1, 0} + m_Position, {0.8, 0.8}, glm::radians(45.), {0.8, 0.2, 0.3, 1});
+            HazelPVR::Renderer2D::DrawQuad({-1.0f,  0.0f} , {0.8f,  0.8f}, {0.8, 0.2, 0.3, 1});
+            HazelPVR::Renderer2D::DrawQuad({ 0.5f, -0.5f}, { 0.5f, 0.75f}, {0.2, 0.3, 0.8, 1});
         }
         HazelPVR::Renderer2D::EndScene();
     }
